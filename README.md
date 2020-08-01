@@ -2,7 +2,7 @@
 📱LinkMo 🌐
 
 ## iOS
-- 김보민
+- [김보민](https://github.com/BOMS2)
 - 김태욱
 
 ## Server
