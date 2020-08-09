@@ -1,0 +1,6 @@
+framework module Pods_LinkMo {
+  umbrella header "Pods-LinkMo-umbrella.h"
+
+  export *
+  module * { export * }
+}
