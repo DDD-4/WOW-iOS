@@ -11,7 +11,7 @@
 - [김태욱](https://github.com/taeuk178)
 
 ### 👨‍💻 Server
-- [하헌우]( )
+- [하헌우](https://github.com/delic8)
 
 ### 👨‍💻 Design
 - [최인서]()
