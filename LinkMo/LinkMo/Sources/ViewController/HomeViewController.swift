@@ -93,6 +93,7 @@ class HomeViewController: UIViewController {
 class CategoryCollectionCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var editBtn: UIButton!
+	
 }
 
 
@@ -118,7 +119,19 @@ extension HomeViewController: UICollectionViewDataSource{
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
-		cell.backgroundColor = UIColor.lightGray
+		cell.backgroundColor = UIColor.init(red: 246, green: 247, blue: 251, alpha: 0)
+		cell.contentView.layer.cornerRadius = 2.0
+		cell.contentView.layer.borderWidth = 1.0
+		cell.contentView.layer.borderColor = UIColor.clear.cgColor
+		cell.contentView.layer.masksToBounds = true
+
+		cell.layer.backgroundColor = UIColor.white.cgColor
+		cell.layer.shadowColor = UIColor.gray.cgColor
+		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+		cell.layer.shadowRadius = 2.0
+		cell.layer.shadowOpacity = 1.0
+		cell.layer.masksToBounds = false
+		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
 		return cell
 	}
 	
@@ -126,7 +139,18 @@ extension HomeViewController: UICollectionViewDataSource{
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        return CGSize(width: 158, height: 158)
     }
+	func collectionView(_ collectionView: UICollectionView,
+						layout collectionViewLayout: UICollectionViewLayout,
+						minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return 19.0
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout
+		collectionViewLayout: UICollectionViewLayout,
+						minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return 19.0
+	}
 }
 
