@@ -11,12 +11,13 @@ import RxSwift
 import RxCocoa
 
 protocol HomeViewModelInput {
-	func addTitle(category: Category)
+	func addTitle(title: String)
 	func readTitle()
 }
 
 protocol HomeViewModelOutput {
 	var categories: BehaviorSubject<[Category]>{ get set }
+	var newText: BehaviorRelay<String>{ get set }
 }
 
 protocol HomeViewModelType {
@@ -31,8 +32,11 @@ class HomeViewModel: CommonViewModel, HomeViewModelInput, HomeViewModelOutput, H
 	var outputs: HomeViewModelOutput { return self }
 	
 	var categories = BehaviorSubject<[Category]>(value: [])
+	var newCategory = BehaviorRelay<Category?>(value: nil)
+	var newText = BehaviorRelay<String>(value: "")
 	
-	func addTitle(category: Category) {
+	func addTitle(title: String) {
+		let category = Category(id: Int64(Date().timeIntervalSince1970), title: title)
 		storage.createTitle(title: category)
 			.bind { _ in
 			self.readTitle()
@@ -45,5 +49,6 @@ class HomeViewModel: CommonViewModel, HomeViewModelInput, HomeViewModelOutput, H
 			self.categories.onNext(categoryList)
 			} .disposed(by: disposeBag)
 	}
+	
 
 }
