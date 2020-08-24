@@ -13,6 +13,7 @@ import RxCocoa
 protocol HomeViewModelInput {
 	func addTitle(title: String)
 	func readTitle()
+	func deleteTitle(indexPath: IndexPath, category: Category)
 }
 
 protocol HomeViewModelOutput {
@@ -50,5 +51,15 @@ class HomeViewModel: CommonViewModel, HomeViewModelInput, HomeViewModelOutput, H
 			} .disposed(by: disposeBag)
 	}
 	
+	func deleteTitle(indexPath: IndexPath, category: Category) {
+		storage.deleteTitle(category: category)
+			.subscribe(onNext: { [weak self] categories in
+				if var list = try? self?.categories.value() {
+					list.remove(at: indexPath.row)
+					self?.categories.onNext(list)
+				}
+			})
+			.disposed(by: disposeBag)
+    }
 
 }

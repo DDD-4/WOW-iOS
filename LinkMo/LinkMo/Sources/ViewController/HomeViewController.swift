@@ -70,19 +70,23 @@ class HomeViewController: UIViewController {
 		self.present(alert, animated: true, completion: nil)
 	}
 	
-	func showActionsheet(){
+	func showActionsheet(indexPath: IndexPath, category: Category){
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {(action) in
 			self.dismiss(animated: true, completion: nil)
-			print("취소 버튼 클릭")
 		}
 		alert.addAction(cancelAction)
 		let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-			print("삭제 버튼 클릭")
+			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
 		}
 		alert.addAction(destroyAction)
 		self.present(alert, animated: true, completion: nil)
 	}
+	
+	func btnCloseTapped(cell: CategoryCollectionCell) {
+		let indexPath = self.collectionView.indexPath(for: cell)
+        print(indexPath!.row)
+    }
 }
 
 
@@ -94,13 +98,15 @@ class CategoryCollectionCell: UICollectionViewCell {
 
 extension HomeViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//		let eachCategory = collectionList[indexPath.row]
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.editBtn.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
 		cell.editBtn.tag = indexPath.row
 	}
 	@IBAction func selectBtn(_ sender: UIButton) {
-		showActionsheet()
+		let buttonPosition = sender.convert(CGPoint.zero, to: self.collectionView)
+		let indexPath = self.collectionView.indexPathForItem(at: buttonPosition)
+		let eachCategory = collectionList[indexPath!.row]
+		showActionsheet(indexPath: indexPath!, category: eachCategory)
 	}
 }
 
@@ -123,3 +129,4 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: 100, height: 100)
     }
 }
+

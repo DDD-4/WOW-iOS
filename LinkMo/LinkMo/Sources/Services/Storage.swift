@@ -38,10 +38,10 @@ class Storage: StorageType {
         }
     }
 
-	func deleteTitle(id: String) -> Observable<Category> {
+	func deleteTitle(id: Int64) -> Observable<Category> {
 		let fetchRequest = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
 		do{
-			fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+			fetchRequest.predicate = NSPredicate(format: "id == %d", id)
 			let results = try self.context.fetch(fetchRequest)
 			if let managedCategoryList = results.first {
 				let categoryList = managedCategoryList.toCategory()
@@ -59,6 +59,10 @@ class Storage: StorageType {
 			return .error(CategoryStorageError.deleteError(error.localizedDescription))
 		}
 	}
+	
+	func deleteTitle(category: Category) -> Observable<Category> {
+		deleteTitle(id: category.id)
+    }
 	
 //	fun create(LinkModel) {
 //		UserManager.update({count: 1}) .save
