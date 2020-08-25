@@ -119,7 +119,6 @@ extension HomeViewController: UICollectionViewDataSource{
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
-		cell.backgroundColor = UIColor.init(red: 246, green: 247, blue: 251, alpha: 0)
 		cell.contentView.layer.cornerRadius = 2.0
 		cell.contentView.layer.borderWidth = 1.0
 		cell.contentView.layer.borderColor = UIColor.clear.cgColor
