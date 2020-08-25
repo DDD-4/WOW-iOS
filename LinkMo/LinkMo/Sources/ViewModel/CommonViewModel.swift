@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 
+let bag = DisposeBag()
 class CommonViewModel: NSObject {
     
     let disposeBag = DisposeBag()
