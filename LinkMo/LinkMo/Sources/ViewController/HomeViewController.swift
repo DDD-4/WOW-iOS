@@ -133,6 +133,7 @@ extension HomeViewController: UICollectionViewDataSource{
 		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
 		return cell
 	}
+    
 	
 }
 
@@ -151,5 +152,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 						minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 		return 19.0
 	}
+    
 }
 
