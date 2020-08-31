@@ -24,6 +24,8 @@
 		29D044AF24DE3F4600CB33EA /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
 		29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B024DE3F6500CB33EA /* ViewModelBindableType.swift */; };
 		29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B224DE3F7600CB33EA /* BaseViewController.swift */; };
+		A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
+		A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
 		A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* SecondTableVC.swift */; };
 		A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddCellList.swift */; };
 		A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
@@ -52,6 +54,8 @@
 		4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinkMo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DF5D2C1EEE1C126D9563CF3 /* Pods-LinkMo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.debug.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.debug.xcconfig"; sourceTree = "<group>"; };
 		818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.release.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.release.xcconfig"; sourceTree = "<group>"; };
+		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A9C5925324F53B200010FDAD /* SecondTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableVC.swift; sourceTree = "<group>"; };
 		A9C5925524F53B3D0010FDAD /* AddCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellList.swift; sourceTree = "<group>"; };
 		A9C5925724F53B580010FDAD /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 			children = (
 				29D044A224DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift */,
 				29D044A324DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift */,
+				A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */,
+				A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */,
 				29D0448224DE394500CB33EA /* LinkMo.xcdatamodeld */,
 				29D0449E24DE3C2D00CB33EA /* Category.swift */,
 				A9C5925924F53B690010FDAD /* TableSection.swift */,
@@ -316,6 +322,7 @@
 				29D044A424DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift in Sources */,
 				29D0449924DE3B9700CB33EA /* Storage.swift in Sources */,
 				29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */,
+				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
 				29D044A724DE3E9900CB33EA /* StorageType.swift in Sources */,
 				29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */,
 				A9C5925A24F53B690010FDAD /* TableSection.swift in Sources */,
@@ -329,6 +336,7 @@
 				29D044A524DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift in Sources */,
 				A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */,
 				29D0449F24DE3C2D00CB33EA /* Category.swift in Sources */,
+				A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
