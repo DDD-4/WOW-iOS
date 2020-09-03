@@ -21,6 +21,7 @@ class TableViewModel{
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     lazy var context = appDelegate!.persistentContainer.viewContext
     
+    //cell count
     var ListSection: [String] = []
     
     var sections: [TableSection] = [
@@ -28,19 +29,23 @@ class TableViewModel{
     ]
     
     var subject: BehaviorRelay<[TableSection]> = BehaviorRelay(value: [])
+    let fetch = NSFetchRequest<ManagedList>(entityName: "ManagedList")
     
     init() { }
     
     func subjectCount(){
-            
+        
     }
     
     func addSection(header: String) -> [TableSection]{
-        let headerAppend = TableSection(header: header, items: [], link: [])
+        let headerAppend = TableSection(header: header, items: ["ㅁ"], link: ["ㅡ"])
         
         let managedTable = ManagedList(context: context)
         managedTable.fromTableSection(list: headerAppend)
-        
+        print(managedTable)
+        print(managedTable.section)
+        print(managedTable.title)
+        print(managedTable.url)
         do{
             try self.context.save()
             
@@ -53,10 +58,9 @@ class TableViewModel{
     }
     
     func readSections() -> Observable<[TableSection]>{
-        let fetchR = NSFetchRequest<ManagedList>(entityName: "ManagedList")
         
         do{
-            let sectionRead = try self.context.fetch(fetchR)
+            let sectionRead = try self.context.fetch(fetch)
             sections = sectionRead.map{$0.toTableSection()}
             
             subject.accept(sections)
@@ -68,8 +72,10 @@ class TableViewModel{
         }
     }
     
+    
+    
     func updateSection(updateText: String, index: Int) -> Observable<[TableSection]>{
-        let fetch = NSFetchRequest<ManagedList>(entityName: "ManagedList")
+        
         do{
             let update = try self.context.fetch(fetch)
             update[index].setValue(updateText, forKey: "section")
@@ -83,7 +89,7 @@ class TableViewModel{
     }
     
     func deleteSection(section: Int) -> Observable<[TableSection]>{
-        let fetch = NSFetchRequest<ManagedList>(entityName: "ManagedList")
+        
         
         do{
             let delete = try self.context.fetch(fetch)
@@ -98,31 +104,72 @@ class TableViewModel{
         
     }
     
+    func sectionList(){
+        do{
+            
+            let list = try self.context.fetch(fetch)
+            for i in 0...list.count - 1{
+                
+                ListSection.append(list[i].section)
+            }
+            
+        }catch{
+            print("Error", error)
+            
+        }
+    }
     
     func addCell(sectionNumber: Int, linkTitle: String, linkUrl: String) -> [TableSection]{
+        
         
         sections[sectionNumber].items.append(linkTitle)
         sections[sectionNumber].link.append(linkUrl)
         
+        do{
+            
+            let cell = try self.context.fetch(fetch)
+            print(cell[sectionNumber])
+            cell[sectionNumber].setValue(linkTitle, forKey: "title")
+//            cell[sectionNumber].setValue(linkUrl, forKey: "url")
+            print(cell[sectionNumber].title)
+            print(sections)
+
+
+            print(cell)
+            print(sections)
+            
+            
+            //try self.context.save()
+            
+            
+        }catch{
+            print("Error",error)
+            
+        }
         return sections
+//        sections[i].items.append(linkTitle)
+//        sections[i].link.append(linkUrl)
+        
     }
+    
+    
     
     //전체 삭제
     
-//    func deleteAllRecords() {
-//        let delegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = delegate.persistentContainer.viewContext
-//
-//        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedList")
-//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-//
-//        do {
-//            try context.execute(deleteRequest)
-//            try context.save()
-//        } catch {
-//            print ("There was an error")
-//        }
-//    }
+    func deleteAllRecords() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedList")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print ("There was an error")
+        }
+    }
     
     
     func deleteCell(){

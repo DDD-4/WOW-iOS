@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mM8-SI-pU0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DfA-Ft-KJd">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -11,7 +11,7 @@
         <!--link-->
         <scene sceneID="aNM-Y6-vPF">
             <objects>
-                <viewController id="vii-an-wUN" sceneMemberID="viewController">
+                <viewController id="vii-an-wUN" customClass="LoginVC" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PjO-Uc-WMa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,7 +46,7 @@
                                                     <constraint firstAttribute="height" constant="54" id="1Bl-4v-3ZG"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LeA-z9-Mwj">
                                                 <rect key="frame" x="20" y="363" width="32" height="32"/>
@@ -149,6 +149,15 @@
                         <viewLayoutGuide key="safeArea" id="flw-Wk-kCe"/>
                     </view>
                     <navigationItem key="navigationItem" title="link" id="lHH-wg-Nz3"/>
+                    <connections>
+                        <outlet property="confirmBtn" destination="c46-3E-dQq" id="Vnh-ra-Mgk"/>
+                        <outlet property="emailField" destination="XqG-Hw-tlt" id="zbk-Xe-GoS"/>
+                        <outlet property="findId" destination="OZq-M6-siy" id="lx7-6E-zED"/>
+                        <outlet property="findPW" destination="RqO-BF-mAT" id="Qik-aJ-F2y"/>
+                        <outlet property="loginState" destination="LeA-z9-Mwj" id="434-DA-FyN"/>
+                        <outlet property="passwordField" destination="v50-vP-57U" id="hvc-dY-3B6"/>
+                        <outlet property="signUpBtn" destination="eZ4-2y-rL2" id="18r-Wf-h2P"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8js-1v-Lm9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -157,7 +166,7 @@
         <!--회원가입-->
         <scene sceneID="Fnq-uw-ZK7">
             <objects>
-                <viewController id="DfA-Ft-KJd" sceneMemberID="viewController">
+                <viewController id="DfA-Ft-KJd" customClass="SignUpVC" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="x0o-L0-xqf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -331,6 +340,16 @@
                         <viewLayoutGuide key="safeArea" id="X81-WO-fAO"/>
                     </view>
                     <navigationItem key="navigationItem" title="회원가입" id="Vai-8w-AEN"/>
+                    <connections>
+                        <outlet property="combinationLbl" destination="AAB-5e-fZA" id="mK8-sH-a8E"/>
+                        <outlet property="emailText" destination="FAT-7F-ZOb" id="tZn-wE-HDT"/>
+                        <outlet property="idConfirmLbl" destination="yag-HZ-n3W" id="u7g-a3-LmD"/>
+                        <outlet property="nameText" destination="XdB-7F-ntF" id="70e-ew-xQv"/>
+                        <outlet property="passwordConfirm" destination="Jwn-kj-YR9" id="AjY-My-QPV"/>
+                        <outlet property="passwordText" destination="sJB-hQ-HjI" id="eRb-vZ-S67"/>
+                        <outlet property="pwConfirmLbl" destination="XPd-lj-mYh" id="tOP-QT-vhX"/>
+                        <outlet property="signUpButton" destination="e7e-xE-tdh" id="XXf-F7-k8g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H4n-o6-t3i" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -481,17 +500,12 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                             </button>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ltn-Y3-f9v">
-                                <rect key="frame" x="0.0" y="680" width="414" height="216"/>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="wjp-aa-LrV" firstAttribute="leading" secondItem="FY0-cw-EiL" secondAttribute="leading" constant="40" id="0gB-5b-CG9"/>
                             <constraint firstItem="JK2-vE-hfg" firstAttribute="centerX" secondItem="309-WH-lww" secondAttribute="centerX" id="8fK-gs-INy"/>
                             <constraint firstItem="FY0-cw-EiL" firstAttribute="trailing" secondItem="wjp-aa-LrV" secondAttribute="trailing" constant="40" id="DdT-Uc-iZg"/>
-                            <constraint firstAttribute="bottom" secondItem="ltn-Y3-f9v" secondAttribute="bottom" id="FVs-wG-iMA"/>
-                            <constraint firstItem="ltn-Y3-f9v" firstAttribute="trailing" secondItem="FY0-cw-EiL" secondAttribute="trailing" id="GfH-pJ-gUi"/>
                             <constraint firstItem="rdV-gJ-MwD" firstAttribute="top" secondItem="JK2-vE-hfg" secondAttribute="bottom" constant="40" id="HjC-El-OuJ"/>
                             <constraint firstItem="wjp-aa-LrV" firstAttribute="top" secondItem="rdV-gJ-MwD" secondAttribute="bottom" constant="40" id="NT1-pw-xVI"/>
                             <constraint firstItem="JK2-vE-hfg" firstAttribute="top" secondItem="FY0-cw-EiL" secondAttribute="top" constant="40" id="Qp4-HM-an2"/>
@@ -502,7 +516,6 @@
                             <constraint firstItem="NWk-ly-Pqu" firstAttribute="top" secondItem="wjp-aa-LrV" secondAttribute="bottom" constant="40" id="nSv-i9-QqB"/>
                             <constraint firstItem="JK2-vE-hfg" firstAttribute="leading" secondItem="FY0-cw-EiL" secondAttribute="leading" constant="40" id="o63-u8-iPc"/>
                             <constraint firstItem="wjp-aa-LrV" firstAttribute="centerX" secondItem="309-WH-lww" secondAttribute="centerX" id="tLo-Y8-Wbu"/>
-                            <constraint firstItem="ltn-Y3-f9v" firstAttribute="leading" secondItem="FY0-cw-EiL" secondAttribute="leading" id="vJP-7L-OWj"/>
                             <constraint firstItem="NWk-ly-Pqu" firstAttribute="centerX" secondItem="309-WH-lww" secondAttribute="centerX" id="y8N-Ra-ExU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FY0-cw-EiL"/>
@@ -510,7 +523,6 @@
                     <connections>
                         <outlet property="confirmBtn" destination="NWk-ly-Pqu" id="Q0p-49-olv"/>
                         <outlet property="firstField" destination="JK2-vE-hfg" id="4d2-TI-ft6"/>
-                        <outlet property="pickerView" destination="ltn-Y3-f9v" id="YAy-DI-W38"/>
                         <outlet property="secondField" destination="rdV-gJ-MwD" id="E9f-0o-xnN"/>
                         <outlet property="thirdField" destination="wjp-aa-LrV" id="hsZ-dA-ysM"/>
                     </connections>

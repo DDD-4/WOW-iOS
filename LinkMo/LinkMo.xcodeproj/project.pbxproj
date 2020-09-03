@@ -26,6 +26,10 @@
 		29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B224DE3F7600CB33EA /* BaseViewController.swift */; };
 		A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
 		A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
+		A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4124FF61200072A34A /* LoginVC.swift */; };
+		A94B0D4624FF617F0072A34A /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4524FF617F0072A34A /* SignUpVC.swift */; };
+		A94B0D4824FF619D0072A34A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4724FF619D0072A34A /* LoginViewModel.swift */; };
+		A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */; };
 		A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* SecondTableVC.swift */; };
 		A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddCellList.swift */; };
 		A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
@@ -56,6 +60,10 @@
 		818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.release.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.release.xcconfig"; sourceTree = "<group>"; };
 		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		A94B0D4124FF61200072A34A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		A94B0D4524FF617F0072A34A /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		A94B0D4724FF619D0072A34A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		A9C5925324F53B200010FDAD /* SecondTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableVC.swift; sourceTree = "<group>"; };
 		A9C5925524F53B3D0010FDAD /* AddCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellList.swift; sourceTree = "<group>"; };
 		A9C5925724F53B580010FDAD /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
@@ -148,6 +156,8 @@
 				29D044AC24DE3F3000CB33EA /* CommonViewModel.swift */,
 				29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */,
 				A9C5925724F53B580010FDAD /* TableViewModel.swift */,
+				A94B0D4724FF619D0072A34A /* LoginViewModel.swift */,
+				A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -160,6 +170,8 @@
 				29D044B224DE3F7600CB33EA /* BaseViewController.swift */,
 				A9C5925324F53B200010FDAD /* SecondTableVC.swift */,
 				A9C5925524F53B3D0010FDAD /* AddCellList.swift */,
+				A94B0D4124FF61200072A34A /* LoginVC.swift */,
+				A94B0D4524FF617F0072A34A /* SignUpVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -317,19 +329,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A94B0D4824FF619D0072A34A /* LoginViewModel.swift in Sources */,
 				A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */,
 				29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */,
+				A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */,
 				29D044A424DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift in Sources */,
 				29D0449924DE3B9700CB33EA /* Storage.swift in Sources */,
 				29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */,
 				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
 				29D044A724DE3E9900CB33EA /* StorageType.swift in Sources */,
 				29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */,
+				A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */,
 				A9C5925A24F53B690010FDAD /* TableSection.swift in Sources */,
 				29D044A924DE3EAD00CB33EA /* CategoryStorageType.swift in Sources */,
 				29D044AB24DE3EDE00CB33EA /* CategoryManager.swift in Sources */,
 				29D0448424DE394500CB33EA /* LinkMo.xcdatamodeld in Sources */,
 				29D044AF24DE3F4600CB33EA /* HomeViewModel.swift in Sources */,
+				A94B0D4624FF617F0072A34A /* SignUpVC.swift in Sources */,
 				A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */,
 				29D044AD24DE3F3000CB33EA /* CommonViewModel.swift in Sources */,
 				29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */,

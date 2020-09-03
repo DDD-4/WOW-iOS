@@ -60,6 +60,9 @@ class SecondTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+//        tableShardVM.deleteAllRecords()
+        
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
         view.addSubview(addSectionBtn)
@@ -437,7 +440,7 @@ extension SecondTableVC: UITableViewDelegate{
                     
                 }
                 let remove = UIAlertAction(title: "제거", style: .default) { _ in
-                    //_ = self.tableShardVM.deleteSection(section: section)
+                    
                     _ = self.tableShardVM.deleteSection(section: section)
                     _ = self.tableShardVM.readSections()
                     
