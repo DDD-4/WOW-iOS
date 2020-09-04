@@ -10,7 +10,10 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
+/*
+ - nameText 빈값 true 수정
+ 
+ */
 class SignUpViewModel {
     static let shard = SignUpViewModel()
     
@@ -29,18 +32,24 @@ class SignUpViewModel {
     
     
     lazy var passwordConfirmType = false
+    lazy var nameType = false
     
     init() {
         
     }
     
     func checkString(_ newText:String) -> Bool {
-        let regex = try! NSRegularExpression(pattern: "[가-힣ㄱ-ㅎㅏ-ㅣ\\s]", options: [])
-        let list = regex.matches(in:newText, options: [], range:NSRange.init(location: 0, length:newText.count))
-        if(list.count != newText.count){
-            return false
+        if newText != ""{
+            let regex = try! NSRegularExpression(pattern: "[가-힣ㄱ-ㅎㅏ-ㅣ\\s]", options: [])
+            let list = regex.matches(in:newText, options: [], range:NSRange.init(location: 0, length:newText.count))
+            
+            if(list.count != newText.count){
+                return false
+            }
+            nameType = true
         }
-        return true
+        print("name type: ", nameType)
+        return nameType
     }
 
     
@@ -64,7 +73,7 @@ class SignUpViewModel {
             print("Errors: ", error)
             return false
         }
-        print("ts: ", passwordConfirmType)
+        
         return passwordConfirmType
     }
     

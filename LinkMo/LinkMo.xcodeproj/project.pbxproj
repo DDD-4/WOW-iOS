@@ -30,6 +30,7 @@
 		A94B0D4624FF617F0072A34A /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4524FF617F0072A34A /* SignUpVC.swift */; };
 		A94B0D4824FF619D0072A34A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4724FF619D0072A34A /* LoginViewModel.swift */; };
 		A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */; };
+		A94B0D4D2502089B0072A34A /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A94B0D4C2502089B0072A34A /* Login.storyboard */; };
 		A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* SecondTableVC.swift */; };
 		A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddCellList.swift */; };
 		A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
@@ -64,6 +65,7 @@
 		A94B0D4524FF617F0072A34A /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		A94B0D4724FF619D0072A34A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		A94B0D4C2502089B0072A34A /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		A9C5925324F53B200010FDAD /* SecondTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableVC.swift; sourceTree = "<group>"; };
 		A9C5925524F53B3D0010FDAD /* AddCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellList.swift; sourceTree = "<group>"; };
 		A9C5925724F53B580010FDAD /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				29D0447F24DE394500CB33EA /* Home.storyboard */,
+				A94B0D4C2502089B0072A34A /* Login.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 			files = (
 				29D0448624DE394900CB33EA /* Assets.xcassets in Resources */,
 				29D0448124DE394500CB33EA /* Home.storyboard in Resources */,
+				A94B0D4D2502089B0072A34A /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,8 @@ import RxSwift
 import RxCocoa
 
 /*
- 
+ - 이름 비었을때 수정
+ - 밑쪽 텍스트필드 높이 수정
  */
 
 class SignUpVC: UIViewController {
@@ -35,8 +36,7 @@ class SignUpVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        combinationLbl.text = "✓ 영문/숫자/특수문자 2가지 이상 조합(8~12)자"
-//        idConfirmLbl.text = "✓ 아이디(이메일)제외"
+
         combinationLbl.text = "✕ 영문/숫자/특수문자 2가지 이상 조합(8~12)자"
         combinationLbl.textColor = .red
         idConfirmLbl.text = "✕ 아이디(이메일)제외"
@@ -46,6 +46,7 @@ class SignUpVC: UIViewController {
         
         
         signUpStep()
+        signUpbtn()
     }
     
     func signUpStep(){
@@ -131,7 +132,7 @@ class SignUpVC: UIViewController {
         
         Observable.combineLatest(signShard.nameVBool, signShard.emailBool, signShard.passwordBool, signShard.pwConfirmBool, resultSelector: { $0 && $1 && $2 && $3})
             .subscribe(onNext: { b in
-                print("Signup: ", b)
+                
                 self.signUpButton.isEnabled = b
             })
             .disposed(by: bag)
@@ -151,9 +152,6 @@ class SignUpVC: UIViewController {
         })
         .disposed(by: bag)
     }
-    
-    
-    
     
     
 }

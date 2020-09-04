@@ -9,8 +9,7 @@
 
 /*
  수정할거
- - pickerview 랑 textfield 중복문제
- - pickerview toolbar
+ 
  - 섹션선택 안되면 버튼 비활성화
  
  */

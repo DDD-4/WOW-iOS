@@ -9,7 +9,14 @@
 
 import Foundation
 import CoreData
-
+/*
+ managedlist -> managedsection
+ section, id
+ 
+ managedurl entity
+ url, image, id, urltitle
+ 
+ */
 
 extension ManagedList {
 

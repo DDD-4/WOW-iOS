@@ -24,17 +24,7 @@ class LoginViewModel {
     init() {
         
     }
-    //        emailVBool.subscribe(onNext: { b in
-    //            self.confirmBtn.isHidden = !b
-    //            print(b)
-    //        })
-    //            .disposed(by: bag)
-    //
-    //        passwordVBool.subscribe(onNext: { b in
-    //            self.confirmBtn.isHidden = !b
-    //            print(!b)
-    //        })
-    //        .disposed(by: bag)
+    
     
     func emailValidation(_ email: String) -> Bool{
         let emailReg = "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
