@@ -37,24 +37,23 @@ class TableViewModel{
         
     }
     
-    func addSection(header: String) -> [TableSection]{
-        let headerAppend = TableSection(header: header, items: ["ㅁ"], link: ["ㅡ"])
+    func addSection(header: String) -> Observable<[TableSection]>{
+        let headerAppend = TableSection(header: header, items: [], link: [])
         
         let managedTable = ManagedList(context: context)
         managedTable.fromTableSection(list: headerAppend)
-        print(managedTable)
-        print(managedTable.section)
-        print(managedTable.title)
-        print(managedTable.url)
+        
+        sections.append(headerAppend)
+        
         do{
             try self.context.save()
+            return .just(sections)
             
         }catch let error as NSError{
             print("List no create. error: ", error.userInfo)
+            return .error(error)
         }
         
-        sections.append(headerAppend)
-        return sections
     }
     
     func readSections() -> Observable<[TableSection]>{
@@ -112,14 +111,13 @@ class TableViewModel{
                 
                 ListSection.append(list[i].section)
             }
-            
         }catch{
             print("Error", error)
             
         }
     }
     
-    func addCell(sectionNumber: Int, linkTitle: String, linkUrl: String) -> [TableSection]{
+    func addCell(sectionNumber: Int, linkTitle: String, linkUrl: String) -> Observable<[TableSection]>{
         
         
         sections[sectionNumber].items.append(linkTitle)
@@ -128,30 +126,55 @@ class TableViewModel{
         do{
             
             let cell = try self.context.fetch(fetch)
-            print(cell[sectionNumber])
-            cell[sectionNumber].setValue(linkTitle, forKey: "title")
-//            cell[sectionNumber].setValue(linkUrl, forKey: "url")
-            print(cell[sectionNumber].title)
-            print(sections)
-
-
-            print(cell)
-            print(sections)
             
+            cell[sectionNumber].setValue([linkTitle], forKey: "title")
+            cell[sectionNumber].setValue([linkUrl], forKey: "url")
+            cell[sectionNumber].fromTableSection(list: sections[sectionNumber])
             
-            //try self.context.save()
-            
-            
+            try self.context.save()
+            return .just(sections)
         }catch{
             print("Error",error)
-            
+            return .error(error)
         }
-        return sections
-//        sections[i].items.append(linkTitle)
-//        sections[i].link.append(linkUrl)
         
     }
     
+    func updateCell(section: Int, cellrow: Int, title: String, link: String) -> Observable<[TableSection]>{
+        
+        do{
+            let updateCell = try self.context.fetch(fetch)
+            updateCell[section].title[cellrow] = title
+            updateCell[section].url[cellrow] = link
+            
+            
+            try self.context.save()
+            return .just(sections)
+        }catch{
+            print("updateCell error, ",error)
+            return .error(error)
+        }
+    }
+    
+    
+    func removeCell(section: Int, cellrow: Int) -> Observable<[TableSection]>{
+        
+        do{
+            let celldelte = try self.context.fetch(fetch)
+            
+            celldelte[section].title.remove(at: cellrow)
+            celldelte[section].url.remove(at: cellrow)
+            
+            print(celldelte[section].title)
+            print(celldelte[section].url)
+            
+            try self.context.save()
+            return .just(sections)
+        }catch{
+            print("Remove Cell Error," ,error)
+            return .error(error)
+        }
+    }
     
     
     //전체 삭제

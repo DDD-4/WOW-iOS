@@ -299,13 +299,35 @@ class SecondTableVC: UIViewController {
                 cell.linkTitle.text = item
                 cell.linkImage.image = UIImage(named: "12")
                 cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
-                print(dataSource.sectionModels[indexPath.section].link[indexPath.row])
                 
+                
+                //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
-                    .subscribe(onNext: { _ in
+                    .subscribe(onNext: { b in
+                        
+                        
                         let alert = UIAlertController(title: nil, message: "수정 삭제", preferredStyle: .actionSheet)
                         
                         let update = UIAlertAction(title: "수정", style: .default) { _ in
+                            let alert = UIAlertController(title: nil, message: "셀 수정", preferredStyle: .alert)
+                            let ok = UIAlertAction(title: "OK", style: .default) { _ in
+                                let updateTitle = alert.textFields![0].text
+                                let updatelink = alert.textFields![1].text
+                                
+                                _ = self.tableShardVM.updateCell(section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
+                                _ = self.tableShardVM.readSections()
+                            }
+                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                            
+                            alert.addTextField { textField in
+                                textField.placeholder = "타이틀"
+                            }
+                            alert.addTextField { textField in
+                                textField.placeholder = "링크"
+                            }
+                            alert.addAction(cancel)
+                            alert.addAction(ok)
+                            self.present(alert, animated: true)
                             
                         }
                         let remove = UIAlertAction(title: "삭제", style: .default) { _ in
@@ -314,6 +336,8 @@ class SecondTableVC: UIViewController {
                             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
                             let ok = UIAlertAction(title: "확인", style: .default) { _ in
                                 // Cell delete
+                                _ = self.tableShardVM.removeCell(section: indexPath.section, cellrow: indexPath.row)
+                                _ = self.tableShardVM.readSections()
                             }
                             alertConfirm.addAction(cancel)
                             alertConfirm.addAction(ok)
