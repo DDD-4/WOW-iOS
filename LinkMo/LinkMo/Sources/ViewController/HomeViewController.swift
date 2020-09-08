@@ -31,6 +31,7 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
+		navigationController?.isNavigationBarHidden = true
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
