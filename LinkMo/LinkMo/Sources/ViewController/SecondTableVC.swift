@@ -11,10 +11,11 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import SnapKit
+import LinkPresentation
 
 /*
  수정할거
- = coredata 연결
+ 
  - coredata 삭제 후 빈데이터 상태일 때 섹션 추가하면 안바뀜
  
  */
@@ -27,9 +28,13 @@ class SecondTableVC: UIViewController {
             case .hide:
                 tableView.isHidden = true
                 dataNil(state: false)
+                
+                
             case .show:
                 tableView.isHidden = false
                 dataNil(state: true)
+                
+                
             }
         }
     }
@@ -130,7 +135,9 @@ class SecondTableVC: UIViewController {
         floatingBtn()
         AddSectionPush()
         AddCellPush()
+        
     }
+    
     
     //MARK: - AddSection
     func AddSectionPush(){
@@ -292,14 +299,40 @@ class SecondTableVC: UIViewController {
         let dataSource = RxTableViewSectionedReloadDataSource<TableSection>(
             configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
                 
+                
                 let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
                 
                 cell.selectionStyle = .none
                 
                 cell.linkTitle.text = item
-                cell.linkImage.image = UIImage(named: "12")
                 cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
                 
+                let urlstring = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
+                let url = URL(string: urlstring)!
+                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+                    guard let linkMetadata = linkMetadata,
+                        let imageProvider = linkMetadata.imageProvider else {
+                        return DispatchQueue.main.async {
+                                cell.linkImage.image = UIImage(named: "12")
+                            }
+                    }
+
+                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                        guard error == nil else {
+                            
+                            return
+                        }
+
+                        if let image = image as? UIImage {
+                            // do something with image
+                            DispatchQueue.main.async {
+                                cell.linkImage.image = image
+                            }
+                        } else {
+                            print("no image available")
+                        }
+                    }
+                }
                 
                 //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
@@ -428,16 +461,22 @@ extension SecondTableVC: UITableViewDelegate{
         let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         titleLbl.text = dataSource.sectionModels[section].identity
         
-        
         let sectionUpdateBtn = UIButton(type: .system)
-        sectionUpdateBtn.setTitle("update", for: .normal)
+        sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         
+        //MARK: - sectionShow
+        let boomboom = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
+        boomboom.rx.tap
+            .subscribe(onNext: { _ in
+                print(section)
+            })
+            .disposed(by: bag)
         
+        header.addSubview(boomboom)
         header.addSubview(titleLbl)
         header.addSubview(sectionUpdateBtn)
         
-        //sectionUpdateBtn.addTarget(self, action: #selector(updateRemove(_:)), for: .touchUpInside)
         
         //MARK: - Section, 수정 삭제
         sectionUpdateBtn.rx.tap
@@ -516,6 +555,7 @@ class SecondCell: UITableViewCell{
         
         
         linkImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        linkImage.sizeToFit()
         linkImage.contentMode = .scaleAspectFill
         
         linkImage.snp.makeConstraints { snp in
@@ -543,7 +583,6 @@ class SecondCell: UITableViewCell{
         
         linkUrl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         linkUrl.textColor = UIColor.darkGray
-        //linkUrl.font = UIFont(name: "Avenir-Light", size: 12)
         linkUrl.font = UIFont.systemFont(ofSize: 14)
         
         linkUrl.snp.makeConstraints { snp in

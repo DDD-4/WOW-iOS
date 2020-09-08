@@ -10,8 +10,8 @@
 /*
  수정할거
  
- - 섹션선택 안되면 버튼 비활성화
- 
+ - url 한글 안들어가게
+ - 피커뷰 선택시 마지막섹션선택되는 버그
  */
 import UIKit
 import RxSwift
@@ -77,20 +77,18 @@ class AddCellList: UIViewController {
         toolbar.setItems([cancel, spaceButton, labelButton, spaceButton, done], animated: false)
         toolbar.isUserInteractionEnabled = true
         
-        firstField.inputView = pickerView
+        
         firstField.inputAccessoryView = toolbar
     }
     
     @objc func dones(){
         firstField.resignFirstResponder()
-
         print("Done")
         
     }
     
     @objc func cancel(){
         firstField.resignFirstResponder()
-
         
     }
     func rxButton(){
@@ -103,7 +101,7 @@ class AddCellList: UIViewController {
         
         thirdField.placeholder = "링크"
         
-        thirdField.textContentType = .URL
+        thirdField.keyboardType = .URL
         thirdField.rx.text
             .orEmpty
             .bind(to: thirdFd)
@@ -111,11 +109,6 @@ class AddCellList: UIViewController {
         
         confirmBtn.rx.tap
             .subscribe(onNext: { [weak self] b in
-                
-                //                var sectionCount = self?.tableShardVM.sections[self!.didselectNumber]
-                //
-                //                sectionCount?.items.append(self!.secondFd.value)
-                //                sectionCount?.link.append(self!.thirdFd.value)
                 
                 _ = self?.tableShardVM.addCell(sectionNumber: self!.didselectNumber, linkTitle: self!.secondFd.value, linkUrl: self!.thirdFd.value)
                 

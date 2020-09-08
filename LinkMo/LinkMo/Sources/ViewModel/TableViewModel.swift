@@ -172,7 +172,7 @@ class TableViewModel{
             return .just(sections)
         }catch{
             print("Remove Cell Error," ,error)
-            return .error(error)
+            return .error(CategoryStorageError.deleteError(error.localizedDescription))
         }
     }
     
@@ -194,10 +194,6 @@ class TableViewModel{
         }
     }
     
-    
-    func deleteCell(){
-        
-    }
 }
 
 //MARK: - alert actionSheet 경고창
