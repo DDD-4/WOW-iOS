@@ -31,6 +31,10 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
+		navigationController?.isNavigationBarHidden = true
+		let defaults = UserDefaults(suiteName: "group.com.LinkMo.share")
+		defaults?.set(collectionList.first, forKey: "ShareLink")
+        defaults?.synchronize()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
