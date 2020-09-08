@@ -11,10 +11,12 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import SnapKit
+import LinkPresentation
 
 /*
  수정할거
- = coredata 연결
+ 
+ - coredata 삭제 후 빈데이터 상태일 때 섹션 추가하면 안바뀜
  
  */
 class SecondTableVC: UIViewController {
@@ -26,9 +28,13 @@ class SecondTableVC: UIViewController {
             case .hide:
                 tableView.isHidden = true
                 dataNil(state: false)
+                
+                
             case .show:
                 tableView.isHidden = false
                 dataNil(state: true)
+                
+                
             }
         }
     }
@@ -59,40 +65,45 @@ class SecondTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+//        tableShardVM.deleteAllRecords()
+        
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
         view.addSubview(addSectionBtn)
         view.addSubview(addCellBtn)
         view.addSubview(addBtn)
         
-        tableShardVM.subject.subscribe(onNext: { b in
+        
+        tableShardVM.subject.accept(tableShardVM.sections)
+        tableShardVM.readSections().subscribe(onNext: { b in
+
             if b.count == 0{
                 self.state = .hide
             }else{
+                
                 self.state = .show
+                
             }
         })
         .disposed(by: bag)
+
         
         //MARK: - editButton
         editButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 
                 
-                self?.tableShardVM.sections.append(TableSection(header: "A", items: ["네이버"], link: ["http://www.naver.com/asdasdasdasdasdasdasdasd"]))
+//                self?.tableShardVM.sections.append(TableSection(header: "A", items: ["네이버"], link: ["http://www.naver.com/asdasdasdasdasdasdasdasd"]))
                 
+                _ = self!.tableShardVM.readSections()
                 
-                self?.tableShardVM.subject.accept(self!.tableShardVM.sections)
+                //self?.tableShardVM.subject.accept(self!.tableShardVM.sections)
                 self?.tableShardVM.subject.subscribe(onNext: { b in
                     if b.count > 0{
                         self?.state = .show
                     }
                     
-                })
-                .disposed(by: bag)
-            
-                self?.tableShardVM.subject.asObservable().subscribe(onNext: { b in
-                    print(b)
                 })
                 .disposed(by: bag)
                 
@@ -124,7 +135,9 @@ class SecondTableVC: UIViewController {
         floatingBtn()
         AddSectionPush()
         AddCellPush()
+        
     }
+    
     
     //MARK: - AddSection
     func AddSectionPush(){
@@ -150,16 +163,9 @@ class SecondTableVC: UIViewController {
                 let ok = UIAlertAction(title: "ok", style: .default) { _ in
                     let addText = alert.textFields?[0].text
                     
-                    //self.tableShardVM.sections.append(TableSection(header: addText!, items: [], link: []))
                     _ = self.tableShardVM.addSection(header: addText!)
                     
-                    self.tableShardVM.subject.accept(self.tableShardVM.sections)
-                    print(self.tableShardVM.subject)
-                    // MARK: - 값 접근
-                    let headerCount = self.dataSource.sectionModels.count - 1
-                    let headerValue = self.dataSource.sectionModels[headerCount].header
-                    self.tableShardVM.ListSection.append("\(headerValue)")
-                    print(self.tableShardVM.ListSection)
+                    _ = self.tableShardVM.readSections()
                     
                 }
                 let cancel = UIAlertAction(title: "cancel", style: .destructive) { _ in
@@ -293,20 +299,68 @@ class SecondTableVC: UIViewController {
         let dataSource = RxTableViewSectionedReloadDataSource<TableSection>(
             configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
                 
+                
                 let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
                 
                 cell.selectionStyle = .none
                 
                 cell.linkTitle.text = item
-                cell.linkImage.image = UIImage(named: "12")
                 cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
-                print(dataSource.sectionModels[indexPath.section].link[indexPath.row])
                 
+                let urlstring = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
+                let url = URL(string: urlstring)!
+                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+                    guard let linkMetadata = linkMetadata,
+                        let imageProvider = linkMetadata.imageProvider else {
+                        return DispatchQueue.main.async {
+                                cell.linkImage.image = UIImage(named: "12")
+                            }
+                    }
+
+                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                        guard error == nil else {
+                            
+                            return
+                        }
+
+                        if let image = image as? UIImage {
+                            // do something with image
+                            DispatchQueue.main.async {
+                                cell.linkImage.image = image
+                            }
+                        } else {
+                            print("no image available")
+                        }
+                    }
+                }
+                
+                //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
-                    .subscribe(onNext: { _ in
+                    .subscribe(onNext: { b in
+                        
+                        
                         let alert = UIAlertController(title: nil, message: "수정 삭제", preferredStyle: .actionSheet)
                         
                         let update = UIAlertAction(title: "수정", style: .default) { _ in
+                            let alert = UIAlertController(title: nil, message: "셀 수정", preferredStyle: .alert)
+                            let ok = UIAlertAction(title: "OK", style: .default) { _ in
+                                let updateTitle = alert.textFields![0].text
+                                let updatelink = alert.textFields![1].text
+                                
+                                _ = self.tableShardVM.updateCell(section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
+                                _ = self.tableShardVM.readSections()
+                            }
+                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                            
+                            alert.addTextField { textField in
+                                textField.placeholder = "타이틀"
+                            }
+                            alert.addTextField { textField in
+                                textField.placeholder = "링크"
+                            }
+                            alert.addAction(cancel)
+                            alert.addAction(ok)
+                            self.present(alert, animated: true)
                             
                         }
                         let remove = UIAlertAction(title: "삭제", style: .default) { _ in
@@ -315,6 +369,8 @@ class SecondTableVC: UIViewController {
                             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
                             let ok = UIAlertAction(title: "확인", style: .default) { _ in
                                 // Cell delete
+                                _ = self.tableShardVM.removeCell(section: indexPath.section, cellrow: indexPath.row)
+                                _ = self.tableShardVM.readSections()
                             }
                             alertConfirm.addAction(cancel)
                             alertConfirm.addAction(ok)
@@ -405,14 +461,63 @@ extension SecondTableVC: UITableViewDelegate{
         let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         titleLbl.text = dataSource.sectionModels[section].identity
         
-        
         let sectionUpdateBtn = UIButton(type: .system)
-        sectionUpdateBtn.setTitle("update", for: .normal)
+        sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         
+        //MARK: - sectionShow
+        let boomboom = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
+        boomboom.rx.tap
+            .subscribe(onNext: { _ in
+                print(section)
+            })
+            .disposed(by: bag)
         
+        header.addSubview(boomboom)
         header.addSubview(titleLbl)
         header.addSubview(sectionUpdateBtn)
+        
+        
+        //MARK: - Section, 수정 삭제
+        sectionUpdateBtn.rx.tap
+            .subscribe(onNext: { _ in
+                
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let update = UIAlertAction(title: "수정", style: .default) { _ in
+                    let alert = UIAlertController(title: nil, message: "수정할 글 입력", preferredStyle: .alert)
+                    
+                    let ok = UIAlertAction(title: "Done", style: .default) { _ in
+                        let updateText = alert.textFields?[0].text
+                        
+                        _ = self.tableShardVM.updateSection(updateText: updateText!, index: section)
+                        _ = self.tableShardVM.readSections()
+                    }
+                    let cancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in}
+                    alert.addTextField { textF in
+                        textF.placeholder = "수정사항 입력"
+                    }
+                    alert.addAction(cancel)
+                    alert.addAction(ok)
+                    
+                    self.present(alert, animated: true)
+                    
+                }
+                let remove = UIAlertAction(title: "제거", style: .default) { _ in
+                    
+                    _ = self.tableShardVM.deleteSection(section: section)
+                    _ = self.tableShardVM.readSections()
+                    
+                }
+                let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
+                    self.dismiss(animated: true, completion: nil)
+                }
+                alert.addAction(update)
+                alert.addAction(remove)
+                alert.addAction(cancel)
+                alert.pruneNegativeWidthConstraints()
+                self.present(alert, animated: true)
+            })
+            .disposed(by: bag)
         
         titleLbl.snp.makeConstraints { snp in
             snp.centerY.equalTo(header)
@@ -429,6 +534,7 @@ extension SecondTableVC: UITableViewDelegate{
         header.backgroundColor = .lightGray
         return header
     }
+    
 }
 
 
@@ -449,6 +555,7 @@ class SecondCell: UITableViewCell{
         
         
         linkImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        linkImage.sizeToFit()
         linkImage.contentMode = .scaleAspectFill
         
         linkImage.snp.makeConstraints { snp in
@@ -476,7 +583,6 @@ class SecondCell: UITableViewCell{
         
         linkUrl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         linkUrl.textColor = UIColor.darkGray
-        //linkUrl.font = UIFont(name: "Avenir-Light", size: 12)
         linkUrl.font = UIFont.systemFont(ofSize: 14)
         
         linkUrl.snp.makeConstraints { snp in

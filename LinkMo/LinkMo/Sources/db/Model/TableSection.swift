@@ -41,5 +41,11 @@ extension TableSection: SectionModelType {
     var identity: String {
         return header
     }
+    var itemed: [String]{
+        return items
+    }
+    var linked: [String]{
+        return link
+    }
     
 }

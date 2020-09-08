@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		07ED6CEBA00E301690A58C7E /* Pods_LinkMo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */; };
+		29C2234125075838004ECCD3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234025075838004ECCD3 /* Login.storyboard */; };
+		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
+		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
+		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447D24DE394500CB33EA /* HomeViewController.swift */; };
 		29D0448124DE394500CB33EA /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29D0447F24DE394500CB33EA /* Home.storyboard */; };
@@ -24,13 +28,50 @@
 		29D044AF24DE3F4600CB33EA /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
 		29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B024DE3F6500CB33EA /* ViewModelBindableType.swift */; };
 		29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B224DE3F7600CB33EA /* BaseViewController.swift */; };
+		A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
+		A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
+		A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4124FF61200072A34A /* LoginVC.swift */; };
+		A94B0D4624FF617F0072A34A /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4524FF617F0072A34A /* SignUpVC.swift */; };
+		A94B0D4824FF619D0072A34A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4724FF619D0072A34A /* LoginViewModel.swift */; };
+		A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */; };
+		A94B0D4D2502089B0072A34A /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A94B0D4C2502089B0072A34A /* Login.storyboard */; };
 		A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* SecondTableVC.swift */; };
 		A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddCellList.swift */; };
 		A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
 		A9C5925A24F53B690010FDAD /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925924F53B690010FDAD /* TableSection.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		29C2234E25075C93004ECCD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29D0446E24DE394500CB33EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29C2234525075C93004ECCD3;
+			remoteInfo = ShareLink;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		29C2235425075C93004ECCD3 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		29C2234025075838004ECCD3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		29C2234625075C93004ECCD3 /* ShareLink.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareLink.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		29C2234825075C93004ECCD3 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		29C2234B25075C93004ECCD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		29C2234D25075C93004ECCD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29C2235525075F1B004ECCD3 /* LinkMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LinkMo.entitlements; sourceTree = "<group>"; };
 		29D0447624DE394500CB33EA /* LinkMo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkMo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D0447924DE394500CB33EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29D0447D24DE394500CB33EA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -52,6 +93,13 @@
 		4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinkMo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DF5D2C1EEE1C126D9563CF3 /* Pods-LinkMo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.debug.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.debug.xcconfig"; sourceTree = "<group>"; };
 		818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.release.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.release.xcconfig"; sourceTree = "<group>"; };
+		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		A94B0D4124FF61200072A34A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		A94B0D4524FF617F0072A34A /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		A94B0D4724FF619D0072A34A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		A94B0D4C2502089B0072A34A /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		A9C5925324F53B200010FDAD /* SecondTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableVC.swift; sourceTree = "<group>"; };
 		A9C5925524F53B3D0010FDAD /* AddCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellList.swift; sourceTree = "<group>"; };
 		A9C5925724F53B580010FDAD /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
@@ -59,6 +107,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		29C2234325075C93004ECCD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29D0447324DE394500CB33EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -70,10 +125,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29C2234725075C93004ECCD3 /* ShareLink */ = {
+			isa = PBXGroup;
+			children = (
+				29C2234825075C93004ECCD3 /* ShareViewController.swift */,
+				29C2234A25075C93004ECCD3 /* MainInterface.storyboard */,
+				29C2234D25075C93004ECCD3 /* Info.plist */,
+			);
+			path = ShareLink;
+			sourceTree = "<group>";
+		};
 		29D0446D24DE394500CB33EA = {
 			isa = PBXGroup;
 			children = (
 				29D0447824DE394500CB33EA /* LinkMo */,
+				29C2234725075C93004ECCD3 /* ShareLink */,
 				29D0447724DE394500CB33EA /* Products */,
 				418801472CE733B1215B4967 /* Pods */,
 				F8C39A78E18A6BDCACAA56C8 /* Frameworks */,
@@ -84,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				29D0447624DE394500CB33EA /* LinkMo.app */,
+				29C2234625075C93004ECCD3 /* ShareLink.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,6 +158,7 @@
 		29D0447824DE394500CB33EA /* LinkMo */ = {
 			isa = PBXGroup;
 			children = (
+				29C2235525075F1B004ECCD3 /* LinkMo.entitlements */,
 				29D0449024DE3A7700CB33EA /* Sources */,
 				29D0449124DE3A7D00CB33EA /* Resources */,
 			);
@@ -144,6 +212,8 @@
 				29D044AC24DE3F3000CB33EA /* CommonViewModel.swift */,
 				29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */,
 				A9C5925724F53B580010FDAD /* TableViewModel.swift */,
+				A94B0D4724FF619D0072A34A /* LoginViewModel.swift */,
+				A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -156,6 +226,8 @@
 				29D044B224DE3F7600CB33EA /* BaseViewController.swift */,
 				A9C5925324F53B200010FDAD /* SecondTableVC.swift */,
 				A9C5925524F53B3D0010FDAD /* AddCellList.swift */,
+				A94B0D4124FF61200072A34A /* LoginVC.swift */,
+				A94B0D4524FF617F0072A34A /* SignUpVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -163,7 +235,9 @@
 		29D0449624DE3AD200CB33EA /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				29C2234025075838004ECCD3 /* Login.storyboard */,
 				29D0447F24DE394500CB33EA /* Home.storyboard */,
+				A94B0D4C2502089B0072A34A /* Login.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -173,6 +247,8 @@
 			children = (
 				29D044A224DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift */,
 				29D044A324DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift */,
+				A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */,
+				A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */,
 				29D0448224DE394500CB33EA /* LinkMo.xcdatamodeld */,
 				29D0449E24DE3C2D00CB33EA /* Category.swift */,
 				A9C5925924F53B690010FDAD /* TableSection.swift */,
@@ -200,6 +276,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		29C2234525075C93004ECCD3 /* ShareLink */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29C2235125075C93004ECCD3 /* Build configuration list for PBXNativeTarget "ShareLink" */;
+			buildPhases = (
+				29C2234225075C93004ECCD3 /* Sources */,
+				29C2234325075C93004ECCD3 /* Frameworks */,
+				29C2234425075C93004ECCD3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareLink;
+			productName = ShareLink;
+			productReference = 29C2234625075C93004ECCD3 /* ShareLink.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		29D0447524DE394500CB33EA /* LinkMo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29D0448D24DE394900CB33EA /* Build configuration list for PBXNativeTarget "LinkMo" */;
@@ -209,10 +302,12 @@
 				29D0447324DE394500CB33EA /* Frameworks */,
 				29D0447424DE394500CB33EA /* Resources */,
 				0D7A295EE0B6AF5744F9235E /* [CP] Embed Pods Frameworks */,
+				29C2235425075C93004ECCD3 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				29C2234F25075C93004ECCD3 /* PBXTargetDependency */,
 			);
 			name = LinkMo;
 			productName = LinkMo;
@@ -229,6 +324,9 @@
 				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "김보민";
 				TargetAttributes = {
+					29C2234525075C93004ECCD3 = {
+						CreatedOnToolsVersion = 11.0;
+					};
 					29D0447524DE394500CB33EA = {
 						CreatedOnToolsVersion = 11.0;
 					};
@@ -248,17 +346,27 @@
 			projectRoot = "";
 			targets = (
 				29D0447524DE394500CB33EA /* LinkMo */,
+				29C2234525075C93004ECCD3 /* ShareLink */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		29C2234425075C93004ECCD3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29D0447424DE394500CB33EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				29D0448624DE394900CB33EA /* Assets.xcassets in Resources */,
 				29D0448124DE394500CB33EA /* Home.storyboard in Resources */,
+				A94B0D4D2502089B0072A34A /* Login.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,34 +415,64 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		29C2234225075C93004ECCD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29D0447224DE394500CB33EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A94B0D4824FF619D0072A34A /* LoginViewModel.swift in Sources */,
 				A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */,
 				29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */,
+				A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */,
 				29D044A424DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift in Sources */,
 				29D0449924DE3B9700CB33EA /* Storage.swift in Sources */,
 				29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */,
+				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
 				29D044A724DE3E9900CB33EA /* StorageType.swift in Sources */,
 				29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */,
+				A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */,
 				A9C5925A24F53B690010FDAD /* TableSection.swift in Sources */,
 				29D044A924DE3EAD00CB33EA /* CategoryStorageType.swift in Sources */,
 				29D044AB24DE3EDE00CB33EA /* CategoryManager.swift in Sources */,
 				29D0448424DE394500CB33EA /* LinkMo.xcdatamodeld in Sources */,
 				29D044AF24DE3F4600CB33EA /* HomeViewModel.swift in Sources */,
+				A94B0D4624FF617F0072A34A /* SignUpVC.swift in Sources */,
 				A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */,
 				29D044AD24DE3F3000CB33EA /* CommonViewModel.swift in Sources */,
 				29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */,
 				29D044A524DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift in Sources */,
 				A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */,
 				29D0449F24DE3C2D00CB33EA /* Category.swift in Sources */,
+				A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		29C2234F25075C93004ECCD3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29C2234525075C93004ECCD3 /* ShareLink */;
+			targetProxy = 29C2234E25075C93004ECCD3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		29C2234A25075C93004ECCD3 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29C2234B25075C93004ECCD3 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		29D0447F24DE394500CB33EA /* Home.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -346,6 +484,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		29C2235225075C93004ECCD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 76R96GR5TQ;
+				INFOPLIST_FILE = ShareLink/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.techtown.LinkMo.ShareLink;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		29C2235325075C93004ECCD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 76R96GR5TQ;
+				INFOPLIST_FILE = ShareLink/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.techtown.LinkMo.ShareLink;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		29D0448B24DE394900CB33EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -468,8 +644,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6DF5D2C1EEE1C126D9563CF3 /* Pods-LinkMo.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_ENTITLEMENTS = LinkMo/LinkMo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 76R96GR5TQ;
 				INFOPLIST_FILE = LinkMo/Resources/Info.plist;
@@ -479,6 +657,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.techtown.LinkMo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -488,6 +667,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_STYLE = Automatic;
@@ -499,6 +679,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.techtown.LinkMo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -507,6 +688,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		29C2235125075C93004ECCD3 /* Build configuration list for PBXNativeTarget "ShareLink" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29C2235225075C93004ECCD3 /* Debug */,
+				29C2235325075C93004ECCD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		29D0447124DE394500CB33EA /* Build configuration list for PBXProject "LinkMo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
