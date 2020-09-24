@@ -30,15 +30,34 @@ class TableViewModel{
     
     var subject: BehaviorRelay<[TableSection]> = BehaviorRelay(value: [])
     let fetch = NSFetchRequest<ManagedList>(entityName: "ManagedList")
-    
+    let categoryfetch = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
+    var sectionDic: Dictionary = [Int64:[TableSection]]()
     init() { }
     
-    func subjectCount(){
-        
+    func addSections(categoryId: Int, header: String) -> Observable<[TableSection]>{
+        do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryId].id
+            //table
+            let headerAppend = TableSection(categoryid: ids, header: header, items: [], link: [])
+            
+            let managedTable = ManagedList(context: context)
+            managedTable.fromTableSection(list: headerAppend)
+            
+            sections.append(headerAppend)
+            sectionDic.updateValue(sections, forKey: ids)
+            
+            try self.context.save()
+            return .just(sections)
+        }catch{
+            print(error)
+            return .error(error)
+        }
     }
     
     func addSection(header: String) -> Observable<[TableSection]>{
-        let headerAppend = TableSection(header: header, items: [], link: [])
+        let headerAppend = TableSection(categoryid: 0, header: header, items: [], link: [])
         
         let managedTable = ManagedList(context: context)
         managedTable.fromTableSection(list: headerAppend)
@@ -56,7 +75,27 @@ class TableViewModel{
         
     }
     
-    func readSections() -> Observable<[TableSection]>{
+    func readSections(categoryId: Int) -> Observable<[TableSection]>{
+        
+        do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryId].id
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let sectionMap  = sectionRead.map{$0.toTableSection()}
+            sectionDic[ids] = sectionMap.filter{$0.categoryid == ids}
+            
+            sections = sectionDic[ids]!
+            subject.accept(sections)
+            return .just(sections)
+        }catch{
+            print(error)
+            return .error(error)
+        }
+    }
+    
+    func readSection() -> Observable<[TableSection]>{
         
         do{
             let sectionRead = try self.context.fetch(fetch)
