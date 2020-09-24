@@ -89,40 +89,6 @@ class SecondTableVC: UIViewController {
         .disposed(by: bag)
 
         
-//        //MARK: - editButton
-//        editButton.rx.tap
-//            .subscribe(onNext: { [weak self] _ in
-//                
-//                
-////                self?.tableShardVM.sections.append(TableSection(header: "A", items: ["네이버"], link: ["http://www.naver.com/asdasdasdasdasdasdasdasd"]))
-//                
-//                _ = self!.tableShardVM.readSections()
-//                
-//                //self?.tableShardVM.subject.accept(self!.tableShardVM.sections)
-//                self?.tableShardVM.subject.subscribe(onNext: { b in
-//                    if b.count > 0{
-//                        self?.state = .show
-//                    }
-//                    
-//                })
-//                .disposed(by: bag)
-//                
-//            })
-//            .disposed(by: bag)
-//        //MARK: - removeBtn
-//        removeBtn.rx.tap
-//            .subscribe(onNext: { [weak self] _ in
-//                self?.tableShardVM.sections.removeAll()
-//                self?.tableShardVM.subject.accept(self!.tableShardVM.sections)
-//                self?.tableShardVM.subject.subscribe(onNext: { b in
-//                    if b.count == 0{
-//                        self?.state = .hide
-//                    }
-//                })
-//                .disposed(by: bag)
-//            })
-//            .disposed(by: bag)
-        
         //TableView 세팅
         tableView.register(SecondCell.self, forCellReuseIdentifier: "second")
         tableView.separatorStyle = .none
@@ -163,9 +129,7 @@ class SecondTableVC: UIViewController {
                 let ok = UIAlertAction(title: "ok", style: .default) { _ in
                     let addText = alert.textFields?[0].text
                     
-//                    _ = self.tableShardVM.addSection(header: addText!)
                     _ = self.tableShardVM.addSections(categoryId: self.categoryID, header: addText!)
-//                    _ = self.tableShardVM.readSections()
                     _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                     
                 }
@@ -203,11 +167,10 @@ class SecondTableVC: UIViewController {
         
         addCellBtn.rx.tap
             .subscribe(onNext: { _ in
-                
-                let addvc = self.storyboard?.instantiateViewController(identifier: "AddCellList") as! AddCellList
-                //self.navigationController?.pushViewController(addvc, animated: true)
-                
-                self.present(addvc, animated: true)
+
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+                let resultViewController = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
+                self.navigationController?.pushViewController(resultViewController, animated: true)
                 
             })
             .disposed(by: bag)
@@ -349,7 +312,7 @@ class SecondTableVC: UIViewController {
                                 let updatelink = alert.textFields![1].text
                                 
                                 _ = self.tableShardVM.updateCell(section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
-                                _ = self.tableShardVM.readSection()
+                                _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
                             
@@ -371,7 +334,7 @@ class SecondTableVC: UIViewController {
                             let ok = UIAlertAction(title: "확인", style: .default) { _ in
                                 // Cell delete
                                 _ = self.tableShardVM.removeCell(section: indexPath.section, cellrow: indexPath.row)
-                                _ = self.tableShardVM.readSection()
+                                _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
                             alertConfirm.addAction(cancel)
                             alertConfirm.addAction(ok)
@@ -427,12 +390,7 @@ class SecondTableVC: UIViewController {
             snp.trailing.equalTo(view)
             snp.leading.equalTo(view)
         }
-         
-//        let margin = view.layoutMarginsGuide
-//        tableView.topAnchor.constraint(equalTo: margin.topAnchor).isActive = true
-//        tableView.bottomAnchor.constraint(equalTo: margin.bottomAnchor).isActive = true
-//        tableView.leadingAnchor.constraint(equalTo: margin.leadingAnchor).isActive = true
-//        tableView.trailingAnchor.constraint(equalTo: margin.trailingAnchor).isActive = true
+        
     }
 }
 
@@ -460,7 +418,7 @@ extension SecondTableVC: UITableViewDelegate{
         let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
         
         let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
-        titleLbl.text = dataSource.sectionModels[section].identity
+        titleLbl.text = dataSource.sectionModels[section].headers
         
         let sectionUpdateBtn = UIButton(type: .system)
         sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
@@ -490,8 +448,8 @@ extension SecondTableVC: UITableViewDelegate{
                     let ok = UIAlertAction(title: "Done", style: .default) { _ in
                         let updateText = alert.textFields?[0].text
                         
-                        _ = self.tableShardVM.updateSection(updateText: updateText!, index: section)
-                        _ = self.tableShardVM.readSection()
+                        _ = self.tableShardVM.updateSections(updateText: updateText!, index: section, categoryId: self.categoryID)
+                        _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                     }
                     let cancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in}
                     alert.addTextField { textF in
@@ -505,8 +463,8 @@ extension SecondTableVC: UITableViewDelegate{
                 }
                 let remove = UIAlertAction(title: "제거", style: .default) { _ in
                     
-                    _ = self.tableShardVM.deleteSection(section: section)
-                    _ = self.tableShardVM.readSection()
+                    _ = self.tableShardVM.deleteSections(section: section, categoryId: self.categoryID)
+                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                     
                 }
                 let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in

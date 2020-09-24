@@ -56,25 +56,6 @@ class TableViewModel{
         }
     }
     
-    func addSection(header: String) -> Observable<[TableSection]>{
-        let headerAppend = TableSection(categoryid: 0, header: header, items: [], link: [])
-        
-        let managedTable = ManagedList(context: context)
-        managedTable.fromTableSection(list: headerAppend)
-        
-        sections.append(headerAppend)
-        
-        do{
-            try self.context.save()
-            return .just(sections)
-            
-        }catch let error as NSError{
-            print("List no create. error: ", error.userInfo)
-            return .error(error)
-        }
-        
-    }
-    
     func readSections(categoryId: Int) -> Observable<[TableSection]>{
         
         do{
@@ -95,28 +76,19 @@ class TableViewModel{
         }
     }
     
-    func readSection() -> Observable<[TableSection]>{
+    
+    
+    func updateSections(updateText: String, index: Int, categoryId: Int) -> Observable<[TableSection]>{
         
         do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryId].id
+            
+            //table
             let sectionRead = try self.context.fetch(fetch)
-            sections = sectionRead.map{$0.toTableSection()}
-            
-            subject.accept(sections)
-            return .just(sections)
-            
-        }catch let error as NSError{
-            print("no read list. error: ", error.userInfo)
-            return .error(error)
-        }
-    }
-    
-    
-    
-    func updateSection(updateText: String, index: Int) -> Observable<[TableSection]>{
-        
-        do{
-            let update = try self.context.fetch(fetch)
-            update[index].setValue(updateText, forKey: "section")
+            let updateValue = sectionRead.filter{$0.categoryid == ids}
+            updateValue[index].setValue(updateText, forKey: "section")
             try self.context.save()
             
             return .just(sections)
@@ -126,12 +98,19 @@ class TableViewModel{
         }
     }
     
-    func deleteSection(section: Int) -> Observable<[TableSection]>{
+    func deleteSections(section: Int, categoryId: Int) -> Observable<[TableSection]>{
         
         
         do{
-            let delete = try self.context.fetch(fetch)
-            self.context.delete(delete[section])
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryId].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let deleteValue = sectionRead.filter{$0.categoryid == ids}
+            
+            self.context.delete(deleteValue[section])
             try self.context.save()
             
             return .just(sections)

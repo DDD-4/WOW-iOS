@@ -39,10 +39,10 @@ extension TableSection: SectionModelType {
         self.items = items
     }
     
-    var identity: String {
+    var headers: String {
         return header
     }
-    var itemed: [String]{
+    var titled: [String]{
         return items
     }
     var linked: [String]{

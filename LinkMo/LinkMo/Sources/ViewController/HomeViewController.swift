@@ -107,9 +107,12 @@ extension HomeViewController: UICollectionViewDelegate {
 		cell.editBtn.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
 		cell.editBtn.tag = indexPath.row
         
-        let vc = SecondTableVC()
-        vc.categoryID = indexPath.row
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+        let tableVC = storyBoard.instantiateViewController(withIdentifier: "SecondTableVC") as! SecondTableVC
+        tableVC.categoryID = indexPath.row
+        self.navigationController?.pushViewController(tableVC, animated: true)
+        
         
 	}
 	@IBAction func selectBtn(_ sender: UIButton) {

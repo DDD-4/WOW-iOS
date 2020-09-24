@@ -20,7 +20,7 @@ public class ManagedList: NSManagedObject {
     func fromTableSection(list: TableSection){
         self.categoryid = list.categoryid
         self.section = list.header
-        self.title = list.itemed
+        self.title = list.titled
         self.url = list.linked
     }
     

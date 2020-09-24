@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		07ED6CEBA00E301690A58C7E /* Pods_LinkMo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */; };
-		29C2234125075838004ECCD3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234025075838004ECCD3 /* Login.storyboard */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -28,6 +27,7 @@
 		29D044AF24DE3F4600CB33EA /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
 		29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B024DE3F6500CB33EA /* ViewModelBindableType.swift */; };
 		29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B224DE3F7600CB33EA /* BaseViewController.swift */; };
+		A910BABB251C8D99009A76EE /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A910BABA251C8D99009A76EE /* TestVC.swift */; };
 		A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
 		A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
 		A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4124FF61200072A34A /* LoginVC.swift */; };
@@ -93,6 +93,7 @@
 		4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinkMo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DF5D2C1EEE1C126D9563CF3 /* Pods-LinkMo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.debug.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.debug.xcconfig"; sourceTree = "<group>"; };
 		818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.release.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.release.xcconfig"; sourceTree = "<group>"; };
+		A910BABA251C8D99009A76EE /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A94B0D4124FF61200072A34A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 				A9C5925524F53B3D0010FDAD /* AddCellList.swift */,
 				A94B0D4124FF61200072A34A /* LoginVC.swift */,
 				A94B0D4524FF617F0072A34A /* SignUpVC.swift */,
+				A910BABA251C8D99009A76EE /* TestVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -432,6 +434,7 @@
 				29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */,
 				A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */,
 				29D044A424DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift in Sources */,
+				A910BABB251C8D99009A76EE /* TestVC.swift in Sources */,
 				29D0449924DE3B9700CB33EA /* Storage.swift in Sources */,
 				29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */,
 				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
