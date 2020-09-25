@@ -60,7 +60,11 @@ class ShareSecondTableViewCell: UITableViewCell{
 }
 
 extension ShareTableViewController: UITableViewDelegate{
-	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	tableView.deselectRow(at: indexPath, animated: true)
+	let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as! ShareTableViewCell
+		
+	}
 }
 
 extension ShareTableViewController: UITableViewDataSource{
