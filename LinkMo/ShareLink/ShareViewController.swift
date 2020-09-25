@@ -42,12 +42,13 @@ class ShareViewController: UIViewController {
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
 		])
 	}
+	
+	
 }
 
 class ShareTableViewCell: UITableViewCell{
 	private let label: UILabel = {
 		let label = UILabel()
-//		label.text = "UI/UX"
 		label.textColor = UIColor.gray
 		return label
 	}()
@@ -60,7 +61,7 @@ class ShareTableViewCell: UITableViewCell{
 			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16)
 		])
 	}
-	
+
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setConstraint()
@@ -71,7 +72,14 @@ class ShareTableViewCell: UITableViewCell{
 }
 	
 extension ShareViewController: UITableViewDelegate{
-	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as! ShareTableViewCell
+		
+		let vc = ShareTableViewController()
+		vc.categoryID = indexPath.row
+		self.navigationController?.pushViewController(vc, animated: true)
+	}
 }
 
 extension ShareViewController: UITableViewDataSource {
@@ -85,3 +93,17 @@ extension ShareViewController: UITableViewDataSource {
 		return cell
 	}
 }
+
+
+//기본 디폴트 값
+//class ShareViewController: SLComposeServiceViewController {
+//    override func isContentValid() -> Bool {
+//        return true
+//    }
+//    override func didSelectPost() {
+//        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+//    }
+//    override func configurationItems() -> [Any]! {
+//        return []
+//    }
+//}
