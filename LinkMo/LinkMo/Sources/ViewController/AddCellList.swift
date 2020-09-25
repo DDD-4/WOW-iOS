@@ -101,7 +101,7 @@ class AddCellList: UIViewController {
         
         thirdField.placeholder = "제목"
         
-        thirdField.keyboardType = .URL
+        secondField.keyboardType = .URL
         thirdField.rx.text
             .orEmpty
             .bind(to: thirdFd)
