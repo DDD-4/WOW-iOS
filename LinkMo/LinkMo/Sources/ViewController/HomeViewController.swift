@@ -10,6 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import NeumorphismKit
+import EMTNeumorphicView
 
 class HomeViewController: UIViewController {
 //	var viewModel: HomeViewModel!
@@ -31,7 +33,36 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
-		navigationController?.isNavigationBarHidden = false
+		navigationController?.isNavigationBarHidden = true
+		view.backgroundColor = UIColor(RGB: 0xF0EEEF)
+		
+		
+		let neumorphismButton = NeumorphismButton(frame: .init(x: 0, y: 0, width: 120.0, height: 40.0))
+		neumorphismButton.baseColor = self.view.backgroundColor ?? .white
+		neumorphismButton.center = self.view.center
+		neumorphismButton.setTitle("BUTTON", for: .normal)
+
+		let titleColor = UIColor.black
+		neumorphismButton.setTitleColor(titleColor, for: .normal)
+
+		self.view.addSubview(neumorphismButton)
+		
+		var button = EMTNeumorphicButton(type: .custom)
+		button = EMTNeumorphicButton(frame:  CGRect(x: 100, y: 100, width: 120.0, height: 40.0))
+		button.setTitle("BUTTONnnn", for: .normal)
+		button.setTitleColor(UIColor.black, for: .normal)
+		button.contentVerticalAlignment = .fill
+		button.contentHorizontalAlignment = .fill
+		button.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
+		button.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
+		button.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
+		self.view.addSubview(button)
+		
+		
+	}
+	@objc func tapped(_ button: EMTNeumorphicButton) {
+		// isSelected property changes neumorphicLayer?.depthType automatically
+		button.isSelected = !button.isSelected
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -125,18 +156,18 @@ extension HomeViewController: UICollectionViewDataSource{
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
-		cell.contentView.layer.cornerRadius = 2.0
-		cell.contentView.layer.borderWidth = 1.0
-		cell.contentView.layer.borderColor = UIColor.clear.cgColor
-		cell.contentView.layer.masksToBounds = true
-
-		cell.layer.backgroundColor = UIColor.white.cgColor
-		cell.layer.shadowColor = UIColor.gray.cgColor
-		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-		cell.layer.shadowRadius = 2.0
-		cell.layer.shadowOpacity = 1.0
-		cell.layer.masksToBounds = false
-		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
+//		cell.contentView.layer.cornerRadius = 2.0
+//		cell.contentView.layer.borderWidth = 1.0
+//		cell.contentView.layer.borderColor = UIColor.clear.cgColor
+//		cell.contentView.layer.masksToBounds = true
+//
+//		cell.layer.backgroundColor = UIColor.white.cgColor
+//		cell.layer.shadowColor = UIColor.gray.cgColor
+//		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+//		cell.layer.shadowRadius = 2.0
+//		cell.layer.shadowOpacity = 1.0
+//		cell.layer.masksToBounds = false
+//		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
 		return cell
 	}
     

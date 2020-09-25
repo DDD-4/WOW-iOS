@@ -1,0 +1,6 @@
+framework module NeumorphismKit {
+  umbrella header "NeumorphismKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
