@@ -16,10 +16,9 @@ class TableViewModel{
     
     static let shard = TableViewModel()
     
-    
-    //private let context = CategoryManager.share.context
-    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-    lazy var context = appDelegate!.persistentContainer.viewContext
+//    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+//    lazy var context = appDelegate!.persistentContainer.viewContext
+	lazy var context = CategoryManager.share.context
     
     //cell count
     var ListSection: [String] = []
@@ -219,8 +218,8 @@ class TableViewModel{
     //전체 삭제
     
     func deleteAllRecords() {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let context = delegate.persistentContainer.viewContext
+//        let delegate = UIApplication.shared.delegate as! AppDelegate
+//        let context = delegate.persistentContainer.viewContext
 
         let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedList")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
