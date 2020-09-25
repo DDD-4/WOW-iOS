@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 protocol HomeViewModelInput {
-	func addTitle(title: String)
+	func addTitle(title: String, icon: String)
 	func readTitle()
 	func deleteTitle(indexPath: IndexPath, category: Category)
 }
@@ -36,8 +36,8 @@ class HomeViewModel: CommonViewModel, HomeViewModelInput, HomeViewModelOutput, H
 	var newCategory = BehaviorRelay<Category?>(value: nil)
 	var newText = BehaviorRelay<String>(value: "")
 	
-	func addTitle(title: String) {
-		let category = Category(id: Int64(Date().timeIntervalSince1970), title: title)
+	func addTitle(title: String, icon: String) {
+		let category = Category(id: Int64(Date().timeIntervalSince1970), title: title, icon: icon)
 		storage.createTitle(title: category)
 			.bind { _ in
 			self.readTitle()

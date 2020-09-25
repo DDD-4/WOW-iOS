@@ -41,7 +41,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="137" height="137"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="기존" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TK-Cl-6C3">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="타이틀" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TK-Cl-6C3">
                                                     <rect key="frame" x="16" y="89" width="105" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -58,9 +58,17 @@
                                                         <action selector="selectBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Pn-UX-qdQ"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아이콘" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fq4-Nz-wTv">
+                                                    <rect key="frame" x="16" y="58" width="44.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="fzd-lL-A7p" firstAttribute="top" secondItem="5Vv-Hp-Vgi" secondAttribute="top" constant="5" id="1zG-Gf-XbF"/>
+                                                <constraint firstItem="Fq4-Nz-wTv" firstAttribute="leading" secondItem="1TK-Cl-6C3" secondAttribute="leading" id="4l1-JM-kzN"/>
+                                                <constraint firstItem="1TK-Cl-6C3" firstAttribute="top" secondItem="Fq4-Nz-wTv" secondAttribute="bottom" constant="10" id="JVU-Rv-Wf8"/>
                                                 <constraint firstItem="1TK-Cl-6C3" firstAttribute="top" secondItem="5Vv-Hp-Vgi" secondAttribute="top" constant="89" id="KgN-EL-08Z"/>
                                                 <constraint firstAttribute="trailing" secondItem="1TK-Cl-6C3" secondAttribute="trailing" constant="16" id="RaR-08-Bpc"/>
                                                 <constraint firstItem="1TK-Cl-6C3" firstAttribute="centerX" secondItem="5Vv-Hp-Vgi" secondAttribute="centerX" id="avY-JV-JYN"/>
@@ -71,6 +79,7 @@
                                         <size key="customSize" width="137" height="137"/>
                                         <connections>
                                             <outlet property="editBtn" destination="fzd-lL-A7p" id="eAa-pW-AUb"/>
+                                            <outlet property="iconLabel" destination="Fq4-Nz-wTv" id="r5O-5z-RE7"/>
                                             <outlet property="titleLabel" destination="1TK-Cl-6C3" id="zyR-HV-Qql"/>
                                         </connections>
                                     </collectionViewCell>
