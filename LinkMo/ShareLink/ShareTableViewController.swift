@@ -60,11 +60,11 @@ class ShareSecondTableViewCell: UITableViewCell{
 }
 
 extension ShareTableViewController: UITableViewDelegate{
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-	tableView.deselectRow(at: indexPath, animated: true)
-	let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as! ShareTableViewCell
-		
-	}
+//	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//	tableView.deselectRow(at: indexPath, animated: true)
+//	let cell = tableView.dequeueReusableCell(withIdentifier: "ShareSecondTableViewCell", for: indexPath) as! ShareSecondTableViewCell
+//		cell.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
+//	}
 }
 
 extension ShareTableViewController: UITableViewDataSource{
@@ -78,6 +78,4 @@ extension ShareTableViewController: UITableViewDataSource{
 		cell.textLabel?.text = section.header
 		return cell
 	}
-	
-	
 }
