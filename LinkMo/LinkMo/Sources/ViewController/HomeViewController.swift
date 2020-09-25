@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
-import NeumorphismKit
 import EMTNeumorphicView
 
 class HomeViewController: UIViewController {
@@ -35,17 +34,6 @@ class HomeViewController: UIViewController {
 		bindViewModel()
 		navigationController?.isNavigationBarHidden = true
 		view.backgroundColor = UIColor(RGB: 0xF0EEEF)
-		
-		
-		let neumorphismButton = NeumorphismButton(frame: .init(x: 0, y: 0, width: 120.0, height: 40.0))
-		neumorphismButton.baseColor = self.view.backgroundColor ?? .white
-		neumorphismButton.center = self.view.center
-		neumorphismButton.setTitle("BUTTON", for: .normal)
-
-		let titleColor = UIColor.black
-		neumorphismButton.setTitleColor(titleColor, for: .normal)
-
-		self.view.addSubview(neumorphismButton)
 		
 		var button = EMTNeumorphicButton(type: .custom)
 		button = EMTNeumorphicButton(frame:  CGRect(x: 100, y: 100, width: 120.0, height: 40.0))
