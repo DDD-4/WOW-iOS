@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import EMTNeumorphicView
 
 class HomeViewController: UIViewController {
 //	var viewModel: HomeViewModel!
@@ -18,8 +19,8 @@ class HomeViewController: UIViewController {
 	
 	@IBOutlet weak var collectionView: UICollectionView!
 	
-	@IBOutlet weak var AddBtn: UIButton!
-	
+    let AddBtn = UIButton(type: .system)
+	let numberRow = 2
 	var collectionList: [Category] = [] {
 		didSet{
 			DispatchQueue.main.async {
@@ -32,16 +33,47 @@ class HomeViewController: UIViewController {
 		super.viewDidLoad()
 		bindViewModel()
 		navigationController?.isNavigationBarHidden = false
+        collectionView.showsVerticalScrollIndicator = false
+        //  navigationBar
+        navigationController?.navigationBar.topItem?.title = "link"
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = .white
 		let defaults = UserDefaults(suiteName: "group.com.LinkMo.share")
 		defaults?.set(collectionList.first, forKey: "ShareLink")
         defaults?.synchronize()
 	}
+	@objc func tapped(_ button: EMTNeumorphicButton) {
+		// isSelected property changes neumorphicLayer?.depthType automatically
+		button.isSelected = !button.isSelected
+	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		viewModel.inputs.readTitle()
+        flottingBtn()
+        
 	}
 
-	
+    //Autolayout
+    func flottingBtn(){
+        view.addSubview(AddBtn)
+        AddBtn.frame = CGRect(x: 0, y: 0, width: 62, height: 62)
+        AddBtn.setTitle("Add", for: .normal)
+        AddBtn.layer.cornerRadius = AddBtn.frame.size.width / 2
+        AddBtn.backgroundColor = .blue
+        
+        AddBtn.snp.makeConstraints { snp in
+            snp.bottom.equalTo(view).offset(-40)
+            snp.trailing.equalTo(view).offset(-30)
+            snp.width.equalTo(62)
+            snp.height.equalTo(62)
+        }
+        
+        AddBtn.rx.tap
+        .subscribe({ _ in
+        self.showAlert(title: "카테고리 추가하기")})
+        .disposed(by: disposeBag)
+    }
+    
 	func bindViewModel() {
 		
 		collectionView.rx.setDelegate(self).disposed(by: disposeBag)
@@ -49,11 +81,6 @@ class HomeViewController: UIViewController {
 		viewModel.outputs.categories
 			.subscribe(onNext: {[weak self] categories in
 				self?.collectionList = categories })
-			.disposed(by: disposeBag)
-		
-		AddBtn.rx.tap
-			.subscribe({ _ in
-			self.showAlert(title: "카테고리 추가하기")})
 			.disposed(by: disposeBag)
 		
 	}
@@ -131,18 +158,18 @@ extension HomeViewController: UICollectionViewDataSource{
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
-		cell.contentView.layer.cornerRadius = 2.0
-		cell.contentView.layer.borderWidth = 1.0
-		cell.contentView.layer.borderColor = UIColor.clear.cgColor
-		cell.contentView.layer.masksToBounds = true
-
-		cell.layer.backgroundColor = UIColor.white.cgColor
-		cell.layer.shadowColor = UIColor.gray.cgColor
-		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-		cell.layer.shadowRadius = 2.0
-		cell.layer.shadowOpacity = 1.0
-		cell.layer.masksToBounds = false
-		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
+//		cell.contentView.layer.cornerRadius = 2.0
+//		cell.contentView.layer.borderWidth = 1.0
+//		cell.contentView.layer.borderColor = UIColor.clear.cgColor
+//		cell.contentView.layer.masksToBounds = true
+//
+//		cell.layer.backgroundColor = UIColor.white.cgColor
+//		cell.layer.shadowColor = UIColor.gray.cgColor
+//		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+//		cell.layer.shadowRadius = 2.0
+//		cell.layer.shadowOpacity = 1.0
+//		cell.layer.masksToBounds = false
+//		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
 		return cell
 	}
     
@@ -150,19 +177,24 @@ extension HomeViewController: UICollectionViewDataSource{
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    //  cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 158, height: 158)
+        let lay = collectionViewLayout as! UICollectionViewFlowLayout
+        let widthPerItem = collectionView.frame.width / CGFloat(numberRow) - lay.minimumInteritemSpacing
+        
+        return CGSize(width:widthPerItem, height:widthPerItem)
     }
 	func collectionView(_ collectionView: UICollectionView,
 						layout collectionViewLayout: UICollectionViewLayout,
 						minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return 19.0
+		return 19
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout
 		collectionViewLayout: UICollectionViewLayout,
 						minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-		return 19.0
+		return 19
 	}
     
 }

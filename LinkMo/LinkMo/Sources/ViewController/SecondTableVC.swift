@@ -50,9 +50,13 @@ class SecondTableVC: UIViewController {
     
     
     var tableView = UITableView()
+    
+    //  addBtn, label
     let addBtn = UIButton(type: .system)
     let addSectionBtn = UIButton(type: .system)
     let addCellBtn = UIButton(type: .system)
+    let sectionLbl = UILabel()
+    let cellLbl = UILabel()
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var removeBtn: UIBarButtonItem!
@@ -73,7 +77,8 @@ class SecondTableVC: UIViewController {
         view.addSubview(addSectionBtn)
         view.addSubview(addCellBtn)
         view.addSubview(addBtn)
-        
+        view.addSubview(sectionLbl)
+        view.addSubview(cellLbl)
         
         tableShardVM.subject.accept(tableShardVM.sections)
         tableState()
@@ -94,153 +99,9 @@ class SecondTableVC: UIViewController {
         
     }
     
-    func tableState(){
-        tableShardVM.readSections(categoryId: categoryID).subscribe(onNext: { b in
-
-            if b.count == 0{
-                self.state = .hide
-            }else{
-                
-                self.state = .show
-                
-            }
-        })
-        .disposed(by: bag)
-    }
-    //MARK: - AddSection
-    func AddSectionPush(){
-        addSectionBtn.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        addSectionBtn.setTitle("Section", for: .normal)
-        addSectionBtn.layer.cornerRadius = addSectionBtn.frame.size.height / 2
-        addSectionBtn.backgroundColor = .orange
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        // bottom -200
-        addSectionBtn.snp.makeConstraints {  snp in
-            sectionConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
-            snp.trailing.equalTo(addBtn).offset(-10)
-            snp.width.equalTo(80)
-            snp.height.equalTo(80)
-        }
-        
-        
-        addSectionBtn.rx.tap
-            .subscribe(onNext: { _ in
-                let alert = UIAlertController(title: "카테고리 입력", message: nil, preferredStyle: .alert)
-                
-                
-                let ok = UIAlertAction(title: "ok", style: .default) { _ in
-                    let addText = alert.textFields?[0].text
-                    
-                    _ = self.tableShardVM.addSections(categoryId: self.categoryID, header: addText!)
-                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
-                    self.tableState()
-                    
-                }
-                let cancel = UIAlertAction(title: "cancel", style: .destructive) { _ in
-                    self.dismiss(animated: true, completion: nil)
-                }
-                
-                alert.addTextField { textfield in
-                    textfield.placeholder = "예시) UI/UX"
-                }
-                
-                alert.addAction(cancel)
-                alert.addAction(ok)
-                
-                self.present(alert, animated: true)
-            })
-            .disposed(by: bag)
-    }
-    
-    //MARK: - AddCell
-    func AddCellPush(){
-        addCellBtn.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        addCellBtn.setTitle("Cell", for: .normal)
-        addCellBtn.layer.cornerRadius = addCellBtn.frame.size.height / 2
-        addCellBtn.backgroundColor = .orange
-        
-        
-        // bottom -110
-        addCellBtn.snp.makeConstraints {  snp in
-            cellConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
-            snp.trailing.equalTo(addBtn).offset(-10)
-            snp.width.equalTo(80)
-            snp.height.equalTo(80)
-        }
-        
-        addCellBtn.rx.tap
-            .subscribe(onNext: { _ in
-
-                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
-                addcellvc.selectSection = self.categoryID
-                self.navigationController?.pushViewController(addcellvc, animated: true)
-                
-            })
-            .disposed(by: bag)
-    }
-    // MARK: - FloatingButton
-    func floatingBtn(){
-        
-        //플로팅버튼
-        addBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        addBtn.setTitle("Add", for: .normal)
-        addBtn.layer.cornerRadius = addBtn.frame.size.width / 2
-        addBtn.backgroundColor = .blue
-        
-        addBtn.snp.makeConstraints { snp in
-            snp.bottom.equalTo(view).offset(-40)
-            snp.trailing.equalTo(view).offset(-30)
-            snp.width.equalTo(100)
-            snp.height.equalTo(100)
-        }
-        addBtn.addTarget(self, action: #selector(adds), for: .touchUpInside)
-    }
-    
-    // MARK: - Floating buttons animation
-    
-    @objc func adds(){
-        
-        let firstDuration = 0.3
-        let secondDuration = 0.35
-        
-        bools = !bools
-        
-        if bools == true{
-            
-            view.layoutIfNeeded()
-            UIView.animate(withDuration: firstDuration) {
-                self.addCellBtn.snp.updateConstraints { snp in
-                    self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-110).constraint
-                }
-                self.view.layoutIfNeeded()
-            }
-            
-            UIView.animate(withDuration: secondDuration) {
-                self.addSectionBtn.snp.updateConstraints { snp in
-                    self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-200).constraint
-                }
-                self.view.layoutIfNeeded()
-            }
-        }else{
-            
-            view.layoutIfNeeded()
-            UIView.animate(withDuration: firstDuration) {
-                self.addCellBtn.snp.updateConstraints { snp in
-                    self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
-                }
-                self.view.layoutIfNeeded()
-            }
-        
-            
-            UIView.animate(withDuration: secondDuration) {
-                self.addSectionBtn.snp.updateConstraints { snp in
-                    self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
-                }
-                self.view.layoutIfNeeded()
-            }
-        }
-
     }
     
     // MARK: - 데이터 isEmpty 상태
@@ -258,25 +119,198 @@ class SecondTableVC: UIViewController {
         }
         
         emptyLabel.isHidden = state
+        addCellBtn.isEnabled = state
     }
 
+    func tableState(){
+        tableShardVM.readSections(categoryId: categoryID).subscribe(onNext: { b in
+            if b.count == 0{
+                self.state = .hide
+            }else{
+                self.state = .show
+            }
+        })
+        .disposed(by: bag)
+    }
+    // MARK: - FloatingButton
+    func floatingBtn(){
+        //플로팅버튼
+        addBtn.frame = CGRect(x: 0, y: 0, width: 62, height: 62)
+        addBtn.setTitle("Add", for: .normal)
+        addBtn.layer.cornerRadius = addBtn.frame.size.width / 2
+        addBtn.backgroundColor = .blue
+        
+        addBtn.snp.makeConstraints { snp in
+            snp.bottom.equalTo(view).offset(-40)
+            snp.trailing.equalTo(view).offset(-30)
+            snp.width.equalTo(62)
+            snp.height.equalTo(62)
+        }
+        addBtn.addTarget(self, action: #selector(adds), for: .touchUpInside)
+    }
+    
+    // MARK: - Floating buttons animation
+    @objc func adds(){
+        
+        let firstDuration = 0.3
+        let secondDuration = 0.35
+        bools = !bools
+        
+        if bools == true{
+            
+            view.layoutIfNeeded()
+            UIView.animate(withDuration: firstDuration) {
+                self.addCellBtn.snp.updateConstraints { snp in
+                    self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-80).constraint
+                }
+                self.view.layoutIfNeeded()
+            }
+            UIView.animate(withDuration: secondDuration) {
+                self.addSectionBtn.snp.updateConstraints { snp in
+                    self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-150).constraint
+                }
+                self.view.layoutIfNeeded()
+                self.sectionLbl.self.isHidden = false
+                self.cellLbl.self.isHidden = false
+            }
+        }else{
+            view.layoutIfNeeded()
+            UIView.animate(withDuration: firstDuration) {
+                self.addCellBtn.snp.updateConstraints { snp in
+                    self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
+                }
+                self.view.layoutIfNeeded()
+            }
+            UIView.animate(withDuration: secondDuration) {
+                self.addSectionBtn.snp.updateConstraints { snp in
+                    self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
+                }
+                self.view.layoutIfNeeded()
+                self.sectionLbl.self.isHidden = true
+                self.cellLbl.self.isHidden = true
+            }
+        }
+    }
+    
+    //MARK: - AddSection
+    func AddSectionPush(){
+        addSectionBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        addSectionBtn.setTitle("Section", for: .normal)
+        addSectionBtn.layer.cornerRadius = addSectionBtn.frame.size.height / 2
+        addSectionBtn.backgroundColor = .orange
+        // bottom -200
+        addSectionBtn.snp.makeConstraints {  snp in
+            sectionConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
+            snp.centerX.equalTo(addBtn)
+            snp.width.equalTo(50)
+            snp.height.equalTo(50)
+        }
+        addSectionBtn.rx.tap
+            .subscribe(onNext: { _ in
+                let alert = UIAlertController(title: "카테고리 입력", message: nil, preferredStyle: .alert)
+                
+                let ok = UIAlertAction(title: "ok", style: .default) { _ in
+                    let addText = alert.textFields?[0].text
+                    
+                    _ = self.tableShardVM.addSections(categoryId: self.categoryID, header: addText!)
+                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                    self.tableState()
+                }
+                let cancel = UIAlertAction(title: "cancel", style: .destructive) { _ in
+                    self.dismiss(animated: true, completion: nil)
+                }
+                alert.addTextField { textfield in
+                    textfield.placeholder = "예시) UI/UX"
+                }
+                alert.addAction(cancel)
+                alert.addAction(ok)
+                
+                self.present(alert, animated: true)
+            })
+            .disposed(by: bag)
+    }
+    
+    //MARK: - AddCell
+    func AddCellPush(){
+        addCellBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        addCellBtn.setTitle("Cell", for: .normal)
+        addCellBtn.layer.cornerRadius = addCellBtn.frame.size.height / 2
+        addCellBtn.backgroundColor = .orange
+        
+        
+        // bottom -110
+        addCellBtn.snp.makeConstraints {  snp in
+            cellConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
+            snp.centerX.equalTo(addBtn)
+            snp.width.equalTo(50)
+            snp.height.equalTo(50)
+        }
+        
+        addCellBtn.rx.tap
+            .subscribe(onNext: { _ in
+
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
+                addcellvc.selectSection = self.categoryID
+                self.navigationController?.pushViewController(addcellvc, animated: true)
+                
+            })
+            .disposed(by: bag)
+    }
+    
+    func sectionLabel(){
+        
+        sectionLbl.isHidden = true
+        sectionLbl.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        sectionLbl.font = .systemFont(ofSize: 15)
+        sectionLbl.backgroundColor = .darkGray
+        sectionLbl.textColor = .white
+        sectionLbl.text = "카테고리 추가"
+        sectionLbl.textAlignment = .center
+        sectionLbl.layer.cornerRadius = 15
+        
+        sectionLbl.snp.makeConstraints { (snp) in
+            snp.trailing.equalTo(addSectionBtn.snp.leading).offset(-10)
+            snp.centerY.equalTo(addSectionBtn)
+            snp.width.greaterThanOrEqualTo(100)
+            snp.height.equalTo(30)
+        }
+    }
+    
+    func cellLabel(){
+        
+        cellLbl.isHidden = true
+        cellLbl.frame = CGRect(x: 0, y: 0, width: 75, height: 30)
+        cellLbl.font = .systemFont(ofSize: 15)
+        cellLbl.backgroundColor = .darkGray
+        cellLbl.textColor = .white
+        cellLbl.text = "링크 추가"
+        cellLbl.textAlignment = .center
+        cellLbl.layer.cornerRadius = 15
+        
+        cellLbl.snp.makeConstraints { (snp) in
+            snp.trailing.equalTo(addCellBtn.snp.leading).offset(-10)
+            snp.centerY.equalTo(addCellBtn)
+            snp.width.greaterThanOrEqualTo(75)
+            snp.height.equalTo(30)
+        }
+    }
     // MARK: - 테이블뷰 세팅 관련
     func tableSetting(){
-        
         
         let dataSource = RxTableViewSectionedReloadDataSource<TableSection>(
             configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
                 
-                
                 let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
                 
                 cell.selectionStyle = .none
-                
                 cell.linkTitle.text = item
                 cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
                 
                 let urlstring = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
-                let url = URL(string: urlstring)!
+                let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                let url = URL(string: encoding)!
+                
                 LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
                     guard let linkMetadata = linkMetadata,
                         let imageProvider = linkMetadata.imageProvider else {
@@ -305,7 +339,6 @@ class SecondTableVC: UIViewController {
                 //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
                     .subscribe(onNext: { b in
-                        
                         
                         let alert = UIAlertController(title: nil, message: "수정 삭제", preferredStyle: .actionSheet)
                         
@@ -350,7 +383,6 @@ class SecondTableVC: UIViewController {
                             self.dismiss(animated: true, completion: nil)
                         }
                         
-                        
                         alert.pruneNegativeWidthConstraints()
                         alert.addAction(update)
                         alert.addAction(remove)
@@ -394,7 +426,6 @@ class SecondTableVC: UIViewController {
             snp.trailing.equalTo(view)
             snp.leading.equalTo(view)
         }
-        
     }
 }
 
@@ -429,18 +460,16 @@ extension SecondTableVC: UITableViewDelegate{
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         
         //MARK: - sectionShow
-        let boomboom = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
-        boomboom.rx.tap
+        let expandable = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
+        expandable.rx.tap
             .subscribe(onNext: { _ in
                 print(section)
             })
             .disposed(by: bag)
         
-        header.addSubview(boomboom)
+        header.addSubview(expandable)
         header.addSubview(titleLbl)
         header.addSubview(sectionUpdateBtn)
-        
-        
         //MARK: - Section, 수정 삭제
         sectionUpdateBtn.rx.tap
             .subscribe(onNext: { _ in
@@ -485,15 +514,11 @@ extension SecondTableVC: UITableViewDelegate{
         titleLbl.snp.makeConstraints { snp in
             snp.centerY.equalTo(header)
             snp.leading.equalTo(header).offset(20)
-            
         }
-        
         sectionUpdateBtn.snp.makeConstraints { snp in
             snp.trailing.equalTo(header).offset(-20)
             snp.centerY.equalTo(header)
         }
-        
-        
         header.backgroundColor = .lightGray
         return header
     }
@@ -526,23 +551,17 @@ class SecondCell: UITableViewCell{
             snp.top.equalTo(contentView).offset(10)
             snp.leading.equalTo(contentView).offset(20)
             snp.bottom.equalTo(contentView).offset(-10)
-            
             snp.width.equalTo(55)
-            
-            
         }
         
         linkTitle.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         linkTitle.font = UIFont.systemFont(ofSize: 17)
         
-        
         linkTitle.snp.makeConstraints { snp in
             snp.leading.equalTo(linkImage.snp.trailing).offset(20)
             snp.top.equalTo(linkImage.snp.top).offset(10)
             snp.trailing.equalTo(updateBtn).offset(-30)
-
         }
-        
         
         linkUrl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         linkUrl.textColor = UIColor.darkGray
@@ -553,7 +572,6 @@ class SecondCell: UITableViewCell{
             snp.bottom.equalTo(linkImage.snp.bottom).offset(-10)
             snp.leading.equalTo(linkImage.snp.trailing).offset(20)
             snp.trailing.equalTo(updateBtn).offset(-30)
-            
         }
         
         
