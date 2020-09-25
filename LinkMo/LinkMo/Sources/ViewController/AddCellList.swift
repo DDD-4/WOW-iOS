@@ -33,7 +33,7 @@ class AddCellList: UIViewController {
     let thirdFd = BehaviorRelay<String>(value: "")
     
     lazy var didselectNumber = 0
-    
+    lazy var selectSection = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +45,8 @@ class AddCellList: UIViewController {
         firstField.inputView = pickerView
         
         toolbar()
-        tableShardVM.ListSection.removeAll()
-        tableShardVM.sectionList()
+        
+        tableShardVM.sectionsList(sectionid: selectSection)
         rxButton()
         
         firstField.rx.text.orEmpty
@@ -93,25 +93,27 @@ class AddCellList: UIViewController {
     }
     func rxButton(){
         
-        secondField.placeholder = "제목"
+        secondField.placeholder = "링크입력"
         secondField.rx.text
             .orEmpty
             .bind(to: secondFd)
             .disposed(by: bag)
         
-        thirdField.placeholder = "링크"
+        thirdField.placeholder = "제목"
         
         thirdField.keyboardType = .URL
         thirdField.rx.text
             .orEmpty
             .bind(to: thirdFd)
             .disposed(by: bag)
-        
+        confirmBtn.layer.cornerRadius = confirmBtn.frame.size.height / 2
+        confirmBtn.setTitleColor(.blue, for: .normal)
+        confirmBtn.backgroundColor = .lightGray
         confirmBtn.rx.tap
             .subscribe(onNext: { [weak self] b in
                 
-                _ = self?.tableShardVM.addCell(sectionNumber: self!.didselectNumber, linkTitle: self!.secondFd.value, linkUrl: self!.thirdFd.value)
-                
+//                _ = self?.tableShardVM.addCell(sectionNumber: self!.didselectNumber, linkTitle: self!.secondFd.value, linkUrl: self!.thirdFd.value)
+                _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.secondFd.value, linkUrl: self!.thirdFd.value)
                 self!.tableShardVM.subject.accept(self!.tableShardVM.sections)
                 //self?.tableShardVM.readSections()
                 self?.dismiss(animated: true, completion: nil)

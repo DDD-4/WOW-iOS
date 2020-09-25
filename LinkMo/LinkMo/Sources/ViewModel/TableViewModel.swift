@@ -121,33 +121,42 @@ class TableViewModel{
         
     }
     
-    func sectionList(){
+    func sectionsList(sectionid: Int){
+        ListSection.removeAll()
         do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[sectionid].id
             
-            let list = try self.context.fetch(fetch)
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let list = sectionRead.filter{$0.categoryid == ids}
+            
             for i in 0...list.count - 1{
-                
                 ListSection.append(list[i].section)
             }
         }catch{
             print("Error", error)
-            
         }
     }
     
-    func addCell(sectionNumber: Int, linkTitle: String, linkUrl: String) -> Observable<[TableSection]>{
-        
+    func addCells(categoryid: Int, sectionNumber: Int, linkTitle: String, linkUrl: String) -> Observable<[TableSection]>{
         
         sections[sectionNumber].items.append(linkTitle)
         sections[sectionNumber].link.append(linkUrl)
         
         do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryid].id
             
-            let cell = try self.context.fetch(fetch)
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let deleteValue = sectionRead.filter{$0.categoryid == ids}
             
-            cell[sectionNumber].setValue([linkTitle], forKey: "title")
-            cell[sectionNumber].setValue([linkUrl], forKey: "url")
-            cell[sectionNumber].fromTableSection(list: sections[sectionNumber])
+            deleteValue[sectionNumber].setValue([linkTitle], forKey: "title")
+            deleteValue[sectionNumber].setValue([linkUrl], forKey: "url")
+            deleteValue[sectionNumber].fromTableSection(list: sections[sectionNumber])
             
             try self.context.save()
             return .just(sections)
@@ -155,15 +164,21 @@ class TableViewModel{
             print("Error",error)
             return .error(error)
         }
-        
     }
     
-    func updateCell(section: Int, cellrow: Int, title: String, link: String) -> Observable<[TableSection]>{
+    func updateCells(categoryid: Int, section: Int, cellrow: Int, title: String, link: String) -> Observable<[TableSection]>{
         
         do{
-            let updateCell = try self.context.fetch(fetch)
-            updateCell[section].title[cellrow] = title
-            updateCell[section].url[cellrow] = link
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryid].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let deleteValue = sectionRead.filter{$0.categoryid == ids}
+            
+            deleteValue[section].title[cellrow] = title
+            deleteValue[section].url[cellrow] = link
             
             
             try self.context.save()
@@ -174,17 +189,19 @@ class TableViewModel{
         }
     }
     
-    
-    func removeCell(section: Int, cellrow: Int) -> Observable<[TableSection]>{
+    func removeCells(categoryid: Int, section: Int, cellrow: Int) -> Observable<[TableSection]>{
         
         do{
-            let celldelte = try self.context.fetch(fetch)
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryid].id
             
-            celldelte[section].title.remove(at: cellrow)
-            celldelte[section].url.remove(at: cellrow)
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let deleteValue = sectionRead.filter{$0.categoryid == ids}
             
-            print(celldelte[section].title)
-            print(celldelte[section].url)
+            deleteValue[section].title.remove(at: cellrow)
+            deleteValue[section].url.remove(at: cellrow)
             
             try self.context.save()
             return .just(sections)
@@ -194,16 +211,15 @@ class TableViewModel{
         }
     }
     
-    
     //전체 삭제
     
     func deleteAllRecords() {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let context = delegate.persistentContainer.viewContext
-
+        
         let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedList")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-
+        
         do {
             try context.execute(deleteRequest)
             try context.save()

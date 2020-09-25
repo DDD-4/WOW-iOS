@@ -76,17 +76,7 @@ class SecondTableVC: UIViewController {
         
         
         tableShardVM.subject.accept(tableShardVM.sections)
-        tableShardVM.readSections(categoryId: categoryID).subscribe(onNext: { b in
-
-            if b.count == 0{
-                self.state = .hide
-            }else{
-                
-                self.state = .show
-                
-            }
-        })
-        .disposed(by: bag)
+        tableState()
 
         
         //TableView 세팅
@@ -104,7 +94,19 @@ class SecondTableVC: UIViewController {
         
     }
     
-    
+    func tableState(){
+        tableShardVM.readSections(categoryId: categoryID).subscribe(onNext: { b in
+
+            if b.count == 0{
+                self.state = .hide
+            }else{
+                
+                self.state = .show
+                
+            }
+        })
+        .disposed(by: bag)
+    }
     //MARK: - AddSection
     func AddSectionPush(){
         addSectionBtn.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
@@ -131,6 +133,7 @@ class SecondTableVC: UIViewController {
                     
                     _ = self.tableShardVM.addSections(categoryId: self.categoryID, header: addText!)
                     _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                    self.tableState()
                     
                 }
                 let cancel = UIAlertAction(title: "cancel", style: .destructive) { _ in
@@ -169,8 +172,9 @@ class SecondTableVC: UIViewController {
             .subscribe(onNext: { _ in
 
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-                let resultViewController = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
-                self.navigationController?.pushViewController(resultViewController, animated: true)
+                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
+                addcellvc.selectSection = self.categoryID
+                self.navigationController?.pushViewController(addcellvc, animated: true)
                 
             })
             .disposed(by: bag)
@@ -311,7 +315,7 @@ class SecondTableVC: UIViewController {
                                 let updateTitle = alert.textFields![0].text
                                 let updatelink = alert.textFields![1].text
                                 
-                                _ = self.tableShardVM.updateCell(section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
+                                _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
                                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
@@ -332,8 +336,8 @@ class SecondTableVC: UIViewController {
                             let alertConfirm = UIAlertController(title: nil, message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
                             let ok = UIAlertAction(title: "확인", style: .default) { _ in
-                                // Cell delete
-                                _ = self.tableShardVM.removeCell(section: indexPath.section, cellrow: indexPath.row)
+                                //cell delete
+                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
                                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
                             alertConfirm.addAction(cancel)
@@ -465,7 +469,7 @@ extension SecondTableVC: UITableViewDelegate{
                     
                     _ = self.tableShardVM.deleteSections(section: section, categoryId: self.categoryID)
                     _ = self.tableShardVM.readSections(categoryId: self.categoryID)
-                    
+                    self.tableState()
                 }
                 let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
                     self.dismiss(animated: true, completion: nil)
