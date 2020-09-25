@@ -18,3 +18,4 @@ struct Category: Equatable {
         self.title = title
     }
 }
+

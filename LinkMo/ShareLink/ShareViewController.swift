@@ -8,16 +8,20 @@
 
 import UIKit
 import Social
+import CoreData
 
 class ShareViewController: UIViewController {
 	private let tableView: UITableView = {
 		let tableview = UITableView()
 		return tableview
 	}()
+	let share = CategoryManager.share
+	var categoryList: [NSManagedObject] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+		share.fetchCategory()
+		categoryList = share.fetchedCategory.reversed()
 		
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -43,7 +47,7 @@ class ShareViewController: UIViewController {
 class ShareTableViewCell: UITableViewCell{
 	private let label: UILabel = {
 		let label = UILabel()
-		label.text = "UI/UX"
+//		label.text = "UI/UX"
 		label.textColor = UIColor.gray
 		return label
 	}()
@@ -72,26 +76,12 @@ extension ShareViewController: UITableViewDelegate{
 
 extension ShareViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 5
+		return categoryList.count
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
-		
+		let category = categoryList[indexPath.row]
+		cell.textLabel?.text =  category.value(forKey: "title") as? String
 		return cell
 	}
 }
-
-
-
-//기본 디폴트 값
-//class ShareViewController: SLComposeServiceViewController {
-//    override func isContentValid() -> Bool {
-//        return true
-//    }
-//    override func didSelectPost() {
-//        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-//    }
-//    override func configurationItems() -> [Any]! {
-//        return []
-//    }
-//}
