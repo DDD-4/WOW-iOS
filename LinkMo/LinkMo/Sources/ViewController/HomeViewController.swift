@@ -78,13 +78,17 @@ class HomeViewController: UIViewController {
 		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
 
 		alert.addTextField(configurationHandler: { (textField) -> Void in
-			textField.placeholder = "카테고리 이름을 입력해주세요."
+			textField.placeholder = "대표 아이콘"
+		})
+		alert.addTextField(configurationHandler: { (textField) -> Void in
+			textField.placeholder = "카테고리 이름"
 		})
 		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
 		}))
 		alert.addAction(UIAlertAction(title: "추가", style: .default, handler: { (action) -> Void in
-			let textField = alert.textFields![0] as UITextField
-			self.viewModel.addTitle(title: textField.text!)
+			let icon = alert.textFields![0] as UITextField
+			let title = alert.textFields![1] as UITextField
+			self.viewModel.addTitle(title: title.text ?? " ", icon: icon.text ?? " ")
 		}))
 
 		self.present(alert, animated: true, completion: nil)
@@ -113,6 +117,7 @@ class HomeViewController: UIViewController {
 class CategoryCollectionCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var editBtn: UIButton!
+	@IBOutlet weak var iconLabel: UILabel!
 	
 }
 
@@ -144,6 +149,7 @@ extension HomeViewController: UICollectionViewDataSource{
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
+		cell.iconLabel.text = collectionList[indexPath.row].icon
 //		cell.contentView.layer.cornerRadius = 2.0
 //		cell.contentView.layer.borderWidth = 1.0
 //		cell.contentView.layer.borderColor = UIColor.clear.cgColor

@@ -12,10 +12,12 @@ import CoreData
 struct Category: Equatable {
 	var title: String
 	var id: Int64
+	var icon: String
 
-	init(id: Int64, title: String) {
+	init(id: Int64, title: String, icon: String) {
 		self.id = id
         self.title = title
+		self.icon = icon
     }
 }
 
