@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		07ED6CEBA00E301690A58C7E /* Pods_LinkMo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */; };
 		2911E8F9251DBCE90068077F /* ShareTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2911E8F8251DBCE80068077F /* ShareTableViewController.swift */; };
+		2911E8FA251DC7540068077F /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925924F53B690010FDAD /* TableSection.swift */; };
+		2911E8FC251DCBFA0068077F /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
+		2911E8FD251DCBFC0068077F /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
+		2911E8FE251DCC0C0068077F /* ManagedCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A224DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift */; };
+		2911E8FF251DCC0E0068077F /* ManagedCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A324DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift */; };
+		2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
+		2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A824DE3EAD00CB33EA /* CategoryStorageType.swift */; };
+		2911E902251DD8020068077F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -457,11 +465,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */,
+				2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */,
 				29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */,
+				2911E8FF251DCC0E0068077F /* ManagedCategory+CoreDataProperties.swift in Sources */,
 				29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */,
+				2911E8FA251DC7540068077F /* TableSection.swift in Sources */,
+				2911E8FD251DCBFC0068077F /* ManagedList+CoreDataProperties.swift in Sources */,
+				2911E8FE251DCC0C0068077F /* ManagedCategory+CoreDataClass.swift in Sources */,
 				2911E8F9251DBCE90068077F /* ShareTableViewController.swift in Sources */,
 				29C2B1EB251DB1F400B8A5A9 /* CategoryManager.swift in Sources */,
 				29C2B1ED251DB26F00B8A5A9 /* Category.swift in Sources */,
+				2911E902251DD8020068077F /* TableViewModel.swift in Sources */,
+				2911E8FC251DCBFA0068077F /* ManagedList+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +588,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -634,6 +651,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
