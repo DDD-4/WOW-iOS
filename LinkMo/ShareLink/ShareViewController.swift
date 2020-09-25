@@ -8,16 +8,20 @@
 
 import UIKit
 import Social
+import CoreData
 
 class ShareViewController: UIViewController {
 	private let tableView: UITableView = {
 		let tableview = UITableView()
 		return tableview
 	}()
+	let share = CategoryManager.share
+	var categoryList: [NSManagedObject] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+		share.fetchCategory()
+		categoryList = share.fetchedCategory.reversed()
 		
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -38,12 +42,13 @@ class ShareViewController: UIViewController {
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
 		])
 	}
+	
+	
 }
 
 class ShareTableViewCell: UITableViewCell{
 	private let label: UILabel = {
 		let label = UILabel()
-		label.text = "UI/UX"
 		label.textColor = UIColor.gray
 		return label
 	}()
@@ -56,7 +61,7 @@ class ShareTableViewCell: UITableViewCell{
 			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16)
 		])
 	}
-	
+
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setConstraint()
@@ -67,20 +72,27 @@ class ShareTableViewCell: UITableViewCell{
 }
 	
 extension ShareViewController: UITableViewDelegate{
-	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as! ShareTableViewCell
+		
+		let vc = ShareTableViewController()
+		vc.categoryID = indexPath.row
+		self.navigationController?.pushViewController(vc, animated: true)
+	}
 }
 
 extension ShareViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 5
+		return categoryList.count
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
-		
+		let category = categoryList[indexPath.row]
+		cell.textLabel?.text =  category.value(forKey: "title") as? String
 		return cell
 	}
 }
-
 
 
 //기본 디폴트 값
@@ -95,3 +107,5 @@ extension ShareViewController: UITableViewDataSource {
 //        return []
 //    }
 //}
+
+

@@ -8,9 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		07ED6CEBA00E301690A58C7E /* Pods_LinkMo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */; };
+		2911E8F9251DBCE90068077F /* ShareTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2911E8F8251DBCE80068077F /* ShareTableViewController.swift */; };
+		2911E8FA251DC7540068077F /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925924F53B690010FDAD /* TableSection.swift */; };
+		2911E8FC251DCBFA0068077F /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
+		2911E8FD251DCBFC0068077F /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
+		2911E8FE251DCC0C0068077F /* ManagedCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A224DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift */; };
+		2911E8FF251DCC0E0068077F /* ManagedCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A324DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift */; };
+		2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
+		2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A824DE3EAD00CB33EA /* CategoryStorageType.swift */; };
+		2911E902251DD8020068077F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		29C2B1EB251DB1F400B8A5A9 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AA24DE3EDE00CB33EA /* CategoryManager.swift */; };
+		29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29D0448224DE394500CB33EA /* LinkMo.xcdatamodeld */; };
+		29C2B1ED251DB26F00B8A5A9 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0449E24DE3C2D00CB33EA /* Category.swift */; };
 		29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447D24DE394500CB33EA /* HomeViewController.swift */; };
 		29D0448124DE394500CB33EA /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29D0447F24DE394500CB33EA /* Home.storyboard */; };
@@ -27,6 +39,7 @@
 		29D044AF24DE3F4600CB33EA /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
 		29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B024DE3F6500CB33EA /* ViewModelBindableType.swift */; };
 		29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B224DE3F7600CB33EA /* BaseViewController.swift */; };
+		3D3633C439A8C09275A32AB6 /* Pods_LinkMo_ShareLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7303BF2F4EB2EDFC3992BE29 /* Pods_LinkMo_ShareLink.framework */; };
 		A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
 		A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
 		A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4124FF61200072A34A /* LoginVC.swift */; };
@@ -65,12 +78,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2911E8F8251DBCE80068077F /* ShareTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTableViewController.swift; sourceTree = "<group>"; };
 		29C2234025075838004ECCD3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		29C2234625075C93004ECCD3 /* ShareLink.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareLink.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C2234825075C93004ECCD3 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		29C2234B25075C93004ECCD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		29C2234D25075C93004ECCD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29C2235525075F1B004ECCD3 /* LinkMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LinkMo.entitlements; sourceTree = "<group>"; };
+		29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareLink.entitlements; sourceTree = "<group>"; };
 		29D0447624DE394500CB33EA /* LinkMo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkMo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D0447924DE394500CB33EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29D0447D24DE394500CB33EA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -89,9 +104,12 @@
 		29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		29D044B024DE3F6500CB33EA /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		29D044B224DE3F7600CB33EA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		321B8FE0C1E4D20B247C15B7 /* Pods-LinkMo-ShareLink.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo-ShareLink.release.xcconfig"; path = "Target Support Files/Pods-LinkMo-ShareLink/Pods-LinkMo-ShareLink.release.xcconfig"; sourceTree = "<group>"; };
 		4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinkMo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DF5D2C1EEE1C126D9563CF3 /* Pods-LinkMo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.debug.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.debug.xcconfig"; sourceTree = "<group>"; };
+		7303BF2F4EB2EDFC3992BE29 /* Pods_LinkMo_ShareLink.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinkMo_ShareLink.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.release.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.release.xcconfig"; sourceTree = "<group>"; };
+		8E1584C83B89878501FAC338 /* Pods-LinkMo-ShareLink.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo-ShareLink.debug.xcconfig"; path = "Target Support Files/Pods-LinkMo-ShareLink/Pods-LinkMo-ShareLink.debug.xcconfig"; sourceTree = "<group>"; };
 		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A94B0D4124FF61200072A34A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -110,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D3633C439A8C09275A32AB6 /* Pods_LinkMo_ShareLink.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +146,9 @@
 		29C2234725075C93004ECCD3 /* ShareLink */ = {
 			isa = PBXGroup;
 			children = (
+				29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */,
 				29C2234825075C93004ECCD3 /* ShareViewController.swift */,
+				2911E8F8251DBCE80068077F /* ShareTableViewController.swift */,
 				29C2234A25075C93004ECCD3 /* MainInterface.storyboard */,
 				29C2234D25075C93004ECCD3 /* Info.plist */,
 			);
@@ -260,6 +281,8 @@
 			children = (
 				6DF5D2C1EEE1C126D9563CF3 /* Pods-LinkMo.debug.xcconfig */,
 				818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */,
+				8E1584C83B89878501FAC338 /* Pods-LinkMo-ShareLink.debug.xcconfig */,
+				321B8FE0C1E4D20B247C15B7 /* Pods-LinkMo-ShareLink.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -268,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */,
+				7303BF2F4EB2EDFC3992BE29 /* Pods_LinkMo_ShareLink.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -279,6 +303,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29C2235125075C93004ECCD3 /* Build configuration list for PBXNativeTarget "ShareLink" */;
 			buildPhases = (
+				8CB89A92FB58934574AB6800 /* [CP] Check Pods Manifest.lock */,
 				29C2234225075C93004ECCD3 /* Sources */,
 				29C2234325075C93004ECCD3 /* Frameworks */,
 				29C2234425075C93004ECCD3 /* Resources */,
@@ -411,6 +436,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8CB89A92FB58934574AB6800 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LinkMo-ShareLink-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -418,7 +465,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */,
+				2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */,
 				29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */,
+				2911E8FF251DCC0E0068077F /* ManagedCategory+CoreDataProperties.swift in Sources */,
+				29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */,
+				2911E8FA251DC7540068077F /* TableSection.swift in Sources */,
+				2911E8FD251DCBFC0068077F /* ManagedList+CoreDataProperties.swift in Sources */,
+				2911E8FE251DCC0C0068077F /* ManagedCategory+CoreDataClass.swift in Sources */,
+				2911E8F9251DBCE90068077F /* ShareTableViewController.swift in Sources */,
+				29C2B1EB251DB1F400B8A5A9 /* CategoryManager.swift in Sources */,
+				29C2B1ED251DB26F00B8A5A9 /* Category.swift in Sources */,
+				2911E902251DD8020068077F /* TableViewModel.swift in Sources */,
+				2911E8FC251DCBFA0068077F /* ManagedList+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +544,9 @@
 /* Begin XCBuildConfiguration section */
 		29C2235225075C93004ECCD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8E1584C83B89878501FAC338 /* Pods-LinkMo-ShareLink.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareLink/ShareLink.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 76R96GR5TQ;
 				INFOPLIST_FILE = ShareLink/Info.plist;
@@ -504,7 +565,9 @@
 		};
 		29C2235325075C93004ECCD3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 321B8FE0C1E4D20B247C15B7 /* Pods-LinkMo-ShareLink.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareLink/ShareLink.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 76R96GR5TQ;
 				INFOPLIST_FILE = ShareLink/Info.plist;
@@ -525,6 +588,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -587,6 +651,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
