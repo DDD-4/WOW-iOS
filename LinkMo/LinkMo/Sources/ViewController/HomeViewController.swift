@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
-		navigationController?.isNavigationBarHidden = true
+		navigationController?.isNavigationBarHidden = false
 		let defaults = UserDefaults(suiteName: "group.com.LinkMo.share")
 		defaults?.set(collectionList.first, forKey: "ShareLink")
         defaults?.synchronize()
@@ -106,6 +106,14 @@ extension HomeViewController: UICollectionViewDelegate {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.editBtn.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
 		cell.editBtn.tag = indexPath.row
+        
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+        let tableVC = storyBoard.instantiateViewController(withIdentifier: "SecondTableVC") as! SecondTableVC
+        tableVC.categoryID = indexPath.row
+        self.navigationController?.pushViewController(tableVC, animated: true)
+        
+        
 	}
 	@IBAction func selectBtn(_ sender: UIButton) {
 		let buttonPosition = sender.convert(CGPoint.zero, to: self.collectionView)

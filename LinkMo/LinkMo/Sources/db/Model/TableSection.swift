@@ -17,6 +17,7 @@ enum tableShow{
 }
 
 struct TableSection {
+    var categoryid: Int64
     var header: String
     var items: [Item]
     var link: [Link]
@@ -38,14 +39,16 @@ extension TableSection: SectionModelType {
         self.items = items
     }
     
-    var identity: String {
+    var headers: String {
         return header
     }
-    var itemed: [String]{
+    var titled: [String]{
         return items
     }
     var linked: [String]{
         return link
     }
-    
+    var categoryId: Int64{
+        return categoryid
+    }
 }

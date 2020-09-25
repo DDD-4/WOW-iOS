@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		07ED6CEBA00E301690A58C7E /* Pods_LinkMo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8A9F62AA0DC2093BC1BD8B /* Pods_LinkMo.framework */; };
-		29C2234125075838004ECCD3 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234025075838004ECCD3 /* Login.storyboard */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
