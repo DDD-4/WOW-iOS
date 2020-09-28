@@ -21,16 +21,15 @@ class AddCellList: UIViewController {
     
     //@IBOutlet weak var pickerView: UIPickerView!
     let pickerView = UIPickerView()
-    @IBOutlet weak var firstField: UITextField!
-    @IBOutlet weak var secondField: UITextField!
-    @IBOutlet weak var thirdField: UITextField!
+    @IBOutlet weak var categoryName: UITextField!
+    @IBOutlet weak var categoryUrl: UITextField!
+    @IBOutlet weak var categoryTitle: UITextField!
     @IBOutlet weak var confirmBtn: UIButton!
     
     let tableShardVM = TableViewModel.shard
     
-    
-    let secondFd = BehaviorRelay<String>(value: "")
-    let thirdFd = BehaviorRelay<String>(value: "")
+    let titleFd = BehaviorRelay<String>(value: "")
+    let urlFd = BehaviorRelay<String>(value: "")
     
     lazy var didselectNumber = 0
     lazy var selectSection = 0
@@ -42,14 +41,13 @@ class AddCellList: UIViewController {
         pickerView.dataSource = self
         
         
-        firstField.inputView = pickerView
-        
-        toolbar()
+        categoryName.inputView = pickerView
         
         tableShardVM.sectionsList(sectionid: selectSection)
         rxButton()
+        toolbar()
         
-        firstField.rx.text.orEmpty
+        categoryName.rx.text.orEmpty
             .subscribe(onNext: { b in
                 if b == ""{
                     self.confirmBtn.isHidden = true
@@ -78,34 +76,34 @@ class AddCellList: UIViewController {
         toolbar.isUserInteractionEnabled = true
         
         
-        firstField.inputAccessoryView = toolbar
+        categoryName.inputAccessoryView = toolbar
     }
     
     @objc func dones(){
-        firstField.resignFirstResponder()
+        categoryName.resignFirstResponder()
         print("Done")
         
     }
     
     @objc func cancel(){
-        firstField.resignFirstResponder()
+        categoryName.resignFirstResponder()
         
     }
     func rxButton(){
         
-        secondField.placeholder = "링크입력"
-        secondField.rx.text
+        categoryUrl.keyboardType = .URL
+        categoryUrl.placeholder = "링크입력"
+        categoryUrl.rx.text
             .orEmpty
-            .bind(to: secondFd)
+            .bind(to: urlFd)
             .disposed(by: bag)
         
-        thirdField.placeholder = "제목"
-        
-        secondField.keyboardType = .URL
-        thirdField.rx.text
+        categoryTitle.placeholder = "제목"
+        categoryTitle.rx.text
             .orEmpty
-            .bind(to: thirdFd)
+            .bind(to: titleFd)
             .disposed(by: bag)
+        
         confirmBtn.layer.cornerRadius = confirmBtn.frame.size.height / 2
         confirmBtn.setTitleColor(.blue, for: .normal)
         confirmBtn.backgroundColor = .lightGray
@@ -113,7 +111,7 @@ class AddCellList: UIViewController {
             .subscribe(onNext: { [weak self] b in
                 
 //                _ = self?.tableShardVM.addCell(sectionNumber: self!.didselectNumber, linkTitle: self!.secondFd.value, linkUrl: self!.thirdFd.value)
-                _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.secondFd.value, linkUrl: self!.thirdFd.value)
+                _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: self!.urlFd.value)
                 self!.tableShardVM.subject.accept(self!.tableShardVM.sections)
                 //self?.tableShardVM.readSections()
                 self?.dismiss(animated: true, completion: nil)
@@ -135,7 +133,7 @@ extension AddCellList: UIPickerViewDelegate, UIPickerViewDataSource{
         return tableShardVM.ListSection[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        firstField.text = tableShardVM.ListSection[row]
+        categoryName.text = tableShardVM.ListSection[row]
         
         didselectNumber = row
     }

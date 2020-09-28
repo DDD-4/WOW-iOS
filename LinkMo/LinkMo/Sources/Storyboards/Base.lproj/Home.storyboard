@@ -210,10 +210,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="LTz-7L-p1U"/>
                     <connections>
+                        <outlet property="categoryName" destination="meW-uW-HJP" id="xNc-2h-brk"/>
+                        <outlet property="categoryTitle" destination="wjp-aa-LrV" id="hsZ-dA-ysM"/>
+                        <outlet property="categoryUrl" destination="rdV-gJ-MwD" id="E9f-0o-xnN"/>
                         <outlet property="confirmBtn" destination="NWk-ly-Pqu" id="Q0p-49-olv"/>
-                        <outlet property="firstField" destination="meW-uW-HJP" id="kje-i9-5zj"/>
-                        <outlet property="secondField" destination="rdV-gJ-MwD" id="E9f-0o-xnN"/>
-                        <outlet property="thirdField" destination="wjp-aa-LrV" id="hsZ-dA-ysM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Sx-KN-oO5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

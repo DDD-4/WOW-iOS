@@ -65,7 +65,7 @@ class SecondTableVC: UIViewController {
     
     var dataSource: RxTableViewSectionedReloadDataSource<TableSection>!
     lazy var categoryID = 0
-        
+    lazy var trueandFalse = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,6 +96,8 @@ class SecondTableVC: UIViewController {
         floatingBtn()
         AddSectionPush()
         AddCellPush()
+        sectionLabel()
+        cellLabel()
         
     }
     
@@ -416,7 +418,12 @@ class SecondTableVC: UIViewController {
         tableShardVM.subject.accept(tableShardVM.sections)
         
         tableView.rx.itemSelected.subscribe(onNext: { index in
-            print(self.tableShardVM.sections[index.section].items[index.row])
+            print(self.tableShardVM.sections[index.section].link[index.row])
+            let urls = self.tableShardVM.sections[index.section].link[index.row]
+            let urltranform = urls.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            guard let url = URL(string: urltranform),
+                UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         })
         .disposed(by: bag)
         
@@ -459,11 +466,14 @@ extension SecondTableVC: UITableViewDelegate{
         sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         
-        //MARK: - sectionShow
+        //MARK: - section 선택, expandable
         let expandable = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
         expandable.rx.tap
             .subscribe(onNext: { _ in
                 print(section)
+                self.trueandFalse = !self.trueandFalse
+                
+                
             })
             .disposed(by: bag)
         
