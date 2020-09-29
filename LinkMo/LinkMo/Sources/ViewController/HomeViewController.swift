@@ -89,13 +89,17 @@ class HomeViewController: UIViewController {
 		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
 
 		alert.addTextField(configurationHandler: { (textField) -> Void in
-			textField.placeholder = "카테고리 이름을 입력해주세요."
+			textField.placeholder = "대표 아이콘"
+		})
+		alert.addTextField(configurationHandler: { (textField) -> Void in
+			textField.placeholder = "카테고리 이름"
 		})
 		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
 		}))
 		alert.addAction(UIAlertAction(title: "추가", style: .default, handler: { (action) -> Void in
-			let textField = alert.textFields![0] as UITextField
-			self.viewModel.addTitle(title: textField.text!)
+			let icon = alert.textFields![0] as UITextField
+			let title = alert.textFields![1] as UITextField
+			self.viewModel.addTitle(title: title.text ?? " ", icon: icon.text ?? " ")
 		}))
 
 		self.present(alert, animated: true, completion: nil)
@@ -124,6 +128,7 @@ class HomeViewController: UIViewController {
 class CategoryCollectionCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var editBtn: UIButton!
+	@IBOutlet weak var iconLabel: UILabel!
 	
 }
 
@@ -158,6 +163,7 @@ extension HomeViewController: UICollectionViewDataSource{
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
+		cell.iconLabel.text = collectionList[indexPath.row].icon
 //		cell.contentView.layer.cornerRadius = 2.0
 //		cell.contentView.layer.borderWidth = 1.0
 //		cell.contentView.layer.borderColor = UIColor.clear.cgColor
@@ -170,6 +176,32 @@ extension HomeViewController: UICollectionViewDataSource{
 //		cell.layer.shadowOpacity = 1.0
 //		cell.layer.masksToBounds = false
 //		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
+        //neumorphism code
+        cell.layer.masksToBounds = false
+
+        let cornerRadius: CGFloat = 15
+        let shadowRadius: CGFloat = 4
+
+        let darkShadow = CALayer()
+        darkShadow.frame = cell.bounds
+        darkShadow.backgroundColor = view.backgroundColor?.cgColor
+        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+        darkShadow.cornerRadius = cornerRadius
+        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+        darkShadow.shadowOpacity = 1
+        darkShadow.shadowRadius = shadowRadius
+        cell.layer.insertSublayer(darkShadow, at: 0)
+
+        let lightShadow = CALayer()
+        lightShadow.frame = cell.bounds
+        lightShadow.backgroundColor = view.backgroundColor?.cgColor
+        lightShadow.shadowColor = UIColor.white.cgColor
+        lightShadow.cornerRadius = cornerRadius
+        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+        lightShadow.shadowOpacity = 1
+        lightShadow.shadowRadius = shadowRadius
+        cell.layer.insertSublayer(lightShadow, at: 0)
+        
 		return cell
 	}
     

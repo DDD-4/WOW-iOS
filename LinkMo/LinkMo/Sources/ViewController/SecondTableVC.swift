@@ -65,7 +65,7 @@ class SecondTableVC: UIViewController {
     
     var dataSource: RxTableViewSectionedReloadDataSource<TableSection>!
     lazy var categoryID = 0
-        
+    lazy var trueandFalse = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,6 +96,8 @@ class SecondTableVC: UIViewController {
         floatingBtn()
         AddSectionPush()
         AddCellPush()
+        sectionLabel()
+        cellLabel()
         
     }
     
@@ -336,6 +338,32 @@ class SecondTableVC: UIViewController {
                     }
                 }
                 
+                //neumorphism code
+                cell.layer.masksToBounds = false
+
+                let cornerRadius: CGFloat = 15
+                let shadowRadius: CGFloat = 4
+
+                let darkShadow = CALayer()
+                darkShadow.frame = cell.bounds
+                darkShadow.backgroundColor = tableView.backgroundColor?.cgColor
+                darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+                darkShadow.cornerRadius = cornerRadius
+                darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+                darkShadow.shadowOpacity = 1
+                darkShadow.shadowRadius = shadowRadius
+                cell.layer.insertSublayer(darkShadow, at: 0)
+
+                let lightShadow = CALayer()
+                lightShadow.frame = cell.bounds
+                lightShadow.backgroundColor = tableView.backgroundColor?.cgColor
+                lightShadow.shadowColor = UIColor.white.cgColor
+                lightShadow.cornerRadius = cornerRadius
+                lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+                lightShadow.shadowOpacity = 1
+                lightShadow.shadowRadius = shadowRadius
+                cell.layer.insertSublayer(lightShadow, at: 0)
+                
                 //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
                     .subscribe(onNext: { b in
@@ -416,7 +444,12 @@ class SecondTableVC: UIViewController {
         tableShardVM.subject.accept(tableShardVM.sections)
         
         tableView.rx.itemSelected.subscribe(onNext: { index in
-            print(self.tableShardVM.sections[index.section].items[index.row])
+            print(self.tableShardVM.sections[index.section].link[index.row])
+            let urls = self.tableShardVM.sections[index.section].link[index.row]
+            let urltranform = urls.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            guard let url = URL(string: urltranform),
+                UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         })
         .disposed(by: bag)
         
@@ -459,11 +492,14 @@ extension SecondTableVC: UITableViewDelegate{
         sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
         
-        //MARK: - sectionShow
+        //MARK: - section 선택, expandable
         let expandable = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
         expandable.rx.tap
             .subscribe(onNext: { _ in
                 print(section)
+                self.trueandFalse = !self.trueandFalse
+                
+                
             })
             .disposed(by: bag)
         

@@ -13,11 +13,12 @@ import CoreData
 @objc(ManagedCategory)
 public class ManagedCategory: NSManagedObject {
 	func toCategory() -> Category {
-		return .init(id: id, title: title)
+		return .init(id: id, title: title, icon: icon)
 	}
 	
 	func fromCategory(category: Category) {
 		self.id = category.id
 		self.title = category.title
+		self.icon = category.icon
 	}
 }
