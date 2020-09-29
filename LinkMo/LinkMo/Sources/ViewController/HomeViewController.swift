@@ -32,19 +32,20 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
-		navigationController?.isNavigationBarHidden = true
+		navigationController?.isNavigationBarHidden = false
 		view.backgroundColor = UIColor(RGB: 0xF0EEEF)
+		collectionView.backgroundColor = UIColor(RGB: 0xF0EEEF)
 		
-		var button = EMTNeumorphicButton(type: .custom)
-		button = EMTNeumorphicButton(frame:  CGRect(x: 100, y: 100, width: 120.0, height: 40.0))
-		button.setTitle("BUTTONnnn", for: .normal)
-		button.setTitleColor(UIColor.black, for: .normal)
-		button.contentVerticalAlignment = .fill
-		button.contentHorizontalAlignment = .fill
-		button.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
-		button.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
-		button.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
-		self.view.addSubview(button)
+//		var button = EMTNeumorphicButton(type: .custom)
+//		button = EMTNeumorphicButton(frame:  CGRect(x: 100, y: 100, width: 120.0, height: 40.0))
+//		button.setTitle("BUTTONnnn", for: .normal)
+//		button.setTitleColor(UIColor.black, for: .normal)
+//		button.contentVerticalAlignment = .fill
+//		button.contentHorizontalAlignment = .fill
+//		button.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
+//		button.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
+//		button.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
+//		self.view.addSubview(button)
 		
 		
 	}
@@ -155,13 +156,13 @@ extension HomeViewController: UICollectionViewDataSource{
 //		cell.contentView.layer.borderColor = UIColor.clear.cgColor
 //		cell.contentView.layer.masksToBounds = true
 //
-//		cell.layer.backgroundColor = UIColor.white.cgColor
-//		cell.layer.shadowColor = UIColor.gray.cgColor
-//		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-//		cell.layer.shadowRadius = 2.0
-//		cell.layer.shadowOpacity = 1.0
-//		cell.layer.masksToBounds = false
-//		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
+		cell.layer.backgroundColor = UIColor(RGB: 0xF0EEEF).cgColor
+		cell.layer.shadowColor = UIColor.gray.cgColor
+		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+		cell.layer.shadowRadius = 2.0
+		cell.layer.shadowOpacity = 1.0
+		cell.layer.masksToBounds = false
+		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
 		return cell
 	}
     
