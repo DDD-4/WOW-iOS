@@ -13,7 +13,6 @@ import RxDataSources
 import EMTNeumorphicView
 
 class HomeViewController: UIViewController {
-//	var viewModel: HomeViewModel!
 	let viewModel = HomeViewModel()
 	let disposeBag = DisposeBag()
 	
@@ -67,15 +66,14 @@ class HomeViewController: UIViewController {
             snp.width.equalTo(62)
             snp.height.equalTo(62)
         }
-        
-        AddBtn.rx.tap
-        .subscribe({ _ in
-        self.showAlert(title: "카테고리 추가하기")})
-        .disposed(by: disposeBag)
-    }
+		
+		AddBtn.rx.tap
+			.subscribe({ _ in
+				self.showAlert(title: "카테고리 추가하기")})
+			.disposed(by: disposeBag)
+	}
     
 	func bindViewModel() {
-		
 		collectionView.rx.setDelegate(self).disposed(by: disposeBag)
 
 		viewModel.outputs.categories
@@ -164,19 +162,6 @@ extension HomeViewController: UICollectionViewDataSource{
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
 		cell.iconLabel.text = collectionList[indexPath.row].icon
-//		cell.contentView.layer.cornerRadius = 2.0
-//		cell.contentView.layer.borderWidth = 1.0
-//		cell.contentView.layer.borderColor = UIColor.clear.cgColor
-//		cell.contentView.layer.masksToBounds = true
-//
-//		cell.layer.backgroundColor = UIColor.white.cgColor
-//		cell.layer.shadowColor = UIColor.gray.cgColor
-//		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-//		cell.layer.shadowRadius = 2.0
-//		cell.layer.shadowOpacity = 1.0
-//		cell.layer.masksToBounds = false
-//		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
-        //neumorphism code
         cell.layer.masksToBounds = false
 
         let cornerRadius: CGFloat = 15
