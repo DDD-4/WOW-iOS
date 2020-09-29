@@ -17,6 +17,7 @@
 		2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A824DE3EAD00CB33EA /* CategoryStorageType.swift */; };
 		2911E902251DD8020068077F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
+		29597501252326160074FFCB /* ShareAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29597500252326160074FFCB /* ShareAlertViewController.swift */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -79,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		2911E8F8251DBCE80068077F /* ShareTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTableViewController.swift; sourceTree = "<group>"; };
+		29597500252326160074FFCB /* ShareAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlertViewController.swift; sourceTree = "<group>"; };
 		29C2234025075838004ECCD3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		29C2234625075C93004ECCD3 /* ShareLink.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareLink.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C2234825075C93004ECCD3 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */,
 				29C2234825075C93004ECCD3 /* ShareViewController.swift */,
 				2911E8F8251DBCE80068077F /* ShareTableViewController.swift */,
+				29597500252326160074FFCB /* ShareAlertViewController.swift */,
 				29C2234A25075C93004ECCD3 /* MainInterface.storyboard */,
 				29C2234D25075C93004ECCD3 /* Info.plist */,
 			);
@@ -470,6 +473,7 @@
 				29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */,
 				2911E8FF251DCC0E0068077F /* ManagedCategory+CoreDataProperties.swift in Sources */,
 				29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */,
+				29597501252326160074FFCB /* ShareAlertViewController.swift in Sources */,
 				2911E8FA251DC7540068077F /* TableSection.swift in Sources */,
 				2911E8FD251DCBFC0068077F /* ManagedList+CoreDataProperties.swift in Sources */,
 				2911E8FE251DCC0C0068077F /* ManagedCategory+CoreDataClass.swift in Sources */,

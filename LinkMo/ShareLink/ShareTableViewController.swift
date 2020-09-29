@@ -48,6 +48,8 @@ class ShareTableViewController: UIViewController {
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
 		])
 	}
+	
+	
 }
 class ShareSecondTableViewCell: UITableViewCell{
 	private let label: UILabel = {
@@ -60,11 +62,13 @@ class ShareSecondTableViewCell: UITableViewCell{
 }
 
 extension ShareTableViewController: UITableViewDelegate{
-//	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//	tableView.deselectRow(at: indexPath, animated: true)
-//	let cell = tableView.dequeueReusableCell(withIdentifier: "ShareSecondTableViewCell", for: indexPath) as! ShareSecondTableViewCell
-//		cell.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
-//	}
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	tableView.deselectRow(at: indexPath, animated: true)
+		let vc = ShareAlertViewController()
+		vc.categoryid = categoryID
+		vc.sectionid = indexPath.row
+		self.navigationController?.pushViewController(vc, animated: false)
+	}
 }
 
 extension ShareTableViewController: UITableViewDataSource{
@@ -79,3 +83,4 @@ extension ShareTableViewController: UITableViewDataSource{
 		return cell
 	}
 }
+
