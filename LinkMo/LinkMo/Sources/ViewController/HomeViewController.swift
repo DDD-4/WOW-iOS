@@ -37,9 +37,9 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = "link"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = .white
-		let defaults = UserDefaults(suiteName: "group.com.LinkMo.share")
-		defaults?.set(collectionList.first, forKey: "ShareLink")
-        defaults?.synchronize()
+		
+		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 	}
 	@objc func tapped(_ button: EMTNeumorphicButton) {
 		// isSelected property changes neumorphicLayer?.depthType automatically
@@ -56,9 +56,13 @@ class HomeViewController: UIViewController {
     func flottingBtn(){
         view.addSubview(AddBtn)
         AddBtn.frame = CGRect(x: 0, y: 0, width: 62, height: 62)
-        AddBtn.setTitle("Add", for: .normal)
+		AddBtn.setTitle("+", for: .normal)
+		AddBtn.setTitleColor(.white, for: .normal)
+		AddBtn.titleLabel?.font = .systemFont(ofSize: 26)
+		AddBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
+		AddBtn.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         AddBtn.layer.cornerRadius = AddBtn.frame.size.width / 2
-        AddBtn.backgroundColor = .blue
+		AddBtn.backgroundColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 100)
         
         AddBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
@@ -120,6 +124,12 @@ class HomeViewController: UIViewController {
 		let indexPath = self.collectionView.indexPath(for: cell)
         print(indexPath!.row)
     }
+	
+	@IBAction func editBtn(_ sender: Any) {
+		print("수정완료 버튼 클릭")
+	}
+	
+	
 }
 
 
@@ -163,7 +173,7 @@ extension HomeViewController: UICollectionViewDataSource{
 		cell.titleLabel.text = collectionList[indexPath.row].title
 		cell.iconLabel.text = collectionList[indexPath.row].icon
         cell.layer.masksToBounds = false
-
+		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
         let cornerRadius: CGFloat = 15
         let shadowRadius: CGFloat = 4
 

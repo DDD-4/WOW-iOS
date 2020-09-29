@@ -13,6 +13,7 @@ import RxCocoa
 protocol HomeViewModelInput {
 	func addTitle(title: String, icon: String)
 	func readTitle()
+	func updateTitle(id: Int64, title: String, icon: String)
 	func deleteTitle(indexPath: IndexPath, category: Category)
 }
 
@@ -49,6 +50,18 @@ class HomeViewModel: CommonViewModel, HomeViewModelInput, HomeViewModelOutput, H
 			.bind { (categoryList) in
 			self.categories.onNext(categoryList)
 			} .disposed(by: disposeBag)
+	}
+	
+	func updateTitle(id: Int64, title: String, icon: String) {
+		let newCategory = Category(id: id, title: title, icon: icon)
+		storage.updateTitle(category: newCategory)
+			.subscribe().disposed(by: disposeBag)
+		
+//		updateFrequents(frequent: frequent)
+//			.bind { _ in
+//				self.sceneCoordinator.close(animated: true, completion: nil)
+//		}.disposed(by: self.disposeBag)
+		
 	}
 	
 	func deleteTitle(indexPath: IndexPath, category: Category) {
