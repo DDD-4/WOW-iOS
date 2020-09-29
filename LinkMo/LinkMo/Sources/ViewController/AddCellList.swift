@@ -40,6 +40,9 @@ class AddCellList: UIViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         
+        categoryName.delegate = self
+        categoryUrl.delegate = self
+        categoryTitle.delegate = self
         
         categoryName.inputView = pickerView
         
@@ -56,8 +59,17 @@ class AddCellList: UIViewController {
                 }
             })
             .disposed(by: bag)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(willshow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(willhide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
-    
+    @objc func endEditing(){
+        categoryUrl.resignFirstResponder()
+        categoryTitle.resignFirstResponder()
+        categoryName.resignFirstResponder()
+        
+    }
     func toolbar(){
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width, height: 50))
         toolbar.barStyle = .black
@@ -110,17 +122,28 @@ class AddCellList: UIViewController {
         confirmBtn.rx.tap
             .subscribe(onNext: { [weak self] b in
                 
-//                _ = self?.tableShardVM.addCell(sectionNumber: self!.didselectNumber, linkTitle: self!.secondFd.value, linkUrl: self!.thirdFd.value)
                 _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: self!.urlFd.value)
                 self!.tableShardVM.subject.accept(self!.tableShardVM.sections)
                 //self?.tableShardVM.readSections()
                 self?.dismiss(animated: true, completion: nil)
             })
             .disposed(by: bag)
+        
     }
     
+    @objc func willshow(_ sender: UIResponder){
+        
+        self.view.frame.origin.y = -150
+    }
+    
+    @objc func willhide(_ sender: UIResponder){
+        self.view.frame.origin.y = 0
+    }
 }
 
+extension AddCellList: UITextFieldDelegate{
+    
+}
 extension AddCellList: UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
