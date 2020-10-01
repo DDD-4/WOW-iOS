@@ -51,6 +51,9 @@ class HomeViewController: UIViewController {
 		viewModel.inputs.readTitle()
         flottingBtn()
         
+        view.backgroundColor = UIColor.appColor(.bgColor)
+        collectionView.backgroundColor = UIColor.appColor(.bgColor)
+        
 	}
 
     //Autolayout
@@ -213,21 +216,25 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     //  cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let lay = collectionViewLayout as! UICollectionViewFlowLayout
-        let widthPerItem = collectionView.frame.width / CGFloat(numberRow) - lay.minimumInteritemSpacing
+        let widthPerItem = collectionView.frame.width / CGFloat(numberRow) - (lay.minimumInteritemSpacing + lay.minimumLineSpacing + 10)
         
         return CGSize(width:widthPerItem, height:widthPerItem)
     }
+    // 셀 가로간격
 	func collectionView(_ collectionView: UICollectionView,
 						layout collectionViewLayout: UICollectionViewLayout,
 						minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-		return 19
+		return 10
 	}
-
+    //셀 세로간격
 	func collectionView(_ collectionView: UICollectionView, layout
 		collectionViewLayout: UICollectionViewLayout,
 						minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 		return 19
 	}
-    
+    //컬렉션뷰 인라인
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 19, left: 20, bottom: 0, right: 20)
+    }
 }
 

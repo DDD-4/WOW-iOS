@@ -14,7 +14,7 @@ import CoreData
 public class ManagedList: NSManagedObject {
 
     func toTableSection() -> TableSection{
-        return .init(categoryid: categoryid, header: section, items: title, link: url)
+        return .init(categoryid: categoryid, header: section, items: title, link: url, expand: expand)
     }
     
     func fromTableSection(list: TableSection){
@@ -22,6 +22,7 @@ public class ManagedList: NSManagedObject {
         self.section = list.header
         self.title = list.titled
         self.url = list.linked
+        self.expand = list.expanded
     }
     
     

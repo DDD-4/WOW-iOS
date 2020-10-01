@@ -33,13 +33,35 @@ class TableViewModel{
     var sectionDic: Dictionary = [Int64:[TableSection]]()
     init() { }
     
+    
+    func expandableCell(categoryId: Int, section: Int, bools: Bool) -> Observable<[TableSection]>{
+        do{//category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryId].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let updateValue = sectionRead.filter{$0.categoryid == ids}
+            let tt = updateValue[section].expand
+            print(sections)
+            updateValue[section].setValue(bools, forKey: "expand")
+            try self.context.save()
+            
+            
+            return .just(sections)
+            
+        }catch{
+            print("Error", error)
+            return .error(error)
+        }
+    }
     func addSections(categoryId: Int, header: String) -> Observable<[TableSection]>{
         do{
             //category
             let categorys = try self.context.fetch(categoryfetch)
             let ids = categorys[categoryId].id
             //table
-            let headerAppend = TableSection(categoryid: ids, header: header, items: [], link: [])
+            let headerAppend = TableSection(categoryid: ids, header: header, items: [], link: [], expand: true)
             
             let managedTable = ManagedList(context: context)
             managedTable.fromTableSection(list: headerAppend)

@@ -21,7 +21,7 @@ struct TableSection {
     var header: String
     var items: [Item]
     var link: [Link]
-    
+    var expand: Bool
 }
 
 extension TableSection: SectionModelType {
@@ -50,5 +50,8 @@ extension TableSection: SectionModelType {
     }
     var categoryId: Int64{
         return categoryid
+    }
+    var expanded: Bool{
+        return expand
     }
 }

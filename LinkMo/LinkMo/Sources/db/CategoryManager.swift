@@ -44,7 +44,7 @@ class CustomPersistantContainer : NSPersistentContainer {
 	override open class func defaultDirectoryURL() -> URL {
         var storeURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.LinkMo.share")
         storeURL = storeURL?.appendingPathComponent("com.LinkMo.share.sqlite")
-        
+        print(storeURL!)
         return storeURL!
     }
 }
