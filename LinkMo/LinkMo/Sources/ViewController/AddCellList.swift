@@ -122,8 +122,13 @@ class AddCellList: UIViewController {
         confirmBtn.backgroundColor = .lightGray
         confirmBtn.rx.tap
             .subscribe(onNext: { [weak self] b in
-                
-                _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: self!.urlFd.value)
+                var urlHttps = self!.urlFd.value
+                if self!.urlFd.value.contains("https://"){
+                    return
+                }else{
+                    urlHttps = "https://\(urlHttps)"
+                }
+                _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: urlHttps)
                 self!.tableShardVM.subject.accept(self!.tableShardVM.sections)
                 
                 self?.dismiss(animated: true, completion: nil)

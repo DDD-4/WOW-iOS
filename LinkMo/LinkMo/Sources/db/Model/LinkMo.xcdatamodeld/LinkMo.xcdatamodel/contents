@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F96" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ManagedCategory" representedClassName="ManagedCategory" syncable="YES">
         <attribute name="icon" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -7,12 +7,13 @@
     </entity>
     <entity name="ManagedList" representedClassName="ManagedList" syncable="YES">
         <attribute name="categoryid" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="expand" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="section" optional="YES" attributeType="String" customClassName="[String]"/>
         <attribute name="title" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="url" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
     </entity>
     <elements>
         <element name="ManagedCategory" positionX="-27" positionY="18" width="128" height="88"/>
-        <element name="ManagedList" positionX="-27" positionY="36" width="128" height="103"/>
+        <element name="ManagedList" positionX="-27" positionY="36" width="128" height="118"/>
     </elements>
 </model>

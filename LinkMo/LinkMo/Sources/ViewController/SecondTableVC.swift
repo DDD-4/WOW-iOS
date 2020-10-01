@@ -65,7 +65,7 @@ class SecondTableVC: UIViewController {
     
     var dataSource: RxTableViewSectionedReloadDataSource<TableSection>!
     lazy var categoryID = 0
-    lazy var trueandFalse = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -307,6 +307,10 @@ class SecondTableVC: UIViewController {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
                 
+                if dataSource.sectionModels[indexPath.section].expanded{
+                    cell.isHidden = true
+                }
+                
                 cell.selectionStyle = .none
                 cell.linkTitle.text = item
                 cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
@@ -315,6 +319,8 @@ class SecondTableVC: UIViewController {
                 let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 let url = URL(string: encoding)!
                 
+                
+                //  PreView, 썸네일이미지
                 LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
                     guard let linkMetadata = linkMetadata,
                         let imageProvider = linkMetadata.imageProvider else {
@@ -467,19 +473,14 @@ class SecondTableVC: UIViewController {
 //MARK: - Table Delegate
 extension SecondTableVC: UITableViewDelegate{
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print(sections[indexPath.section].items[indexPath.row])
-//
-//        guard let url = URL(string: "http://www.naver.com"),
-//            UIApplication.shared.canOpenURL(url) else { return }
-//         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//
-//    }
     //MARK: - height row and header
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if dataSource.sectionModels[indexPath.section].expanded{
+            return 0
+        }
         return 80
     }
     
@@ -499,8 +500,12 @@ extension SecondTableVC: UITableViewDelegate{
         expandable.rx.tap
             .subscribe(onNext: { _ in
                 print(section)
-                self.trueandFalse = !self.trueandFalse
+                var expandable = self.dataSource.sectionModels[section].expanded
+                expandable = !expandable
                 
+                _ = self.tableShardVM.expandableCell(categoryId: self.categoryID, section: section, bools: expandable)
+                
+                _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                 
             })
             .disposed(by: bag)

@@ -28,5 +28,5 @@ extension ManagedList {
     @NSManaged public var section: String
     @NSManaged public var url: [String]
     @NSManaged public var categoryid: Int64
-    
+    @NSManaged public var expand: Bool
 }
