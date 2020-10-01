@@ -41,6 +41,7 @@
 		29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B024DE3F6500CB33EA /* ViewModelBindableType.swift */; };
 		29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044B224DE3F7600CB33EA /* BaseViewController.swift */; };
 		3D3633C439A8C09275A32AB6 /* Pods_LinkMo_ShareLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7303BF2F4EB2EDFC3992BE29 /* Pods_LinkMo_ShareLink.framework */; };
+		A910BABD25258281009A76EE /* ColorManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A910BABC25258281009A76EE /* ColorManage.swift */; };
 		A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */; };
 		A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */; };
 		A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4124FF61200072A34A /* LoginVC.swift */; };
@@ -112,6 +113,7 @@
 		7303BF2F4EB2EDFC3992BE29 /* Pods_LinkMo_ShareLink.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LinkMo_ShareLink.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.release.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.release.xcconfig"; sourceTree = "<group>"; };
 		8E1584C83B89878501FAC338 /* Pods-LinkMo-ShareLink.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo-ShareLink.debug.xcconfig"; path = "Target Support Files/Pods-LinkMo-ShareLink/Pods-LinkMo-ShareLink.debug.xcconfig"; sourceTree = "<group>"; };
+		A910BABC25258281009A76EE /* ColorManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManage.swift; sourceTree = "<group>"; };
 		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A94B0D4124FF61200072A34A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			children = (
 				29D0449724DE3B0900CB33EA /* Model */,
 				29D044AA24DE3EDE00CB33EA /* CategoryManager.swift */,
+				A910BABC25258281009A76EE /* ColorManage.swift */,
 			);
 			path = db;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */,
 				29D044A524DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift in Sources */,
 				A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */,
+				A910BABD25258281009A76EE /* ColorManage.swift in Sources */,
 				29D0449F24DE3C2D00CB33EA /* Category.swift in Sources */,
 				A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */,
 			);

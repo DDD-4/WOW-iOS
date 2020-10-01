@@ -79,7 +79,8 @@ class SecondTableVC: UIViewController {
         view.addSubview(addBtn)
         view.addSubview(sectionLbl)
         view.addSubview(cellLbl)
-        
+        view.backgroundColor = .black
+        tableView.backgroundColor = .black
         tableShardVM.subject.accept(tableShardVM.sections)
         tableState()
 
@@ -102,8 +103,9 @@ class SecondTableVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
+        view.backgroundColor = UIColor.appColor(.bgColor)
+        tableView.backgroundColor = UIColor.appColor(.bgColor)
     }
     
     // MARK: - 데이터 isEmpty 상태
@@ -506,6 +508,33 @@ extension SecondTableVC: UITableViewDelegate{
         header.addSubview(expandable)
         header.addSubview(titleLbl)
         header.addSubview(sectionUpdateBtn)
+        header.backgroundColor = UIColor.appColor(.listHeaderColor)
+        header.layer.cornerRadius = 20
+        
+        //neumorphism code
+        header.layer.masksToBounds = false
+
+        let cornerRadius: CGFloat = 15
+        let shadowRadius: CGFloat = 4
+
+        let darkShadow = CALayer()
+        darkShadow.frame = header.bounds
+        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+        darkShadow.cornerRadius = cornerRadius
+        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+        darkShadow.shadowOpacity = 1
+        darkShadow.shadowRadius = shadowRadius
+        header.layer.insertSublayer(darkShadow, at: 0)
+
+        let lightShadow = CALayer()
+        lightShadow.frame = header.bounds
+        lightShadow.shadowColor = UIColor.white.cgColor
+        lightShadow.cornerRadius = cornerRadius
+        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+        lightShadow.shadowOpacity = 1
+        lightShadow.shadowRadius = shadowRadius
+        header.layer.insertSublayer(lightShadow, at: 0)
+        
         //MARK: - Section, 수정 삭제
         sectionUpdateBtn.rx.tap
             .subscribe(onNext: { _ in
@@ -555,7 +584,7 @@ extension SecondTableVC: UITableViewDelegate{
             snp.trailing.equalTo(header).offset(-20)
             snp.centerY.equalTo(header)
         }
-        header.backgroundColor = .lightGray
+        
         return header
     }
     
@@ -576,7 +605,6 @@ class SecondCell: UITableViewCell{
         contentView.addSubview(linkTitle)
         contentView.addSubview(linkUrl)
         contentView.addSubview(updateBtn)
-        
         
         linkImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         linkImage.sizeToFit()

@@ -10,8 +10,7 @@
 /*
  수정할거
  
- - url 한글 안들어가게
- - 피커뷰 선택시 마지막섹션선택되는 버그
+ keyboard 가리는 현상
  */
 import UIKit
 import RxSwift
@@ -62,7 +61,9 @@ class AddCellList: UIViewController {
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(willshow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(willhide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillhide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
     @objc func endEditing(){
         categoryUrl.resignFirstResponder()
@@ -124,25 +125,47 @@ class AddCellList: UIViewController {
                 
                 _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: self!.urlFd.value)
                 self!.tableShardVM.subject.accept(self!.tableShardVM.sections)
-                //self?.tableShardVM.readSections()
+                
                 self?.dismiss(animated: true, completion: nil)
             })
             .disposed(by: bag)
         
     }
     
-    @objc func willshow(_ sender: UIResponder){
-        
-        self.view.frame.origin.y = -150
+//    @objc func willshow(_ sender: UIResponder){
+//
+//        let tt = (navigationController?.navigationBar.frame.origin.y)! - 150
+//        print(self.view.frame.origin.y)
+//        self.view.frame.origin.y = tt
+//        print(tt)
+//    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            print("first", view.frame.origin.y)
+            
+            if self.view.frame.origin.y == 64 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
     }
-    
-    @objc func willhide(_ sender: UIResponder){
-        self.view.frame.origin.y = 0
+//    @objc func willhide(_ sender: UIResponder){
+//        self.view.frame.origin.y = 0
+//        print(self.view.frame.origin.y)
+//    }
+    @objc func keyboardWillhide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 64
+            print("third",view.frame.origin.y)
+        }
+
     }
 }
 
 extension AddCellList: UITextFieldDelegate{
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 extension AddCellList: UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
