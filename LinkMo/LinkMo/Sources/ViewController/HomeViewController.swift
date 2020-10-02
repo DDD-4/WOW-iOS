@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
 			}
 		}
 	}
+	private var pullControl = UIRefreshControl()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -40,7 +41,22 @@ class HomeViewController: UIViewController {
 		
 		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		
+		pullControl.attributedTitle = NSAttributedString(string: "새로고침")
+        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = pullControl
+        } else {
+            collectionView.addSubview(pullControl)
+        }
 	}
+
+	@objc private func refreshListData(_ sender: Any) {
+        self.pullControl.endRefreshing()
+		collectionView.reloadData()
+    }
+
+	
 	@objc func tapped(_ button: EMTNeumorphicButton) {
 		// isSelected property changes neumorphicLayer?.depthType automatically
 		button.isSelected = !button.isSelected
@@ -49,7 +65,6 @@ class HomeViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		viewModel.inputs.readTitle()
         flottingBtn()
-        
 	}
 
     //Autolayout
@@ -79,7 +94,7 @@ class HomeViewController: UIViewController {
     
 	func bindViewModel() {
 		collectionView.rx.setDelegate(self).disposed(by: disposeBag)
-
+		collectionView.rx.setDataSource(self).disposed(by: disposeBag)
 		viewModel.outputs.categories
 			.subscribe(onNext: {[weak self] categories in
 				self?.collectionList = categories })
@@ -115,6 +130,7 @@ class HomeViewController: UIViewController {
 		alert.addAction(cancelAction)
 		let EditAction = UIAlertAction(title: "Edit", style: .default) { (action) in
 			self.editAlert(category: category)
+			self.collectionView.reloadData()
 		}
 		alert.addAction(EditAction)
 		let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
@@ -139,12 +155,22 @@ class HomeViewController: UIViewController {
 			let title = alert.textFields![1] as UITextField
 			if title.text!.isEmpty {
 				title.text = "\(category.title)"
-			}else if icon.text!.isEmpty {
+			}
+			if icon.text!.isEmpty {
 				icon.text = "\(category.icon)"
 			}
 			self.viewModel.inputs.updateTitle(category: category, title: title.text ?? "\(category.title)", icon: icon.text ?? "\(category.icon)")
+			DispatchQueue.main.async {
+				self.collectionView.reloadData()
+			}
 		}))
+		DispatchQueue.main.async {
+			self.collectionView.reloadData()
+		}
 		self.present(alert, animated: true, completion: nil)
+		DispatchQueue.main.async {
+			self.collectionView.reloadData()
+		}
 	}
 	
 	func btnCloseTapped(cell: CategoryCollectionCell) {
@@ -173,7 +199,6 @@ extension HomeViewController: UICollectionViewDelegate {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.editBtn.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
 		cell.editBtn.tag = indexPath.row
-        self.collectionView.reloadData()
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
         let tableVC = storyBoard.instantiateViewController(withIdentifier: "SecondTableVC") as! SecondTableVC
@@ -223,7 +248,7 @@ extension HomeViewController: UICollectionViewDataSource{
         lightShadow.shadowOpacity = 1
         lightShadow.shadowRadius = shadowRadius
         cell.layer.insertSublayer(lightShadow, at: 0)
-        
+		
 		return cell
 	}
     

@@ -85,9 +85,6 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="GzN-58-aSj"/>
-                                </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G6G-Xb-Jbh" customClass="EMTNeumorphicButton" customModule="EMTNeumorphicView">
                                 <rect key="frame" x="334" y="155.5" width="60" height="30"/>
