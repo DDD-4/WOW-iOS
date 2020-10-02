@@ -338,54 +338,29 @@ class SecondTableVC: UIViewController {
                 let url = URL(string: encoding)!
                 
                 
-//                //  PreView, 썸네일이미지
-//                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-//                    guard let linkMetadata = linkMetadata,
-//                        let imageProvider = linkMetadata.imageProvider else {
-//                        return DispatchQueue.main.async {
-//                                cell.linkImage.image = UIImage(named: "12")
-//                            }
-//                    }
-//                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                        guard error == nil else {
-//                            return
-//                        }
-//                        if let image = image as? UIImage {
-//                            // do something with image
-//                            DispatchQueue.main.async {
-//                                cell.linkImage.image = image
-//                            }
-//                        } else {
-//                            print("no image available")
-//                        }
-//                    }
-//                }
+                //  PreView, 썸네일이미지
+                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+                    guard let linkMetadata = linkMetadata,
+                        let imageProvider = linkMetadata.imageProvider else {
+                        return DispatchQueue.main.async {
+                                cell.linkImage.image = UIImage(named: "12")
+                            }
+                    }
+                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                        guard error == nil else {
+                            return
+                        }
+                        if let image = image as? UIImage {
+                            // do something with image
+                            DispatchQueue.main.async {
+                                cell.linkImage.image = image
+                            }
+                        } else {
+                            print("no image available")
+                        }
+                    }
+                }
                 
-//                //neumorphism code
-//                cell.layer.masksToBounds = false
-//
-//                let cornerRadius: CGFloat = 15
-//                let shadowRadius: CGFloat = 4
-//
-//                let darkShadow = CALayer()
-//                darkShadow.frame = cell.bounds
-//                darkShadow.backgroundColor = tableView.backgroundColor?.cgColor
-//                darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
-//                darkShadow.cornerRadius = cornerRadius
-//                darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
-//                darkShadow.shadowOpacity = 1
-//                darkShadow.shadowRadius = shadowRadius
-//                cell.layer.insertSublayer(darkShadow, at: 0)
-//
-//                let lightShadow = CALayer()
-//                lightShadow.frame = cell.bounds
-//                lightShadow.backgroundColor = tableView.backgroundColor?.cgColor
-//                lightShadow.shadowColor = UIColor.white.cgColor
-//                lightShadow.cornerRadius = cornerRadius
-//                lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
-//                lightShadow.shadowOpacity = 1
-//                lightShadow.shadowRadius = shadowRadius
-//                cell.layer.insertSublayer(lightShadow, at: 0)
                 
                 //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
