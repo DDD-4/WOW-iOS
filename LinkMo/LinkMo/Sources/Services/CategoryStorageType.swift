@@ -25,6 +25,9 @@ protocol CategoryStorageType{
 	func fetchTitle() -> Observable<[Category]>
 	
 	@discardableResult
+	func updateTitle(category: Category) -> Observable<Category>
+	
+	@discardableResult
 	func deleteTitle(id: Int64) -> Observable<Category>
 	
 	@discardableResult
