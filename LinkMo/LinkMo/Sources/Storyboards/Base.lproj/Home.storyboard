@@ -264,6 +264,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="main_settingBtn" width="220" height="102"/>
+        <image name="main_settingBtn" width="216" height="100"/>
     </resources>
 </document>
