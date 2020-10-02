@@ -62,7 +62,7 @@ public class EMTNeumorphicButton: UIButton, EMTNeumorphicElementProtocol {
  `EMTNeumorphicTableCell` is a subclass of UITableViewCell and it provides some Neumorphism style design.
  Access neumorphicLayer. Change effects via its properties.
  */
-public class EMTNeumorphicTableCell: UITableViewCell, EMTNeumorphicElementProtocol {
+open class EMTNeumorphicTableCell: UITableViewCell, EMTNeumorphicElementProtocol {
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

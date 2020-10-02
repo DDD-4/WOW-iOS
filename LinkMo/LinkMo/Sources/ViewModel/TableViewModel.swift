@@ -41,10 +41,9 @@ class TableViewModel{
             
             //table
             let sectionRead = try self.context.fetch(fetch)
-            let updateValue = sectionRead.filter{$0.categoryid == ids}
-            let tt = updateValue[section].expand
-            print(sections)
-            updateValue[section].setValue(bools, forKey: "expand")
+            let expande = sectionRead.filter{$0.categoryid == ids}
+            
+            expande[section].setValue(bools, forKey: "expand")
             try self.context.save()
             
             

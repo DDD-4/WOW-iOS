@@ -36,6 +36,7 @@ class AddCellList: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor.appColor(.bgColor)
         pickerView.delegate = self
         pickerView.dataSource = self
         
@@ -52,9 +53,11 @@ class AddCellList: UIViewController {
         categoryName.rx.text.orEmpty
             .subscribe(onNext: { b in
                 if b == ""{
-                    self.confirmBtn.isHidden = true
+                    self.confirmBtn.isEnabled = false
+                    self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
                 }else{
-                    self.confirmBtn.isHidden = false
+                    self.confirmBtn.isEnabled = true
+                    self.confirmBtn.setTitleColor(.blue, for: .normal)
                 }
             })
             .disposed(by: bag)
@@ -131,7 +134,7 @@ class AddCellList: UIViewController {
                 _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: urlHttps)
                 self!.tableShardVM.subject.accept(self!.tableShardVM.sections)
                 
-                self?.dismiss(animated: true, completion: nil)
+                self!.dismiss(animated: true, completion: nil)
             })
             .disposed(by: bag)
         
