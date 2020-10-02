@@ -113,10 +113,37 @@ class HomeViewController: UIViewController {
 			self.dismiss(animated: true, completion: nil)
 		}
 		alert.addAction(cancelAction)
+		let EditAction = UIAlertAction(title: "Edit", style: .default) { (action) in
+			self.editAlert(category: category)
+		}
+		alert.addAction(EditAction)
 		let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
 			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
 		}
 		alert.addAction(destroyAction)
+		self.present(alert, animated: true, completion: nil)
+	}
+	
+	func editAlert(category: Category) {
+		let alert = UIAlertController(title: "카테고리 수정하기", message: nil, preferredStyle: .alert)
+		alert.addTextField(configurationHandler: { (textField) -> Void in
+			textField.placeholder = "\(category.icon)"
+		})
+		alert.addTextField(configurationHandler: { (textField) -> Void in
+			textField.placeholder = "\(category.title)"
+		})
+		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
+		}))
+		alert.addAction(UIAlertAction(title: "수정", style: .default, handler: { (action) -> Void in
+			let icon = alert.textFields![0] as UITextField
+			let title = alert.textFields![1] as UITextField
+			if title.text!.isEmpty {
+				title.text = "\(category.title)"
+			}else if icon.text!.isEmpty {
+				icon.text = "\(category.icon)"
+			}
+			self.viewModel.inputs.updateTitle(category: category, title: title.text ?? "\(category.title)", icon: icon.text ?? "\(category.icon)")
+		}))
 		self.present(alert, animated: true, completion: nil)
 	}
 	
@@ -146,7 +173,7 @@ extension HomeViewController: UICollectionViewDelegate {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.editBtn.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
 		cell.editBtn.tag = indexPath.row
-        
+        self.collectionView.reloadData()
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
         let tableVC = storyBoard.instantiateViewController(withIdentifier: "SecondTableVC") as! SecondTableVC

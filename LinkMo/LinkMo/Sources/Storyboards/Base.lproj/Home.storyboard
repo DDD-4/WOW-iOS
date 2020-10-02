@@ -80,7 +80,7 @@
                                         <size key="customSize" width="137" height="137"/>
                                         <connections>
                                             <outlet property="editBtn" destination="fzd-lL-A7p" id="eAa-pW-AUb"/>
-                                            <outlet property="iconLabel" destination="Fq4-Nz-wTv" id="r5O-5z-RE7"/>
+                                            <outlet property="iconLabel" destination="Fq4-Nz-wTv" id="FAB-Ov-qU0"/>
                                             <outlet property="titleLabel" destination="1TK-Cl-6C3" id="zyR-HV-Qql"/>
                                         </connections>
                                     </collectionViewCell>
