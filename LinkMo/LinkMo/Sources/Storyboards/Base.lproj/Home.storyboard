@@ -103,8 +103,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="eEw-ds-mS0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="67" id="41p-By-8v5"/>
+                            <constraint firstItem="G6G-Xb-Jbh" firstAttribute="top" secondItem="eEw-ds-mS0" secondAttribute="bottom" constant="-30.5" id="D6h-Gp-UJX"/>
                             <constraint firstItem="9gA-8Y-DVm" firstAttribute="top" secondItem="eEw-ds-mS0" secondAttribute="bottom" id="GnS-C8-atK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="eEw-ds-mS0" secondAttribute="trailing" constant="251.5" id="IuR-Iq-qvx"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="G6G-Xb-Jbh" secondAttribute="trailing" constant="20" id="O7a-B7-geJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9gA-8Y-DVm" secondAttribute="trailing" id="Z3Z-eK-1NI"/>
                             <constraint firstItem="eEw-ds-mS0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="iXI-1p-sS5"/>
                             <constraint firstItem="9gA-8Y-DVm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jgI-PV-tSj"/>
