@@ -30,6 +30,8 @@ class CategoryManager {
 	//shareLink
 	//MARK: - shareLink - Category
 	var fetchedCategory = [NSManagedObject]()
+	var fetchedTableSection = [NSManagedObject]()
+	
 	func fetchCategory() {
 		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedCategory")
 		let dateSort = NSSortDescriptor(key:"id", ascending:false)
@@ -37,6 +39,28 @@ class CategoryManager {
 		self.fetchedCategory = try! context.fetch(fetchRequest)
 	}
 	
+	func fetchTableSection() {
+		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedList")
+		let dateSort = NSSortDescriptor(key:"categoryid", ascending:false)
+		fetchRequest.sortDescriptors = [dateSort]
+		self.fetchedTableSection = try! context.fetch(fetchRequest)
+	}
+	
+	func createCells(category: Category, tablesection: TableSection, sectionNumber: Int, linkTitle: String, linkUrl: String){
+        let managedCell = ManagedList(context: self.context)
+		managedCell.categoryid = category.id
+		
+		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedList")
+		let dateSort = NSSortDescriptor(key:"header", ascending:false)
+		fetchRequest.sortDescriptors = [dateSort]
+		let fetchedHeader = try! context.fetch(fetchRequest)
+		
+		managedCell.section = fetchedHeader.
+		managedCell.title.append(linkTitle)
+		managedCell.url.append(linkUrl)
+		try! context.save()
+		fetchTableSection()
+    }
 }
 
 
