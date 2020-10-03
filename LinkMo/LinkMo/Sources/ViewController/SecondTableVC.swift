@@ -480,6 +480,13 @@ extension SecondTableVC: UITableViewDelegate{
         
         let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         titleLbl.text = dataSource.sectionModels[section].headers
+        titleLbl.font = .systemFont(ofSize: 22)
+        
+        let numberLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        numberLbl.text = "\(dataSource.sectionModels[section].linked.count)개"
+        numberLbl.textAlignment = .right
+        
+        numberLbl.font = .systemFont(ofSize: 15)
         
         let sectionUpdateBtn = UIButton(type: .system)
         sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
@@ -502,11 +509,12 @@ extension SecondTableVC: UITableViewDelegate{
         
         header.addSubview(expandable)
         header.addSubview(titleLbl)
+        header.addSubview(numberLbl)
         header.addSubview(sectionUpdateBtn)
         header.backgroundColor = UIColor.appColor(.listHeaderColor)
         header.layer.cornerRadius = 20
         
-        //neumorphism code
+        //neumorphism code 티안남
         header.layer.masksToBounds = false
 
         let cornerRadius: CGFloat = 15
@@ -570,10 +578,17 @@ extension SecondTableVC: UITableViewDelegate{
                 self.present(alert, animated: true)
             })
             .disposed(by: bag)
-        
+//        titleLbl.backgroundColor = .orange
+//        numberLbl.backgroundColor = .blue
         titleLbl.snp.makeConstraints { snp in
             snp.centerY.equalTo(header)
             snp.leading.equalTo(header).offset(20)
+            snp.width.greaterThanOrEqualTo(30)
+        }
+        numberLbl.snp.makeConstraints { snp in
+            snp.leading.equalTo(titleLbl.snp.trailing)
+            snp.centerY.equalTo(header)
+            snp.width.equalTo(50)
         }
         sectionUpdateBtn.snp.makeConstraints { snp in
             snp.trailing.equalTo(header).offset(-20)
