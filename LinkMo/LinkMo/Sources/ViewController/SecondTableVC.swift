@@ -12,11 +12,9 @@ import RxCocoa
 import RxDataSources
 import SnapKit
 import LinkPresentation
-
+import EMTNeumorphicView
 /*
  수정할거
- 
- - coredata 삭제 후 빈데이터 상태일 때 섹션 추가하면 안바뀜
  
  */
 class SecondTableVC: UIViewController {
@@ -66,11 +64,10 @@ class SecondTableVC: UIViewController {
     var dataSource: RxTableViewSectionedReloadDataSource<TableSection>!
     lazy var categoryID = 0
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-//        tableShardVM.deleteAllRecords()
         
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
@@ -80,18 +77,21 @@ class SecondTableVC: UIViewController {
         view.addSubview(sectionLbl)
         view.addSubview(cellLbl)
         view.backgroundColor = .black
-        tableView.backgroundColor = .black
+        
         tableShardVM.subject.accept(tableShardVM.sections)
-        tableState()
 
         
         //TableView 세팅
         tableView.register(SecondCell.self, forCellReuseIdentifier: "second")
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.separatorStyle = .none
+        tableView.alwaysBounceHorizontal = false
+        
+        tableState()
         tableSetting()
         tableView.rx.setDelegate(self)
         .disposed(by: bag)
-        
         
         // AddBtn
         floatingBtn()
@@ -99,15 +99,22 @@ class SecondTableVC: UIViewController {
         AddCellPush()
         sectionLabel()
         cellLabel()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
+        // 뉴모피즘 색
         view.backgroundColor = UIColor.appColor(.bgColor)
         tableView.backgroundColor = UIColor.appColor(.bgColor)
+        
+        // 버튼으로 만들기
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
+//        tableView.addGestureRecognizer(tapGesture)
+//        tableView.isUserInteractionEnabled = true
+        
+        
+        
     }
-    
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
         emptyLabel.text = "데이터 추가바람"
@@ -153,7 +160,7 @@ class SecondTableVC: UIViewController {
         addBtn.addTarget(self, action: #selector(adds), for: .touchUpInside)
     }
     
-    // MARK: - Floating buttons animation
+    // MARK: - Floating buttons 애니메이션
     @objc func adds(){
         
         let firstDuration = 0.3
@@ -195,7 +202,27 @@ class SecondTableVC: UIViewController {
             }
         }
     }
-    
+    // tap으로 플로팅 버튼비활성화
+    @objc func tapandhide(_ sender: UITapGestureRecognizer){
+        if bools{
+            bools = false
+            view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) {
+                self.addCellBtn.snp.updateConstraints { snp in
+                    self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
+                }
+                self.view.layoutIfNeeded()
+            }
+            UIView.animate(withDuration: 0.35) {
+                self.addSectionBtn.snp.updateConstraints { snp in
+                    self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
+                }
+                self.view.layoutIfNeeded()
+                self.sectionLbl.self.isHidden = true
+                self.cellLbl.self.isHidden = true
+            }
+        }
+    }
     //MARK: - AddSection
     func AddSectionPush(){
         addSectionBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -305,73 +332,61 @@ class SecondTableVC: UIViewController {
         let dataSource = RxTableViewSectionedReloadDataSource<TableSection>(
             configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
                 
-                let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
+//                let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "second") as! SecondCell
+                var type: EMTNeumorphicLayerCornerType = .all
                 
-                if dataSource.sectionModels[indexPath.section].expanded{
+                if dataSource.sectionModels[indexPath.section].expanded == false{
                     cell.isHidden = true
                 }
                 
+                // url값이 저장되잇다는 전제하에
+                if dataSource.sectionModels[indexPath.section].linked.count > 1{
+                    
+                    if indexPath.row == 0{
+                        type = .topRow
+                    }else if indexPath.row == dataSource.sectionModels[indexPath.section].linked.count - 1{
+                        type = .bottomRow
+                    }else{
+                        type = .middleRow
+                    }
+                }
+                cell.neumorphicLayer?.cornerType = type
+                cell.neumorphicLayer?.cornerRadius = 12
+                
                 cell.selectionStyle = .none
                 cell.linkTitle.text = item
-                cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
+                cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
                 
-                let urlstring = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
+                let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
                 let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 let url = URL(string: encoding)!
                 
                 
-                //  PreView, 썸네일이미지
-                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-                    guard let linkMetadata = linkMetadata,
-                        let imageProvider = linkMetadata.imageProvider else {
-                        return DispatchQueue.main.async {
-                                cell.linkImage.image = UIImage(named: "12")
-                            }
-                    }
-
-                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                        guard error == nil else {
-                            
-                            return
-                        }
-
-                        if let image = image as? UIImage {
-                            // do something with image
-                            DispatchQueue.main.async {
-                                cell.linkImage.image = image
-                            }
-                        } else {
-                            print("no image available")
-                        }
-                    }
-                }
+//                //  PreView, 썸네일이미지
+//                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+//                    guard let linkMetadata = linkMetadata,
+//                        let imageProvider = linkMetadata.imageProvider else {
+//                        return DispatchQueue.main.async {
+//                                cell.linkImage.image = UIImage(named: "12")
+//                            }
+//                    }
+//                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+//                        guard error == nil else {
+//                            return
+//                        }
+//                        if let image = image as? UIImage {
+//                            // do something with image
+//                            DispatchQueue.main.async {
+//                                cell.linkImage.image = image
+//                            }
+//                        } else {
+//                            print("no image available")
+//                        }
+//                    }
+//                }
                 
-                //neumorphism code
-                cell.layer.masksToBounds = false
-
-                let cornerRadius: CGFloat = 15
-                let shadowRadius: CGFloat = 4
-
-                let darkShadow = CALayer()
-                darkShadow.frame = cell.bounds
-                darkShadow.backgroundColor = tableView.backgroundColor?.cgColor
-                darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
-                darkShadow.cornerRadius = cornerRadius
-                darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
-                darkShadow.shadowOpacity = 1
-                darkShadow.shadowRadius = shadowRadius
-                cell.layer.insertSublayer(darkShadow, at: 0)
-
-                let lightShadow = CALayer()
-                lightShadow.frame = cell.bounds
-                lightShadow.backgroundColor = tableView.backgroundColor?.cgColor
-                lightShadow.shadowColor = UIColor.white.cgColor
-                lightShadow.cornerRadius = cornerRadius
-                lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
-                lightShadow.shadowOpacity = 1
-                lightShadow.shadowRadius = shadowRadius
-                cell.layer.insertSublayer(lightShadow, at: 0)
-                
+                cell.updateBtn.tag = indexPath.row
                 //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
                     .subscribe(onNext: { b in
@@ -382,10 +397,18 @@ class SecondTableVC: UIViewController {
                             let alert = UIAlertController(title: nil, message: "셀 수정", preferredStyle: .alert)
                             let ok = UIAlertAction(title: "OK", style: .default) { _ in
                                 let updateTitle = alert.textFields![0].text
-                                let updatelink = alert.textFields![1].text
+                                var updatelink = alert.textFields![1].text
                                 
-                                _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
-                                _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                                defer{
+                                    _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
+                                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                                }
+                                if updatelink!.contains("https://"){
+                                    return
+                                }else{
+                                    updatelink = "https://\(updatelink!)"
+                                }
+                                
                             }
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
                             
@@ -406,7 +429,13 @@ class SecondTableVC: UIViewController {
                             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
                             let ok = UIAlertAction(title: "확인", style: .default) { _ in
                                 //cell delete
-                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
+                                
+                                print("section = ", indexPath.section)
+                                print("row =", indexPath.row)
+                                print("update Tag =", indexPath.row)
+                                
+                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: cell.updateBtn.tag)
+                                
                                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
                             alertConfirm.addAction(cancel)
@@ -449,14 +478,20 @@ class SecondTableVC: UIViewController {
         .drive(tableView.rx.items(dataSource: dataSource))
         .disposed(by: bag)
         
-        tableShardVM.subject.accept(tableShardVM.sections)
-        
         tableView.rx.itemSelected.subscribe(onNext: { index in
             print(self.tableShardVM.sections[index.section].link[index.row])
             let urls = self.tableShardVM.sections[index.section].link[index.row]
             let urltranform = urls.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             guard let url = URL(string: urltranform),
-                UIApplication.shared.canOpenURL(url) else { return }
+                self.tableShardVM.canOpenURL(urltranform) else {
+                    let alert = UIAlertController(title: "오류", message: "URL을 다시확인해주세여", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    alert.addAction(ok)
+                    self.present(alert, animated: true)
+                    return
+            }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         })
         .disposed(by: bag)
@@ -478,7 +513,7 @@ extension SecondTableVC: UITableViewDelegate{
         return 44
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if dataSource.sectionModels[indexPath.section].expanded{
+        if dataSource.sectionModels[indexPath.section].expanded == false{
             return 0
         }
         return 80
@@ -490,6 +525,13 @@ extension SecondTableVC: UITableViewDelegate{
         
         let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         titleLbl.text = dataSource.sectionModels[section].headers
+        titleLbl.font = .systemFont(ofSize: 22)
+        
+        let numberLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        numberLbl.text = "\(dataSource.sectionModels[section].linked.count)개"
+        numberLbl.textAlignment = .right
+        
+        numberLbl.font = .systemFont(ofSize: 15)
         
         let sectionUpdateBtn = UIButton(type: .system)
         sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
@@ -499,46 +541,46 @@ extension SecondTableVC: UITableViewDelegate{
         let expandable = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
         expandable.rx.tap
             .subscribe(onNext: { _ in
-                print(section)
                 var expandable = self.dataSource.sectionModels[section].expanded
                 expandable = !expandable
                 
-                _ = self.tableShardVM.expandableCell(categoryId: self.categoryID, section: section, bools: expandable)
-                
+                _ = self.tableShardVM.expandableCell(categoryId: self.categoryID,
+                                                     section: section,
+                                                     bools: expandable)
                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
-                
             })
             .disposed(by: bag)
         
         header.addSubview(expandable)
         header.addSubview(titleLbl)
+        header.addSubview(numberLbl)
         header.addSubview(sectionUpdateBtn)
         header.backgroundColor = UIColor.appColor(.listHeaderColor)
         header.layer.cornerRadius = 20
         
-        //neumorphism code
-        header.layer.masksToBounds = false
-
-        let cornerRadius: CGFloat = 15
-        let shadowRadius: CGFloat = 4
-
-        let darkShadow = CALayer()
-        darkShadow.frame = header.bounds
-        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
-        darkShadow.cornerRadius = cornerRadius
-        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
-        darkShadow.shadowOpacity = 1
-        darkShadow.shadowRadius = shadowRadius
-        header.layer.insertSublayer(darkShadow, at: 0)
-
-        let lightShadow = CALayer()
-        lightShadow.frame = header.bounds
-        lightShadow.shadowColor = UIColor.white.cgColor
-        lightShadow.cornerRadius = cornerRadius
-        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
-        lightShadow.shadowOpacity = 1
-        lightShadow.shadowRadius = shadowRadius
-        header.layer.insertSublayer(lightShadow, at: 0)
+//        //neumorphism code 티안남
+//        header.layer.masksToBounds = false
+//
+//        let cornerRadius: CGFloat = 15
+//        let shadowRadius: CGFloat = 4
+//
+//        let darkShadow = CALayer()
+//        darkShadow.frame = header.bounds
+//        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+//        darkShadow.cornerRadius = cornerRadius
+//        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+//        darkShadow.shadowOpacity = 1
+//        darkShadow.shadowRadius = shadowRadius
+//        header.layer.insertSublayer(darkShadow, at: 0)
+//
+//        let lightShadow = CALayer()
+//        lightShadow.frame = header.bounds
+//        lightShadow.shadowColor = UIColor.white.cgColor
+//        lightShadow.cornerRadius = cornerRadius
+//        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+//        lightShadow.shadowOpacity = 1
+//        lightShadow.shadowRadius = shadowRadius
+//        header.layer.insertSublayer(lightShadow, at: 0)
         
         //MARK: - Section, 수정 삭제
         sectionUpdateBtn.rx.tap
@@ -580,10 +622,17 @@ extension SecondTableVC: UITableViewDelegate{
                 self.present(alert, animated: true)
             })
             .disposed(by: bag)
-        
+//        titleLbl.backgroundColor = .orange
+//        numberLbl.backgroundColor = .blue
         titleLbl.snp.makeConstraints { snp in
             snp.centerY.equalTo(header)
             snp.leading.equalTo(header).offset(20)
+            snp.width.greaterThanOrEqualTo(30)
+        }
+        numberLbl.snp.makeConstraints { snp in
+            snp.leading.equalTo(titleLbl.snp.trailing)
+            snp.centerY.equalTo(header)
+            snp.width.equalTo(50)
         }
         sectionUpdateBtn.snp.makeConstraints { snp in
             snp.trailing.equalTo(header).offset(-20)
@@ -596,7 +645,7 @@ extension SecondTableVC: UITableViewDelegate{
 }
 
 
-class SecondCell: UITableViewCell{
+class SecondCell: EMTNeumorphicTableCell{
     
     let linkImage = UIImageView()
     let linkTitle = UILabel()

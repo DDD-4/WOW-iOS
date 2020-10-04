@@ -24,6 +24,8 @@ class AddCellList: UIViewController {
     @IBOutlet weak var categoryUrl: UITextField!
     @IBOutlet weak var categoryTitle: UITextField!
     @IBOutlet weak var confirmBtn: UIButton!
+    @IBOutlet weak var scrollonView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     let tableShardVM = TableViewModel.shard
     
@@ -35,6 +37,9 @@ class AddCellList: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.appColor(.bgColor)
+        scrollonView.backgroundColor = UIColor.appColor(.bgColor)
         
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -52,19 +57,59 @@ class AddCellList: UIViewController {
         categoryName.rx.text.orEmpty
             .subscribe(onNext: { b in
                 if b == ""{
-                    self.confirmBtn.isHidden = true
+                    self.confirmBtn.isEnabled = false
+                    self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
                 }else{
-                    self.confirmBtn.isHidden = false
+                    self.confirmBtn.isEnabled = true
+                    self.confirmBtn.setTitleColor(.blue, for: .normal)
                 }
             })
             .disposed(by: bag)
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(willshow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(willhide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillhide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
+        view.addGestureRecognizer(tapGesture)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObservers()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObservers()
+    }
+    
+    @objc func didTapView(gesture: UITapGestureRecognizer){
+        view.endEditing(true)
+    }
+    
+    func addObservers(){
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (notification) in
+            self.keyboardWillShow(notification: notification)
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (notification) in
+            self.keyboardWillHide(notification: notification)
+        }
+    }
+    
+    func keyboardWillShow(notification: Notification){
+        guard let userInfo = notification.userInfo,
+            let frame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
+                return
+        }
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height, right: 0)
+        scrollView.contentInset = contentInset
+    }
+    
+    func keyboardWillHide(notification: Notification){
+        scrollView.contentInset = UIEdgeInsets.zero
+    }
+    
+    func removeObservers(){
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func endEditing(){
         categoryUrl.resignFirstResponder()
         categoryTitle.resignFirstResponder()
@@ -121,29 +166,26 @@ class AddCellList: UIViewController {
         confirmBtn.setTitleColor(.blue, for: .normal)
         confirmBtn.backgroundColor = .lightGray
         confirmBtn.rx.tap
-            .subscribe(onNext: { [weak self] b in
-                var urlHttps = self!.urlFd.value
-                if self!.urlFd.value.contains("https://"){
+            .subscribe(onNext: { b in
+                var urlHttps = self.urlFd.value
+                
+                defer{
+                    _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
+                    self.tableShardVM.subject.accept(self.tableShardVM.sections)
+                    
+                    self.navigationController?.popViewController(animated: true)
+                }
+                if self.urlFd.value.contains("https://"){
                     return
                 }else{
                     urlHttps = "https://\(urlHttps)"
                 }
-                _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: urlHttps)
-                self!.tableShardVM.subject.accept(self!.tableShardVM.sections)
                 
-                self?.dismiss(animated: true, completion: nil)
             })
             .disposed(by: bag)
         
     }
     
-//    @objc func willshow(_ sender: UIResponder){
-//
-//        let tt = (navigationController?.navigationBar.frame.origin.y)! - 150
-//        print(self.view.frame.origin.y)
-//        self.view.frame.origin.y = tt
-//        print(tt)
-//    }
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
@@ -154,10 +196,7 @@ class AddCellList: UIViewController {
             }
         }
     }
-//    @objc func willhide(_ sender: UIResponder){
-//        self.view.frame.origin.y = 0
-//        print(self.view.frame.origin.y)
-//    }
+
     @objc func keyboardWillhide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 64

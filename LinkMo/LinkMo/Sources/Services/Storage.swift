@@ -37,6 +37,29 @@ class Storage: StorageType {
             return .error(error)
         }
     }
+	
+	func updateTitle(category: Category) -> Observable<Category> {
+        do{
+            let fetchRequest = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
+            fetchRequest.predicate = NSPredicate(format: "id == %d", category.id)
+            let results = try self.context.fetch(fetchRequest)
+            if let managedCategories = results.first {
+                do{
+                    managedCategories.fromCategory(category: category)
+                    try self.context.save()
+                    return .just(managedCategories.toCategory())
+                }catch let error{
+                    return .error(error)
+                }
+            }else{
+                print("해당 데이터에 대한 Category를 찾을 수 없음. error: ")
+                return .error(CategoryStorageError.updateError("Error"))
+            }
+        } catch let error as NSError{
+            print("error: ", error.localizedDescription)
+            return .error(error)
+        }
+    }
 
 	func deleteTitle(id: Int64) -> Observable<Category> {
 		let fetchRequest = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
@@ -63,10 +86,6 @@ class Storage: StorageType {
 	func deleteTitle(category: Category) -> Observable<Category> {
 		deleteTitle(id: category.id)
     }
-	
-//	fun create(LinkModel) {
-//		UserManager.update({count: 1}) .save
-//		LinkManager.create(LinkModel)
-//	}
+
 }
 
