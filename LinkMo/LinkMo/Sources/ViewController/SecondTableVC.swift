@@ -64,6 +64,7 @@ class SecondTableVC: UIViewController {
     var dataSource: RxTableViewSectionedReloadDataSource<TableSection>!
     lazy var categoryID = 0
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,7 +79,6 @@ class SecondTableVC: UIViewController {
         view.backgroundColor = .black
         
         tableShardVM.subject.accept(tableShardVM.sections)
-        tableState()
 
         
         //TableView 세팅
@@ -87,13 +87,25 @@ class SecondTableVC: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.separatorStyle = .none
         tableView.alwaysBounceHorizontal = false
-        tableView.contentInsetAdjustmentBehavior = .scrollableAxes
-        print(tableView.contentSize)
+        
         
         tableSetting()
         tableView.rx.setDelegate(self)
         .disposed(by: bag)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 뉴모피즘 색
+        view.backgroundColor = UIColor.appColor(.bgColor)
+        tableView.backgroundColor = UIColor.appColor(.bgColor)
+        
+        tableState()
+        // 버튼으로 만들기
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
+//        tableView.addGestureRecognizer(tapGesture)
+//        tableView.isUserInteractionEnabled = true
         
         // AddBtn
         floatingBtn()
@@ -103,13 +115,6 @@ class SecondTableVC: UIViewController {
         cellLabel()
         
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        view.backgroundColor = UIColor.appColor(.bgColor)
-        tableView.backgroundColor = UIColor.appColor(.bgColor)
-    }
-    
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
         emptyLabel.text = "데이터 추가바람"
@@ -155,7 +160,7 @@ class SecondTableVC: UIViewController {
         addBtn.addTarget(self, action: #selector(adds), for: .touchUpInside)
     }
     
-    // MARK: - Floating buttons animation
+    // MARK: - Floating buttons 애니메이션
     @objc func adds(){
         
         let firstDuration = 0.3
@@ -197,7 +202,27 @@ class SecondTableVC: UIViewController {
             }
         }
     }
-    
+    // tap으로 플로팅 버튼비활성화
+    @objc func tapandhide(_ sender: UITapGestureRecognizer){
+        if bools{
+            bools = false
+            view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) {
+                self.addCellBtn.snp.updateConstraints { snp in
+                    self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
+                }
+                self.view.layoutIfNeeded()
+            }
+            UIView.animate(withDuration: 0.35) {
+                self.addSectionBtn.snp.updateConstraints { snp in
+                    self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
+                }
+                self.view.layoutIfNeeded()
+                self.sectionLbl.self.isHidden = true
+                self.cellLbl.self.isHidden = true
+            }
+        }
+    }
     //MARK: - AddSection
     func AddSectionPush(){
         addSectionBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -331,9 +356,9 @@ class SecondTableVC: UIViewController {
                 
                 cell.selectionStyle = .none
                 cell.linkTitle.text = item
-                cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
+                cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
                 
-                let urlstring = "\(dataSource.sectionModels[indexPath.section].link[indexPath.row])"
+                let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
                 let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 let url = URL(string: encoding)!
                 
@@ -372,10 +397,18 @@ class SecondTableVC: UIViewController {
                             let alert = UIAlertController(title: nil, message: "셀 수정", preferredStyle: .alert)
                             let ok = UIAlertAction(title: "OK", style: .default) { _ in
                                 let updateTitle = alert.textFields![0].text
-                                let updatelink = alert.textFields![1].text
+                                var updatelink = alert.textFields![1].text
                                 
-                                _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
-                                _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                                defer{
+                                    _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
+                                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                                }
+                                if updatelink!.contains("https://"){
+                                    return
+                                }else{
+                                    updatelink = "https://\(updatelink!)"
+                                }
+                                
                             }
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
                             
@@ -439,14 +472,20 @@ class SecondTableVC: UIViewController {
         .drive(tableView.rx.items(dataSource: dataSource))
         .disposed(by: bag)
         
-        tableShardVM.subject.accept(tableShardVM.sections)
-        
         tableView.rx.itemSelected.subscribe(onNext: { index in
             print(self.tableShardVM.sections[index.section].link[index.row])
             let urls = self.tableShardVM.sections[index.section].link[index.row]
             let urltranform = urls.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             guard let url = URL(string: urltranform),
-                UIApplication.shared.canOpenURL(url) else { return }
+                self.tableShardVM.canOpenURL(urltranform) else {
+                    let alert = UIAlertController(title: "오류", message: "URL을 다시확인해주세여", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    alert.addAction(ok)
+                    self.present(alert, animated: true)
+                    return
+            }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         })
         .disposed(by: bag)
@@ -496,14 +535,13 @@ extension SecondTableVC: UITableViewDelegate{
         let expandable = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
         expandable.rx.tap
             .subscribe(onNext: { _ in
-                
                 var expandable = self.dataSource.sectionModels[section].expanded
                 expandable = !expandable
                 
-                _ = self.tableShardVM.expandableCell(categoryId: self.categoryID, section: section, bools: expandable)
-                
+                _ = self.tableShardVM.expandableCell(categoryId: self.categoryID,
+                                                     section: section,
+                                                     bools: expandable)
                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
-                
             })
             .disposed(by: bag)
         
@@ -514,29 +552,29 @@ extension SecondTableVC: UITableViewDelegate{
         header.backgroundColor = UIColor.appColor(.listHeaderColor)
         header.layer.cornerRadius = 20
         
-        //neumorphism code 티안남
-        header.layer.masksToBounds = false
-
-        let cornerRadius: CGFloat = 15
-        let shadowRadius: CGFloat = 4
-
-        let darkShadow = CALayer()
-        darkShadow.frame = header.bounds
-        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
-        darkShadow.cornerRadius = cornerRadius
-        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
-        darkShadow.shadowOpacity = 1
-        darkShadow.shadowRadius = shadowRadius
-        header.layer.insertSublayer(darkShadow, at: 0)
-
-        let lightShadow = CALayer()
-        lightShadow.frame = header.bounds
-        lightShadow.shadowColor = UIColor.white.cgColor
-        lightShadow.cornerRadius = cornerRadius
-        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
-        lightShadow.shadowOpacity = 1
-        lightShadow.shadowRadius = shadowRadius
-        header.layer.insertSublayer(lightShadow, at: 0)
+//        //neumorphism code 티안남
+//        header.layer.masksToBounds = false
+//
+//        let cornerRadius: CGFloat = 15
+//        let shadowRadius: CGFloat = 4
+//
+//        let darkShadow = CALayer()
+//        darkShadow.frame = header.bounds
+//        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+//        darkShadow.cornerRadius = cornerRadius
+//        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+//        darkShadow.shadowOpacity = 1
+//        darkShadow.shadowRadius = shadowRadius
+//        header.layer.insertSublayer(darkShadow, at: 0)
+//
+//        let lightShadow = CALayer()
+//        lightShadow.frame = header.bounds
+//        lightShadow.shadowColor = UIColor.white.cgColor
+//        lightShadow.cornerRadius = cornerRadius
+//        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+//        lightShadow.shadowOpacity = 1
+//        lightShadow.shadowRadius = shadowRadius
+//        header.layer.insertSublayer(lightShadow, at: 0)
         
         //MARK: - Section, 수정 삭제
         sectionUpdateBtn.rx.tap

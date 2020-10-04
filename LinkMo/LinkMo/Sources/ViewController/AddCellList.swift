@@ -168,15 +168,19 @@ class AddCellList: UIViewController {
         confirmBtn.rx.tap
             .subscribe(onNext: { b in
                 var urlHttps = self.urlFd.value
+                
+                defer{
+                    _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
+                    self.tableShardVM.subject.accept(self.tableShardVM.sections)
+                    
+                    self.navigationController?.popViewController(animated: true)
+                }
                 if self.urlFd.value.contains("https://"){
                     return
                 }else{
                     urlHttps = "https://\(urlHttps)"
                 }
-                _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
-                self.tableShardVM.subject.accept(self.tableShardVM.sections)
                 
-                self.navigationController?.popViewController(animated: true)
             })
             .disposed(by: bag)
         
