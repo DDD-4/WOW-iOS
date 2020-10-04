@@ -403,7 +403,7 @@ class SecondTableVC: UIViewController {
                                     _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
                                     _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                                 }
-                                if updatelink!.contains("https://"){
+                                if updatelink!.contains("https://") || updatelink!.contains("http://"){
                                     return
                                 }else{
                                     updatelink = "https://\(updatelink!)"
