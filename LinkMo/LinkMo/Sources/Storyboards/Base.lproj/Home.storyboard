@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mM8-SI-pU0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mM8-SI-pU0">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -80,21 +80,33 @@
                                         <size key="customSize" width="137" height="137"/>
                                         <connections>
                                             <outlet property="editBtn" destination="fzd-lL-A7p" id="eAa-pW-AUb"/>
-                                            <outlet property="iconLabel" destination="Fq4-Nz-wTv" id="r5O-5z-RE7"/>
+                                            <outlet property="iconLabel" destination="Fq4-Nz-wTv" id="FAB-Ov-qU0"/>
                                             <outlet property="titleLabel" destination="1TK-Cl-6C3" id="zyR-HV-Qql"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="GzN-58-aSj"/>
-                                </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G6G-Xb-Jbh" customClass="EMTNeumorphicButton" customModule="EMTNeumorphicView">
+                                <rect key="frame" x="334" y="155.5" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="1Gp-6F-qPd"/>
+                                    <constraint firstAttribute="height" constant="30" id="K1l-N5-Ydc"/>
+                                </constraints>
+                                <state key="normal" image="main_settingBtn">
+                                    <color key="titleShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="editBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lg1-D1-pnj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="eEw-ds-mS0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="67" id="41p-By-8v5"/>
+                            <constraint firstItem="G6G-Xb-Jbh" firstAttribute="top" secondItem="eEw-ds-mS0" secondAttribute="bottom" constant="-30.5" id="D6h-Gp-UJX"/>
                             <constraint firstItem="9gA-8Y-DVm" firstAttribute="top" secondItem="eEw-ds-mS0" secondAttribute="bottom" id="GnS-C8-atK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="eEw-ds-mS0" secondAttribute="trailing" constant="251.5" id="IuR-Iq-qvx"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="G6G-Xb-Jbh" secondAttribute="trailing" constant="20" id="O7a-B7-geJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9gA-8Y-DVm" secondAttribute="trailing" id="Z3Z-eK-1NI"/>
                             <constraint firstItem="eEw-ds-mS0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="iXI-1p-sS5"/>
                             <constraint firstItem="9gA-8Y-DVm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jgI-PV-tSj"/>
@@ -374,4 +386,7 @@
             <point key="canvasLocation" x="1031.8840579710145" y="116.51785714285714"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="main_settingBtn" width="216" height="100"/>
+    </resources>
 </document>

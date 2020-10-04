@@ -13,7 +13,6 @@ import RxDataSources
 import EMTNeumorphicView
 
 class HomeViewController: UIViewController {
-//	var viewModel: HomeViewModel!
 	let viewModel = HomeViewModel()
 	let disposeBag = DisposeBag()
 	
@@ -28,6 +27,7 @@ class HomeViewController: UIViewController {
 			}
 		}
 	}
+	private var pullControl = UIRefreshControl()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -38,10 +38,25 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = "link"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = .white
-		let defaults = UserDefaults(suiteName: "group.com.LinkMo.share")
-		defaults?.set(collectionList.first, forKey: "ShareLink")
-        defaults?.synchronize()
+		
+		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		
+		pullControl.attributedTitle = NSAttributedString(string: "새로고침")
+        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = pullControl
+        } else {
+            collectionView.addSubview(pullControl)
+        }
 	}
+
+	@objc private func refreshListData(_ sender: Any) {
+        self.pullControl.endRefreshing()
+		collectionView.reloadData()
+    }
+
+	
 	@objc func tapped(_ button: EMTNeumorphicButton) {
 		// isSelected property changes neumorphicLayer?.depthType automatically
 		button.isSelected = !button.isSelected
@@ -60,9 +75,13 @@ class HomeViewController: UIViewController {
     func flottingBtn(){
         view.addSubview(AddBtn)
         AddBtn.frame = CGRect(x: 0, y: 0, width: 62, height: 62)
-        AddBtn.setTitle("Add", for: .normal)
+		AddBtn.setTitle("+", for: .normal)
+		AddBtn.setTitleColor(.white, for: .normal)
+		AddBtn.titleLabel?.font = .systemFont(ofSize: 26)
+		AddBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
+		AddBtn.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         AddBtn.layer.cornerRadius = AddBtn.frame.size.width / 2
-        AddBtn.backgroundColor = .blue
+		AddBtn.backgroundColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 100)
         
         AddBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
@@ -70,17 +89,16 @@ class HomeViewController: UIViewController {
             snp.width.equalTo(62)
             snp.height.equalTo(62)
         }
-        
-        AddBtn.rx.tap
-        .subscribe({ _ in
-        self.showAlert(title: "카테고리 추가하기")})
-        .disposed(by: disposeBag)
-    }
+		
+		AddBtn.rx.tap
+			.subscribe({ _ in
+				self.showAlert(title: "카테고리 추가하기")})
+			.disposed(by: disposeBag)
+	}
     
 	func bindViewModel() {
-		
 		collectionView.rx.setDelegate(self).disposed(by: disposeBag)
-
+		collectionView.rx.setDataSource(self).disposed(by: disposeBag)
 		viewModel.outputs.categories
 			.subscribe(onNext: {[weak self] categories in
 				self?.collectionList = categories })
@@ -114,6 +132,11 @@ class HomeViewController: UIViewController {
 			self.dismiss(animated: true, completion: nil)
 		}
 		alert.addAction(cancelAction)
+		let EditAction = UIAlertAction(title: "Edit", style: .default) { (action) in
+			self.editAlert(category: category)
+			self.collectionView.reloadData()
+		}
+		alert.addAction(EditAction)
 		let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
 			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
 		}
@@ -121,10 +144,49 @@ class HomeViewController: UIViewController {
 		self.present(alert, animated: true, completion: nil)
 	}
 	
+	func editAlert(category: Category) {
+		let alert = UIAlertController(title: "카테고리 수정하기", message: nil, preferredStyle: .alert)
+		alert.addTextField(configurationHandler: { (textField) -> Void in
+			textField.placeholder = "\(category.icon)"
+		})
+		alert.addTextField(configurationHandler: { (textField) -> Void in
+			textField.placeholder = "\(category.title)"
+		})
+		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
+		}))
+		alert.addAction(UIAlertAction(title: "수정", style: .default, handler: { (action) -> Void in
+			let icon = alert.textFields![0] as UITextField
+			let title = alert.textFields![1] as UITextField
+			if title.text!.isEmpty {
+				title.text = "\(category.title)"
+			}
+			if icon.text!.isEmpty {
+				icon.text = "\(category.icon)"
+			}
+			self.viewModel.inputs.updateTitle(category: category, title: title.text ?? "\(category.title)", icon: icon.text ?? "\(category.icon)")
+			DispatchQueue.main.async {
+				self.collectionView.reloadData()
+			}
+		}))
+		DispatchQueue.main.async {
+			self.collectionView.reloadData()
+		}
+		self.present(alert, animated: true, completion: nil)
+		DispatchQueue.main.async {
+			self.collectionView.reloadData()
+		}
+	}
+	
 	func btnCloseTapped(cell: CategoryCollectionCell) {
 		let indexPath = self.collectionView.indexPath(for: cell)
         print(indexPath!.row)
     }
+	
+	@IBAction func editBtn(_ sender: Any) {
+		print("수정완료 버튼 클릭")
+	}
+	
+	
 }
 
 
@@ -141,7 +203,6 @@ extension HomeViewController: UICollectionViewDelegate {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.editBtn.addTarget(self, action: #selector(selectBtn), for: .touchUpInside)
 		cell.editBtn.tag = indexPath.row
-        
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
         let tableVC = storyBoard.instantiateViewController(withIdentifier: "SecondTableVC") as! SecondTableVC
@@ -167,21 +228,8 @@ extension HomeViewController: UICollectionViewDataSource{
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
 		cell.titleLabel.text = collectionList[indexPath.row].title
 		cell.iconLabel.text = collectionList[indexPath.row].icon
-//		cell.contentView.layer.cornerRadius = 2.0
-//		cell.contentView.layer.borderWidth = 1.0
-//		cell.contentView.layer.borderColor = UIColor.clear.cgColor
-//		cell.contentView.layer.masksToBounds = true
-//
-//		cell.layer.backgroundColor = UIColor.white.cgColor
-//		cell.layer.shadowColor = UIColor.gray.cgColor
-//		cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-//		cell.layer.shadowRadius = 2.0
-//		cell.layer.shadowOpacity = 1.0
-//		cell.layer.masksToBounds = false
-//		cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
-        //neumorphism code
         cell.layer.masksToBounds = false
-
+		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
         let cornerRadius: CGFloat = 15
         let shadowRadius: CGFloat = 4
 
@@ -204,7 +252,7 @@ extension HomeViewController: UICollectionViewDataSource{
         lightShadow.shadowOpacity = 1
         lightShadow.shadowRadius = shadowRadius
         cell.layer.insertSublayer(lightShadow, at: 0)
-        
+		
 		return cell
 	}
     
