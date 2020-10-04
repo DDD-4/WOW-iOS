@@ -88,11 +88,17 @@ class SecondTableVC: UIViewController {
         tableView.separatorStyle = .none
         tableView.alwaysBounceHorizontal = false
         
-        
+        tableState()
         tableSetting()
         tableView.rx.setDelegate(self)
         .disposed(by: bag)
         
+        // AddBtn
+        floatingBtn()
+        AddSectionPush()
+        AddCellPush()
+        sectionLabel()
+        cellLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,18 +107,12 @@ class SecondTableVC: UIViewController {
         view.backgroundColor = UIColor.appColor(.bgColor)
         tableView.backgroundColor = UIColor.appColor(.bgColor)
         
-        tableState()
         // 버튼으로 만들기
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
 //        tableView.addGestureRecognizer(tapGesture)
 //        tableView.isUserInteractionEnabled = true
         
-        // AddBtn
-        floatingBtn()
-        AddSectionPush()
-        AddCellPush()
-        sectionLabel()
-        cellLabel()
+        
         
     }
     // MARK: - 데이터 isEmpty 상태
