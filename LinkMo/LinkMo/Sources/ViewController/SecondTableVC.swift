@@ -363,30 +363,30 @@ class SecondTableVC: UIViewController {
                 let url = URL(string: encoding)!
                 
                 
-                //  PreView, 썸네일이미지
-                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-                    guard let linkMetadata = linkMetadata,
-                        let imageProvider = linkMetadata.imageProvider else {
-                        return DispatchQueue.main.async {
-                                cell.linkImage.image = UIImage(named: "12")
-                            }
-                    }
-                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                        guard error == nil else {
-                            return
-                        }
-                        if let image = image as? UIImage {
-                            // do something with image
-                            DispatchQueue.main.async {
-                                cell.linkImage.image = image
-                            }
-                        } else {
-                            print("no image available")
-                        }
-                    }
-                }
+//                //  PreView, 썸네일이미지
+//                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+//                    guard let linkMetadata = linkMetadata,
+//                        let imageProvider = linkMetadata.imageProvider else {
+//                        return DispatchQueue.main.async {
+//                                cell.linkImage.image = UIImage(named: "12")
+//                            }
+//                    }
+//                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+//                        guard error == nil else {
+//                            return
+//                        }
+//                        if let image = image as? UIImage {
+//                            // do something with image
+//                            DispatchQueue.main.async {
+//                                cell.linkImage.image = image
+//                            }
+//                        } else {
+//                            print("no image available")
+//                        }
+//                    }
+//                }
                 
-                
+                cell.updateBtn.tag = indexPath.row
                 //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
                     .subscribe(onNext: { b in
@@ -429,7 +429,13 @@ class SecondTableVC: UIViewController {
                             let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
                             let ok = UIAlertAction(title: "확인", style: .default) { _ in
                                 //cell delete
-                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
+                                
+                                print("section = ", indexPath.section)
+                                print("row =", indexPath.row)
+                                print("update Tag =", indexPath.row)
+                                
+                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: cell.updateBtn.tag)
+                                
                                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
                             alertConfirm.addAction(cancel)
