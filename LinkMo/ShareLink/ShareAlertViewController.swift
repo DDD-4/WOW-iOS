@@ -8,10 +8,18 @@
 
 import UIKit
 import Social
+import CoreData
+import RxSwift
+import RxDataSources
 
 class ShareAlertViewController: SLComposeServiceViewController {
-	var categoryid = 0
-	var sectionid = 0
+	let viewModel = TableViewModel()
+	let share = CategoryManager.share
+	var categoryAll: Category? = nil
+	var tablesectionAll: TableSection? = nil
+	var categoryid: Int64 = 0
+	var categoryIndex = 0
+	var sectionIndex = 0 
 	
     override func isContentValid() -> Bool {
         return true
@@ -23,10 +31,7 @@ class ShareAlertViewController: SLComposeServiceViewController {
 			itemProvider.hasItemConformingToTypeIdentifier("public.url") {
 			itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { (url, error) in
 				if let shareURL = url as? URL {
-					print("URL!!! :   ", shareURL)
-					print("textview :   ", self.textView.text)
-					print("categoryID :    ", self.categoryid)
-					print("sectionID :   ", self.sectionid)
+					self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.textView.text, linkUrl: "\(shareURL)")
 				}
 				self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
 			}

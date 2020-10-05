@@ -18,7 +18,9 @@ class ShareTableViewController: UIViewController {
 		return tableview
 	}()
 	
-	lazy var categoryID = 0
+	var categoryID: Int64 = 0
+	var categoryIndex = 0
+	var categoryAll: Category? = nil
 	var sectionList: [TableSection] = []
 	let viewModel = TableViewModel()
 	let disposeBag = DisposeBag()
@@ -32,7 +34,7 @@ class ShareTableViewController: UIViewController {
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 		setConstraint()
 		
-		viewModel.readSections(categoryId: categoryID)
+		viewModel.readSections(categoryId: categoryIndex)
 		.subscribe(onNext: {[weak self] sections in
 			self?.sectionList = sections })
 		.disposed(by: disposeBag)
@@ -66,7 +68,10 @@ extension ShareTableViewController: UITableViewDelegate{
 	tableView.deselectRow(at: indexPath, animated: true)
 		let vc = ShareAlertViewController()
 		vc.categoryid = categoryID
-		vc.sectionid = indexPath.row
+		vc.categoryIndex = categoryIndex
+		vc.sectionIndex = indexPath.row
+		vc.categoryAll = categoryAll
+		vc.tablesectionAll = sectionList[indexPath.row].self
 		self.navigationController?.pushViewController(vc, animated: false)
 	}
 }
