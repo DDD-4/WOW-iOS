@@ -27,18 +27,9 @@ class CategoryManager {
 	lazy var context = persistentContainer.viewContext
 	
 	
-	//shareLink
-	//MARK: - shareLink - Category
-	var fetchedCategory = [NSManagedObject]()
+	//MARK: - shareLink
 	var fetchedTableSection = [NSManagedObject]()
-	
-	func fetchCategory() {
-		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedCategory")
-		let dateSort = NSSortDescriptor(key:"id", ascending:false)
-		fetchRequest.sortDescriptors = [dateSort]
-		self.fetchedCategory = try! context.fetch(fetchRequest)
-	}
-	
+
 	func fetchTableSection() {
 		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedList")
 		let dateSort = NSSortDescriptor(key:"categoryid", ascending:false)
@@ -46,23 +37,22 @@ class CategoryManager {
 		self.fetchedTableSection = try! context.fetch(fetchRequest)
 	}
 	
-	func createCells(category: Category, tablesection: TableSection, sectionNumber: Int, linkTitle: String, linkUrl: String){
-        let managedCell = ManagedList(context: self.context)
-		managedCell.categoryid = category.id
+	func createCells(category: Category, tablesection: TableSection, categoryNumber: Int, sectionNumber: Int, linkTitle: String, linkUrl: String){
+		let fetchRequestCa = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
+		let fetchRequestLi = NSFetchRequest<ManagedList>(entityName: "ManagedList")
 		
-		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedList")
-		let dateSort = NSSortDescriptor(key:"header", ascending:false)
-		fetchRequest.sortDescriptors = [dateSort]
-		let fetchedHeader = try! context.fetch(fetchRequest)
+		let categorys = try! context.fetch(fetchRequestCa)
+		let ids = categorys[categoryNumber].id
 		
-		managedCell.section = fetchedHeader.
-		managedCell.title.append(linkTitle)
-		managedCell.url.append(linkUrl)
+		let sectionRead = try! context.fetch(fetchRequestLi)
+		let deleteValue = sectionRead.filter{$0.categoryid == ids}
+		
+		deleteValue[sectionNumber].title.append(linkTitle)
+		deleteValue[sectionNumber].url.append(linkUrl)
 		try! context.save()
 		fetchTableSection()
-    }
+	}
 }
-
 
 class CustomPersistantContainer : NSPersistentContainer {
 	override open class func defaultDirectoryURL() -> URL {
