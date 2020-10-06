@@ -9,6 +9,7 @@
 import UIKit
 import Social
 import CoreData
+import RxSwift
 import EMTNeumorphicView
 
 class ShareViewController: UIViewController {
@@ -16,13 +17,26 @@ class ShareViewController: UIViewController {
 		let tableview = UITableView()
 		return tableview
 	}()
-	let share = CategoryManager.share
-	var categoryList: [NSManagedObject] = []
+	let viewModel = HomeViewModel()
+	let disposeBag = DisposeBag()
+//	let share = CategoryManager.share
+//	var categoryList: [NSManagedObject] = []
+	var categoryList: [Category] = [] {
+		didSet{
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		share.fetchCategory()
-		categoryList = share.fetchedCategory.reversed()
+//		share.fetchCategory()
+//		categoryList = share.fetchedCategory.reversed()
+		viewModel.outputs.categories
+		.subscribe(onNext: {[weak self] categories in
+			self?.categoryList = categories })
+		.disposed(by: disposeBag)
 		
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -31,6 +45,10 @@ class ShareViewController: UIViewController {
 		// autoHeight
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		viewModel.inputs.readTitle()
 	}
 	
 	private func setConstraint() {
@@ -78,7 +96,9 @@ extension ShareViewController: UITableViewDelegate{
 		let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as! ShareTableViewCell
 		
 		let vc = ShareTableViewController()
-		vc.categoryID = indexPath.row
+		vc.categoryIndex = indexPath.row
+		vc.categoryID = categoryList[indexPath.row].id
+		vc.categoryAll = categoryList[indexPath.row].self
 		self.navigationController?.pushViewController(vc, animated: true)
 	}
 }
@@ -89,8 +109,9 @@ extension ShareViewController: UITableViewDataSource {
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
-		let category = categoryList[indexPath.row]
-		cell.textLabel?.text =  category.value(forKey: "title") as? String
+//		let category = categoryList[indexPath.row]
+//		cell.textLabel?.text =  category.value(forKey: "title") as? String
+		cell.textLabel?.text = categoryList[indexPath.row].title
 		return cell
 	}
 }

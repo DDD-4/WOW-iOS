@@ -175,7 +175,7 @@ class AddCellList: UIViewController {
                     
                     self.navigationController?.popViewController(animated: true)
                 }
-                if self.urlFd.value.contains("https://"){
+                if self.urlFd.value.contains("https://") || self.urlFd.value.contains("http://"){
                     return
                 }else{
                     urlHttps = "https://\(urlHttps)"

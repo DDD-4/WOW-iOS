@@ -27,18 +27,32 @@ class CategoryManager {
 	lazy var context = persistentContainer.viewContext
 	
 	
-	//shareLink
-	//MARK: - shareLink - Category
-	var fetchedCategory = [NSManagedObject]()
-	func fetchCategory() {
-		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedCategory")
-		let dateSort = NSSortDescriptor(key:"id", ascending:false)
+	//MARK: - shareLink
+	var fetchedTableSection = [NSManagedObject]()
+
+	func fetchTableSection() {
+		let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ManagedList")
+		let dateSort = NSSortDescriptor(key:"categoryid", ascending:false)
 		fetchRequest.sortDescriptors = [dateSort]
-		self.fetchedCategory = try! context.fetch(fetchRequest)
+		self.fetchedTableSection = try! context.fetch(fetchRequest)
 	}
 	
+	func createCells(category: Category, tablesection: TableSection, categoryNumber: Int, sectionNumber: Int, linkTitle: String, linkUrl: String){
+		let fetchRequestCa = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
+		let fetchRequestLi = NSFetchRequest<ManagedList>(entityName: "ManagedList")
+		
+		let categorys = try! context.fetch(fetchRequestCa)
+		let ids = categorys[categoryNumber].id
+		
+		let sectionRead = try! context.fetch(fetchRequestLi)
+		let deleteValue = sectionRead.filter{$0.categoryid == ids}
+		
+		deleteValue[sectionNumber].title.append(linkTitle)
+		deleteValue[sectionNumber].url.append(linkUrl)
+		try! context.save()
+		fetchTableSection()
+	}
 }
-
 
 class CustomPersistantContainer : NSPersistentContainer {
 	override open class func defaultDirectoryURL() -> URL {
