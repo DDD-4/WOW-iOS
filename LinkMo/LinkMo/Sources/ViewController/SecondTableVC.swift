@@ -331,9 +331,11 @@ class SecondTableVC: UIViewController {
         
         let dataSource = RxTableViewSectionedReloadDataSource<TableSection>(
             configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
+                print("section: ",indexPath.section)
+                print("row: ",indexPath.row)
                 
 //                let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
-                let cell = tableView.dequeueReusableCell(withIdentifier: "second") as! SecondCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
                 var type: EMTNeumorphicLayerCornerType = .all
                 
                 if dataSource.sectionModels[indexPath.section].expanded == false{
@@ -353,7 +355,7 @@ class SecondTableVC: UIViewController {
                 }
                 cell.neumorphicLayer?.cornerType = type
                 cell.neumorphicLayer?.cornerRadius = 12
-                
+                cell.data = (indexPath.section, indexPath.row)
                 cell.selectionStyle = .none
                 cell.linkTitle.text = item
                 cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
@@ -386,15 +388,15 @@ class SecondTableVC: UIViewController {
 //                    }
 //                }
                 
-                cell.updateBtn.tag = indexPath.row
+                
                 //MARK: - Cell 수정 삭제
                 cell.updateBtn.rx.tap
                     .subscribe(onNext: { b in
                         
-                        let alert = UIAlertController(title: nil, message: "수정 삭제", preferredStyle: .actionSheet)
+                        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                         
                         let update = UIAlertAction(title: "수정", style: .default) { _ in
-                            let alert = UIAlertController(title: nil, message: "셀 수정", preferredStyle: .alert)
+                            let alert = UIAlertController(title: nil, message: "링크 수정", preferredStyle: .alert)
                             let ok = UIAlertAction(title: "OK", style: .default) { _ in
                                 let updateTitle = alert.textFields![0].text
                                 var updatelink = alert.textFields![1].text
@@ -413,10 +415,10 @@ class SecondTableVC: UIViewController {
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
                             
                             alert.addTextField { textField in
-                                textField.placeholder = "타이틀"
+                                textField.placeholder = dataSource.sectionModels[cell.data.0].titled[cell.data.1]
                             }
                             alert.addTextField { textField in
-                                textField.placeholder = "링크"
+                                textField.placeholder = dataSource.sectionModels[cell.data.0].linked[cell.data.1]
                             }
                             alert.addAction(cancel)
                             alert.addAction(ok)
@@ -434,7 +436,7 @@ class SecondTableVC: UIViewController {
                                 print("row =", indexPath.row)
                                 print("update Tag =", indexPath.row)
                                 
-                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: cell.updateBtn.tag)
+                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: cell.data.0, cellrow: cell.data.1)
                                 
                                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
@@ -651,7 +653,7 @@ class SecondCell: EMTNeumorphicTableCell{
     let linkTitle = UILabel()
     let linkUrl = UILabel()
     let updateBtn = UIButton(type: .system)
-    
+    var data: (Int, Int) = (0, 0)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
