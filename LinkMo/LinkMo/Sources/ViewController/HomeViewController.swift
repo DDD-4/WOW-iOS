@@ -182,11 +182,6 @@ class HomeViewController: UIViewController {
         print(indexPath!.row)
     }
 	
-	@IBAction func editBtn(_ sender: Any) {
-		print("수정완료 버튼 클릭")
-	}
-	
-	
 }
 
 
