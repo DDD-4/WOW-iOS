@@ -31,6 +31,17 @@ class TableViewModel{
     let fetch = NSFetchRequest<ManagedList>(entityName: "ManagedList")
     let categoryfetch = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
     var sectionDic: Dictionary = [Int64:[TableSection]]()
+    
+    //addCellList
+    let listlocateS: BehaviorSubject<String> = BehaviorSubject(value: "")
+    let listlocateBool: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    
+    let urlValidS: BehaviorSubject<String> = BehaviorSubject(value: "")
+    let urlVBool: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    
+    let titleValidS: BehaviorSubject<String> = BehaviorSubject(value: "")
+    let titleVBool: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    
     init() { }
     
     
@@ -247,6 +258,7 @@ class TableViewModel{
             print ("There was an error")
         }
     }
+    // url 주소
     func canOpenURL(_ string: String?) -> Bool {
         guard let urlString = string,
             let url = URL(string: urlString)
@@ -254,9 +266,35 @@ class TableViewModel{
 
         if !UIApplication.shared.canOpenURL(url) { return false }
 
-        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
+        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+(|/)"
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
         return predicate.evaluate(with: string)
+    }
+    
+    //AddCellList
+    func checklocate(_ locate: String) -> Bool{
+        if locate.isEmpty{
+            return false
+        }else{
+            return true
+        }
+    }
+    func checkURL(_ urlString: String) -> Bool{
+        if urlString.isEmpty{
+            
+            return false
+        }else{
+            
+            return true
+        }
+    }
+    
+    func checkTitle(_ titleText: String) -> Bool{
+        if titleText.isEmpty{
+            return false
+        }else{
+            return true
+        }
     }
 }
 

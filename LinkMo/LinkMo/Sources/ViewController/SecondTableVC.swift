@@ -18,7 +18,7 @@ import EMTNeumorphicView
  
  */
 class SecondTableVC: UIViewController {
-
+    
     //MARK: - TableView isEmpty didSet
     var state: tableShow = .hide{
         didSet{
@@ -79,7 +79,7 @@ class SecondTableVC: UIViewController {
         view.backgroundColor = .black
         
         tableShardVM.subject.accept(tableShardVM.sections)
-
+        
         
         //TableView 세팅
         tableView.register(SecondCell.self, forCellReuseIdentifier: "second")
@@ -88,10 +88,13 @@ class SecondTableVC: UIViewController {
         tableView.separatorStyle = .none
         tableView.alwaysBounceHorizontal = false
         
+//        tableView.contentInsetAdjustmentBehavior = .never
+//        tableView.contentInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        
         tableState()
         tableSetting()
         tableView.rx.setDelegate(self)
-        .disposed(by: bag)
+            .disposed(by: bag)
         
         // AddBtn
         floatingBtn()
@@ -108,9 +111,9 @@ class SecondTableVC: UIViewController {
         tableView.backgroundColor = UIColor.appColor(.bgColor)
         
         // 버튼으로 만들기
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
-//        tableView.addGestureRecognizer(tapGesture)
-//        tableView.isUserInteractionEnabled = true
+        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
+        //        tableView.addGestureRecognizer(tapGesture)
+        //        tableView.isUserInteractionEnabled = true
         
         
         
@@ -132,7 +135,7 @@ class SecondTableVC: UIViewController {
         emptyLabel.isHidden = state
         addCellBtn.isEnabled = state
     }
-
+    
     func tableState(){
         tableShardVM.readSections(categoryId: categoryID).subscribe(onNext: { b in
             if b.count == 0{
@@ -141,7 +144,7 @@ class SecondTableVC: UIViewController {
                 self.state = .show
             }
         })
-        .disposed(by: bag)
+            .disposed(by: bag)
     }
     // MARK: - FloatingButton
     func floatingBtn(){
@@ -202,7 +205,7 @@ class SecondTableVC: UIViewController {
             }
         }
     }
-    // tap으로 플로팅 버튼비활성화
+    // MARK: tap으로 플로팅 버튼비활성화
     @objc func tapandhide(_ sender: UITapGestureRecognizer){
         if bools{
             bools = false
@@ -279,7 +282,7 @@ class SecondTableVC: UIViewController {
         
         addCellBtn.rx.tap
             .subscribe(onNext: { _ in
-
+                
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
                 let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
                 addcellvc.selectSection = self.categoryID
@@ -328,139 +331,136 @@ class SecondTableVC: UIViewController {
     }
     // MARK: - 테이블뷰 세팅 관련
     func tableSetting(){
-        
-        let dataSource = RxTableViewSectionedReloadDataSource<TableSection>(
-            configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
-                print("section: ",indexPath.section)
-                print("row: ",indexPath.row)
+        let configureCells: (TableViewSectionedDataSource<TableSection>, UITableView, IndexPath, String) -> UITableViewCell = { (dataSource, tableView, indexPath, element) in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as? SecondCell else { return UITableViewCell() }
+            
+            var type: EMTNeumorphicLayerCornerType = .all
+            
+            if dataSource.sectionModels[indexPath.section].expanded == false{
+                cell.isHidden = true
+            }
+            
+            // url값이 저장되잇다는 전제하에
+            if dataSource.sectionModels[indexPath.section].linked.count > 1{
                 
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
-                let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as! SecondCell
-                var type: EMTNeumorphicLayerCornerType = .all
-                
-                if dataSource.sectionModels[indexPath.section].expanded == false{
-                    cell.isHidden = true
+                if indexPath.row == 0{
+                    type = .topRow
+                }else if indexPath.row == dataSource.sectionModels[indexPath.section].linked.count - 1{
+                    type = .bottomRow
+                }else{
+                    type = .middleRow
                 }
-                
-                // url값이 저장되잇다는 전제하에
-                if dataSource.sectionModels[indexPath.section].linked.count > 1{
+            }
+            cell.neumorphicLayer?.cornerType = type
+            cell.neumorphicLayer?.cornerRadius = 12
+//            cell.data = (indexPath.section, indexPath.row)
+            cell.selectionStyle = .none
+            cell.linkTitle.text = element
+            cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
+            
+            let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
+            let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            let url = URL(string: encoding)!
+            
+            
+            //                //  PreView, 썸네일이미지
+            //                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+            //                    guard let linkMetadata = linkMetadata,
+            //                        let imageProvider = linkMetadata.imageProvider else {
+            //                        return DispatchQueue.main.async {
+            //                                cell.linkImage.image = UIImage(named: "12")
+            //                            }
+            //                    }
+            //                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+            //                        guard error == nil else {
+            //                            return
+            //                        }
+            //                        if let image = image as? UIImage {
+            //                            // do something with image
+            //                            DispatchQueue.main.async {
+            //                                cell.linkImage.image = image
+            //                            }
+            //                        } else {
+            //                            print("no image available")
+            //                        }
+            //                    }
+            //                }
+            
+            
+            //MARK: - Cell 수정 삭제
+            cell.updateBtn.rx.tap
+                .subscribe(onNext: { b in
                     
-                    if indexPath.row == 0{
-                        type = .topRow
-                    }else if indexPath.row == dataSource.sectionModels[indexPath.section].linked.count - 1{
-                        type = .bottomRow
-                    }else{
-                        type = .middleRow
-                    }
-                }
-                cell.neumorphicLayer?.cornerType = type
-                cell.neumorphicLayer?.cornerRadius = 12
-                cell.data = (indexPath.section, indexPath.row)
-                cell.selectionStyle = .none
-                cell.linkTitle.text = item
-                cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
-                
-                let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
-                let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                let url = URL(string: encoding)!
-                
-                
-//                //  PreView, 썸네일이미지
-//                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-//                    guard let linkMetadata = linkMetadata,
-//                        let imageProvider = linkMetadata.imageProvider else {
-//                        return DispatchQueue.main.async {
-//                                cell.linkImage.image = UIImage(named: "12")
-//                            }
-//                    }
-//                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                        guard error == nil else {
-//                            return
-//                        }
-//                        if let image = image as? UIImage {
-//                            // do something with image
-//                            DispatchQueue.main.async {
-//                                cell.linkImage.image = image
-//                            }
-//                        } else {
-//                            print("no image available")
-//                        }
-//                    }
-//                }
-                
-                
-                //MARK: - Cell 수정 삭제
-                cell.updateBtn.rx.tap
-                    .subscribe(onNext: { b in
-                        
-                        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        
-                        let update = UIAlertAction(title: "수정", style: .default) { _ in
-                            let alert = UIAlertController(title: nil, message: "링크 수정", preferredStyle: .alert)
-                            let ok = UIAlertAction(title: "OK", style: .default) { _ in
-                                let updateTitle = alert.textFields![0].text
-                                var updatelink = alert.textFields![1].text
-                                
-                                defer{
-                                    _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
-                                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
-                                }
-                                if updatelink!.contains("https://") || updatelink!.contains("http://"){
-                                    return
-                                }else{
-                                    updatelink = "https://\(updatelink!)"
-                                }
-                                
-                            }
-                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+                    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                    
+                    let update = UIAlertAction(title: "수정", style: .default) { _ in
+                        let alert = UIAlertController(title: nil, message: "링크 수정", preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "OK", style: .default) { _ in
+                            let updateTitle = alert.textFields![0].text
+                            var updatelink = alert.textFields![1].text
                             
-                            alert.addTextField { textField in
-                                textField.placeholder = dataSource.sectionModels[cell.data.0].titled[cell.data.1]
-                            }
-                            alert.addTextField { textField in
-                                textField.placeholder = dataSource.sectionModels[cell.data.0].linked[cell.data.1]
-                            }
-                            alert.addAction(cancel)
-                            alert.addAction(ok)
-                            self.present(alert, animated: true)
-                            
-                        }
-                        let remove = UIAlertAction(title: "삭제", style: .default) { _ in
-                            
-                            let alertConfirm = UIAlertController(title: nil, message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
-                            let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-                            let ok = UIAlertAction(title: "확인", style: .default) { _ in
-                                //cell delete
-                                
-                                print("section = ", indexPath.section)
-                                print("row =", indexPath.row)
-                                print("update Tag =", indexPath.row)
-                                
-                                _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: cell.data.0, cellrow: cell.data.1)
-                                
+                            defer{
+                                _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
                                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                             }
-                            alertConfirm.addAction(cancel)
-                            alertConfirm.addAction(ok)
+                            if updatelink!.contains("https://") || updatelink!.contains("http://"){
+                                return
+                            }else{
+                                updatelink = "https://\(updatelink!)"
+                            }
                             
-                            self.present(alertConfirm, animated: true)
                         }
+                        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
                         
-                        let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
-                            self.dismiss(animated: true, completion: nil)
+                        alert.addTextField { textField in
+                            textField.placeholder = dataSource.sectionModels[indexPath.section].titled[indexPath.row]
                         }
-                        
-                        alert.pruneNegativeWidthConstraints()
-                        alert.addAction(update)
-                        alert.addAction(remove)
+                        alert.addTextField { textField in
+                            textField.placeholder = dataSource.sectionModels[indexPath.section].linked[indexPath.row]
+                        }
                         alert.addAction(cancel)
-                        self.present(alert, animated: false)
-                    })
-                    .disposed(by: bag)
-                
-                return cell
-        })
-        
+                        alert.addAction(ok)
+                        self.present(alert, animated: true)
+                        
+                    }
+                    let remove = UIAlertAction(title: "삭제", style: .default) { _ in
+                        
+                        let alertConfirm = UIAlertController(title: nil, message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                        let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                            //cell delete
+                            
+                            print("section = ", indexPath.section)
+                            print("row =", indexPath.row)
+                            print("update Tag =", indexPath.row)
+                            
+//                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: cell.data.0, cellrow: cell.data.1)
+                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
+                            
+                            _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                        }
+                        alertConfirm.addAction(cancel)
+                        alertConfirm.addAction(ok)
+                        
+                        self.present(alertConfirm, animated: true)
+                    }
+                    
+                    let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    
+                    alert.pruneNegativeWidthConstraints()
+                    alert.addAction(update)
+                    alert.addAction(remove)
+                    alert.addAction(cancel)
+                    self.present(alert, animated: false)
+                })
+                .disposed(by: bag)
+            
+            return cell
+            
+        }
+        let dataSource = RxTableViewSectionedReloadDataSource<TableSection>.init(configureCell: configureCells)
         dataSource.titleForHeaderInSection = { ds, index in
             return ds.sectionModels[index].header
         }
@@ -476,9 +476,9 @@ class SecondTableVC: UIViewController {
         self.dataSource = dataSource
         
         tableShardVM.subject
-        .asDriver(onErrorJustReturn: tableShardVM.sections)
-        .drive(tableView.rx.items(dataSource: dataSource))
-        .disposed(by: bag)
+            .asDriver(onErrorJustReturn: tableShardVM.sections)
+            .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
         
         tableView.rx.itemSelected.subscribe(onNext: { index in
             print(self.tableShardVM.sections[index.section].link[index.row])
@@ -496,7 +496,7 @@ class SecondTableVC: UIViewController {
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         })
-        .disposed(by: bag)
+            .disposed(by: bag)
         
         tableView.snp.makeConstraints { snp in
             snp.top.equalTo(view)
@@ -560,29 +560,29 @@ extension SecondTableVC: UITableViewDelegate{
         header.backgroundColor = UIColor.appColor(.listHeaderColor)
         header.layer.cornerRadius = 20
         
-//        //neumorphism code 티안남
-//        header.layer.masksToBounds = false
-//
-//        let cornerRadius: CGFloat = 15
-//        let shadowRadius: CGFloat = 4
-//
-//        let darkShadow = CALayer()
-//        darkShadow.frame = header.bounds
-//        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
-//        darkShadow.cornerRadius = cornerRadius
-//        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
-//        darkShadow.shadowOpacity = 1
-//        darkShadow.shadowRadius = shadowRadius
-//        header.layer.insertSublayer(darkShadow, at: 0)
-//
-//        let lightShadow = CALayer()
-//        lightShadow.frame = header.bounds
-//        lightShadow.shadowColor = UIColor.white.cgColor
-//        lightShadow.cornerRadius = cornerRadius
-//        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
-//        lightShadow.shadowOpacity = 1
-//        lightShadow.shadowRadius = shadowRadius
-//        header.layer.insertSublayer(lightShadow, at: 0)
+        //        //neumorphism code 티안남
+        //        header.layer.masksToBounds = false
+        //
+        //        let cornerRadius: CGFloat = 15
+        //        let shadowRadius: CGFloat = 4
+        //
+        //        let darkShadow = CALayer()
+        //        darkShadow.frame = header.bounds
+        //        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+        //        darkShadow.cornerRadius = cornerRadius
+        //        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+        //        darkShadow.shadowOpacity = 1
+        //        darkShadow.shadowRadius = shadowRadius
+        //        header.layer.insertSublayer(darkShadow, at: 0)
+        //
+        //        let lightShadow = CALayer()
+        //        lightShadow.frame = header.bounds
+        //        lightShadow.shadowColor = UIColor.white.cgColor
+        //        lightShadow.cornerRadius = cornerRadius
+        //        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+        //        lightShadow.shadowOpacity = 1
+        //        lightShadow.shadowRadius = shadowRadius
+        //        header.layer.insertSublayer(lightShadow, at: 0)
         
         //MARK: - Section, 수정 삭제
         sectionUpdateBtn.rx.tap
@@ -624,8 +624,8 @@ extension SecondTableVC: UITableViewDelegate{
                 self.present(alert, animated: true)
             })
             .disposed(by: bag)
-//        titleLbl.backgroundColor = .orange
-//        numberLbl.backgroundColor = .blue
+        //        titleLbl.backgroundColor = .orange
+        //        numberLbl.backgroundColor = .blue
         titleLbl.snp.makeConstraints { snp in
             snp.centerY.equalTo(header)
             snp.leading.equalTo(header).offset(20)
@@ -653,7 +653,7 @@ class SecondCell: EMTNeumorphicTableCell{
     let linkTitle = UILabel()
     let linkUrl = UILabel()
     let updateBtn = UIButton(type: .system)
-    var data: (Int, Int) = (0, 0)
+//    var data: (Int, Int) = (0, 0)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

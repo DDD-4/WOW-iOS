@@ -54,17 +54,59 @@ class AddCellList: UIViewController {
         rxButton()
         toolbar()
         
+        
+//        categoryName.rx.text.orEmpty
+//            .subscribe(onNext: { b in
+//                if b == ""{
+//                    self.confirmBtn.isEnabled = false
+//                    self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
+//                }else{
+//                    self.confirmBtn.isEnabled = true
+//                    self.confirmBtn.setTitleColor(.blue, for: .normal)
+//                }
+//            })
+//            .disposed(by: bag)
+        
         categoryName.rx.text.orEmpty
-            .subscribe(onNext: { b in
-                if b == ""{
-                    self.confirmBtn.isEnabled = false
-                    self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
-                }else{
-                    self.confirmBtn.isEnabled = true
-                    self.confirmBtn.setTitleColor(.blue, for: .normal)
-                }
-            })
+            .bind(to: tableShardVM.listlocateS)
             .disposed(by: bag)
+        
+        tableShardVM.listlocateS
+            .map(tableShardVM.checklocate(_:))
+            .bind(to: tableShardVM.listlocateBool)
+            .disposed(by: bag)
+        
+        categoryUrl.rx.text.orEmpty
+            .bind(to: tableShardVM.urlValidS)
+            .disposed(by: bag)
+        
+        tableShardVM.urlValidS
+            .map(tableShardVM.checkURL(_:))
+            .bind(to: tableShardVM.urlVBool)
+            .disposed(by: bag)
+        
+        categoryTitle.rx.text.orEmpty
+            .bind(to: tableShardVM.titleValidS)
+            .disposed(by: bag)
+        
+        tableShardVM.titleValidS
+            .map(tableShardVM.checkTitle(_:))
+            .bind(to: tableShardVM.titleVBool)
+            .disposed(by: bag)
+        
+        Observable.combineLatest(tableShardVM.listlocateBool, tableShardVM.urlVBool, tableShardVM.titleVBool, resultSelector: {$0 && $1 && $2})
+        .subscribe(onNext: { b in
+            if b == false{
+                self.confirmBtn.isEnabled = false
+                self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
+            }else{
+                self.confirmBtn.isEnabled = true
+                self.confirmBtn.setTitleColor(.blue, for: .normal)
+            }
+        })
+        .disposed(by: bag)
+        
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
         view.addGestureRecognizer(tapGesture)
     }
