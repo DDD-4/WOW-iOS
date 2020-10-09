@@ -54,7 +54,7 @@ class HomeViewController: UIViewController {
 
 	@objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
-		collectionView.reloadData()
+		self.collectionView.reloadData()
     }
 
 	
