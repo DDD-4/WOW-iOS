@@ -14,6 +14,7 @@ import EMTNeumorphicView
 
 class HomeViewController: UIViewController {
 	let viewModel = HomeViewModel()
+	let tableViewModel = TableViewModel()
 	let disposeBag = DisposeBag()
 	
 	@IBOutlet weak var collectionView: UICollectionView!
@@ -140,7 +141,6 @@ class HomeViewController: UIViewController {
 			.subscribe(onNext: {[weak self] categories in
 				self?.collectionList = categories })
 			.disposed(by: disposeBag)
-		
 	}
 	
 	func showAlert(title: String) {
@@ -226,6 +226,7 @@ class CategoryCollectionCell: UICollectionViewCell {
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var editBtn: UIButton!
 	@IBOutlet weak var iconLabel: UILabel!
+	@IBOutlet weak var sectionCnt: UILabel!
 	
 }
 
@@ -258,8 +259,14 @@ extension HomeViewController: UICollectionViewDataSource{
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionCell", for: indexPath) as! CategoryCollectionCell
+		var sectionCount = 0
 		cell.titleLabel.text = collectionList[indexPath.row].title
 		cell.iconLabel.text = collectionList[indexPath.row].icon
+		self.tableViewModel.readSections(categoryId: indexPath.row).subscribe(onNext: {[weak self] categories in
+			sectionCount = categories.count })
+		.disposed(by: disposeBag)
+		cell.sectionCnt.text = "\(sectionCount)개"
+		
         cell.layer.masksToBounds = false
 		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
         let cornerRadius: CGFloat = 15
