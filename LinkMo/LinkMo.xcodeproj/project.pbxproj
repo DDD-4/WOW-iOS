@@ -24,7 +24,6 @@
 		2959750525285E5E0074FFCB /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AC24DE3F3000CB33EA /* CommonViewModel.swift */; };
 		29597506252866140074FFCB /* ShareAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29597500252326160074FFCB /* ShareAlertViewController.swift */; };
 		2959750825301B500074FFCB /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2959750725301B4F0074FFCB /* GmarketSansLight.otf */; };
-		2959750925301B500074FFCB /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2959750725301B4F0074FFCB /* GmarketSansLight.otf */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -393,7 +392,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */,
-				2959750925301B500074FFCB /* GmarketSansLight.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

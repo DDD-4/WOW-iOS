@@ -12,7 +12,6 @@ import CoreData
 
 class Storage: StorageType {
 	private let context = CategoryManager.share.context
-	
     func createTitle(title: Category) -> Observable<Category> {
 		let managedCategory = ManagedCategory(context: self.context)
         managedCategory.fromCategory(category: title)
@@ -68,8 +67,10 @@ class Storage: StorageType {
 			let results = try self.context.fetch(fetchRequest)
 			if let managedCategoryList = results.first {
 				let categoryList = managedCategoryList.toCategory()
+                
 				self.context.delete(managedCategoryList)
 				do{
+                    
 					try self.context.save()
 					return .just(categoryList)
 				}catch{
@@ -87,5 +88,6 @@ class Storage: StorageType {
 		deleteTitle(id: category.id)
     }
 
+    
 }
 

@@ -25,6 +25,7 @@ class TableViewModel{
     
     var sections: [TableSection] = [
         //TableSection(header: "A", items: ["A"], link: ["A"])
+//        TableSection(categoryid: 323, header: "a", items: [], link: [], expand: true)
     ]
     
     var subject: BehaviorRelay<[TableSection]> = BehaviorRelay(value: [])
@@ -99,6 +100,7 @@ class TableViewModel{
             sectionDic[ids] = sectionMap.filter{$0.categoryid == ids}
             
             sections = sectionDic[ids]!
+            
             subject.accept(sections)
             return .just(sections)
         }catch{
@@ -242,13 +244,37 @@ class TableViewModel{
         }
     }
     
-    //전체 삭제
     
+    func removeCategory(categoryId: Int) -> Observable<[TableSection]>{
+        do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryId].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let deleteValue = sectionRead.filter{$0.categoryid == ids}
+            let tt = deleteValue.count - 1
+            
+            for i in 0...tt{
+                self.context.delete(deleteValue[i])
+            }
+            
+            try self.context.save()
+            return .just(sections)
+        }catch{
+            print("remove All sections error", error)
+            return .error(CategoryStorageError.deleteError(error.localizedDescription))
+        }
+    }
+    
+    //전체 삭제
     func deleteAllRecords() {
 //        let delegate = UIApplication.shared.delegate as! AppDelegate
 //        let context = delegate.persistentContainer.viewContext
 
         let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedList")
+        
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
         
         do {

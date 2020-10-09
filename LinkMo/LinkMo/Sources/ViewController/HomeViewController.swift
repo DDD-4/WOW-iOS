@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
 	let viewModel = HomeViewModel()
 	let tableViewModel = TableViewModel()
 	let disposeBag = DisposeBag()
-	
+	let tableshared = TableViewModel.shard
 	@IBOutlet weak var collectionView: UICollectionView!
 	
     let AddBtn = UIButton(type: .system)
@@ -175,7 +175,9 @@ class HomeViewController: UIViewController {
 		}
 		alert.addAction(EditAction)
 		let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            _ = self.tableshared.removeCategory(categoryId: indexPath.row)
 			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
+            
 		}
 		alert.addAction(destroyAction)
 		self.present(alert, animated: true, completion: nil)
@@ -240,6 +242,7 @@ extension HomeViewController: UICollectionViewDelegate {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
         let tableVC = storyBoard.instantiateViewController(withIdentifier: "SecondTableVC") as! SecondTableVC
         tableVC.categoryID = indexPath.row
+        tableVC.navigationTitle = collectionList[indexPath.row].title
         self.navigationController?.pushViewController(tableVC, animated: true)
         
         

@@ -26,17 +26,13 @@ class SecondTableVC: UIViewController {
             case .hide:
                 tableView.isHidden = true
                 dataNil(state: false)
-                
-                
+            
             case .show:
                 tableView.isHidden = false
                 dataNil(state: true)
-                
-                
             }
         }
     }
-    
     
     let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
     //floating btn
@@ -45,14 +41,14 @@ class SecondTableVC: UIViewController {
     //autolayout
     var cellConstraint: Constraint? = nil
     var sectionConstraint: Constraint? = nil
-    
+    var navigationTitle = ""
     
     var tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     //  addBtn, label
-    let addBtn = UIButton(type: .system)
-    let addSectionBtn = UIButton(type: .system)
-    let addCellBtn = UIButton(type: .system)
+    let addBtn = UIButton(type: .custom)
+    let addSectionBtn = UIButton(type: .custom)
+    let addCellBtn = UIButton(type: .custom)
     let sectionLbl = UILabel()
     let cellLbl = UILabel()
     
@@ -68,6 +64,7 @@ class SecondTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = navigationTitle
         
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
@@ -87,9 +84,6 @@ class SecondTableVC: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.separatorStyle = .none
         tableView.alwaysBounceHorizontal = false
-        
-//        tableView.contentInsetAdjustmentBehavior = .never
-//        tableView.contentInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         
         tableState()
         tableSetting()
@@ -236,8 +230,8 @@ class SecondTableVC: UIViewController {
         addSectionBtn.snp.makeConstraints {  snp in
             sectionConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
             snp.centerX.equalTo(addBtn)
-            snp.width.equalTo(50)
-            snp.height.equalTo(50)
+            snp.width.equalTo(44)
+            snp.height.equalTo(44)
         }
         addSectionBtn.rx.tap
             .subscribe(onNext: { _ in
@@ -267,7 +261,7 @@ class SecondTableVC: UIViewController {
     
     //MARK: - AddCell
     func AddCellPush(){
-        addCellBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        addCellBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         addCellBtn.setImage(UIImage(named: "ic_link"), for: .normal)
         addCellBtn.layer.cornerRadius = addCellBtn.frame.size.height / 2
         addCellBtn.backgroundColor = UIColor.appColor(.pureBlue)
@@ -277,8 +271,8 @@ class SecondTableVC: UIViewController {
         addCellBtn.snp.makeConstraints {  snp in
             cellConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
             snp.centerX.equalTo(addBtn)
-            snp.width.equalTo(50)
-            snp.height.equalTo(50)
+            snp.width.equalTo(44)
+            snp.height.equalTo(44)
         }
         
         addCellBtn.rx.tap
@@ -334,30 +328,53 @@ class SecondTableVC: UIViewController {
     func tableSetting(){
         let configureCells: (TableViewSectionedDataSource<TableSection>, UITableView, IndexPath, String) -> UITableViewCell = { (dataSource, tableView, indexPath, element) in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as? SecondCell else { return UITableViewCell() }
-            
+            cell.data = (indexPath.section, indexPath.row)
             var type: EMTNeumorphicLayerCornerType = .all
             
             if dataSource.sectionModels[indexPath.section].expanded == false{
                 cell.isHidden = true
             }
             
-            // url값이 저장되잇다는 전제하에
-            if dataSource.sectionModels[indexPath.section].linked.count > 1{
-                
-                if indexPath.row == 0{
-                    type = .topRow
-                }else if indexPath.row == dataSource.sectionModels[indexPath.section].linked.count - 1{
-                    type = .bottomRow
-                }else{
-                    type = .middleRow
-                }
-            }
-            cell.neumorphicLayer?.cornerType = type
-            cell.neumorphicLayer?.cornerRadius = 12
+//            // url값이 저장되잇다는 전제하에
+//            if dataSource.sectionModels[indexPath.section].linked.count > 1{
+//
+//                if indexPath.row == 0{
+//                    type = .topRow
+//                }else if indexPath.row == dataSource.sectionModels[indexPath.section].linked.count - 1{
+//                    type = .bottomRow
+//                }else{
+//                    type = .middleRow
+//                }
+//            }
+//            cell.neumorphicLayer?.cornerType = type
+//            cell.neumorphicLayer?.cornerRadius = 12
 //            cell.data = (indexPath.section, indexPath.row)
             cell.selectionStyle = .none
             cell.linkTitle.text = element
             cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
+            //neumorphism code 티안남
+            cell.layer.masksToBounds = false
+            
+            let cornerRadius: CGFloat = 15
+            let shadowRadius: CGFloat = 4
+            
+            let darkShadow = CALayer()
+            darkShadow.frame = cell.bounds
+            darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+            darkShadow.cornerRadius = cornerRadius
+            darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+            darkShadow.shadowOpacity = 1
+            darkShadow.shadowRadius = shadowRadius
+            cell.layer.insertSublayer(darkShadow, at: 0)
+            
+            let lightShadow = CALayer()
+            lightShadow.frame = cell.bounds
+            lightShadow.shadowColor = UIColor.white.cgColor
+            lightShadow.cornerRadius = cornerRadius
+            lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+            lightShadow.shadowOpacity = 1
+            lightShadow.shadowRadius = shadowRadius
+            cell.layer.insertSublayer(lightShadow, at: 0)
             
             let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
             let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -414,10 +431,14 @@ class SecondTableVC: UIViewController {
                         let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
                         
                         alert.addTextField { textField in
-                            textField.placeholder = dataSource.sectionModels[indexPath.section].titled[indexPath.row]
+//                            textField.placeholder = dataSource.sectionModels[indexPath.section].titled[indexPath.row]
+                            
+                            textField.placeholder = dataSource.sectionModels[cell.data.0].titled[cell.data.1]
+
                         }
                         alert.addTextField { textField in
-                            textField.placeholder = dataSource.sectionModels[indexPath.section].linked[indexPath.row]
+//                            textField.placeholder = dataSource.sectionModels[indexPath.section].linked[indexPath.row]
+                            textField.placeholder = dataSource.sectionModels[cell.data.0].linked[cell.data.1]
                         }
                         alert.addAction(cancel)
                         alert.addAction(ok)
@@ -435,8 +456,8 @@ class SecondTableVC: UIViewController {
                             print("row =", indexPath.row)
                             print("update Tag =", indexPath.row)
                             
-//                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: cell.data.0, cellrow: cell.data.1)
-                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
+                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: cell.data.0, cellrow: cell.data.1)
+//                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
                             
                             _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                         }
@@ -528,7 +549,7 @@ extension SecondTableVC: UITableViewDelegate{
         
         let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         titleLbl.text = dataSource.sectionModels[section].headers
-        titleLbl.font = .systemFont(ofSize: 22)
+        titleLbl.font = .systemFont(ofSize: 18)
         
         let numberLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         numberLbl.text = "\(dataSource.sectionModels[section].linked.count)개"
@@ -536,7 +557,7 @@ extension SecondTableVC: UITableViewDelegate{
         numberLbl.font = .systemFont(ofSize: 15)
         
         let sectionUpdateBtn = UIButton(type: .system)
-        sectionUpdateBtn.setImage(UIImage(named: "ic_delete"), for: .normal)
+        sectionUpdateBtn.setImage(UIImage(named: "ic_delete copy"), for: .normal)
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         
         //MARK: - section 선택, expandable
@@ -647,13 +668,13 @@ extension SecondTableVC: UITableViewDelegate{
 }
 
 
-class SecondCell: EMTNeumorphicTableCell{
+class SecondCell: UITableViewCell{
     
     let linkImage = UIImageView()
     let linkTitle = UILabel()
     let linkUrl = UILabel()
     let updateBtn = UIButton(type: .system)
-//    var data: (Int, Int) = (0, 0)
+    var data: (Int, Int) = (0, 0)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -696,7 +717,7 @@ class SecondCell: EMTNeumorphicTableCell{
         
         
         updateBtn.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        updateBtn.setImage(UIImage(named: "ic_delete"), for: .normal)
+        updateBtn.setImage(UIImage(named: "ic_delete copy"), for: .normal)
         
         updateBtn.snp.makeConstraints { snp in
             snp.top.equalTo(contentView).offset(20)
