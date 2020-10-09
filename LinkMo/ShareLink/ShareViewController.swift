@@ -13,14 +13,9 @@ import RxSwift
 import EMTNeumorphicView
 
 class ShareViewController: UIViewController {
-	private let tableView: UITableView = {
-		let tableview = UITableView()
-		return tableview
-	}()
+	//MARK: - Properties
 	let viewModel = HomeViewModel()
 	let disposeBag = DisposeBag()
-//	let share = CategoryManager.share
-//	var categoryList: [NSManagedObject] = []
 	var categoryList: [Category] = [] {
 		didSet{
 			DispatchQueue.main.async {
@@ -28,11 +23,15 @@ class ShareViewController: UIViewController {
 			}
 		}
 	}
+	//MARK: - Views
+	private let tableView: UITableView = {
+		let tableview = UITableView()
+		return tableview
+	}()
 	
+	// MARK: - View Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-//		share.fetchCategory()
-//		categoryList = share.fetchedCategory.reversed()
 		viewModel.outputs.categories
 		.subscribe(onNext: {[weak self] categories in
 			self?.categoryList = categories })
@@ -51,6 +50,7 @@ class ShareViewController: UIViewController {
 		viewModel.inputs.readTitle()
 	}
 	
+	// MARK: - Methods
 	private func setConstraint() {
 		self.view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,8 +61,6 @@ class ShareViewController: UIViewController {
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
 		])
 	}
-	
-	
 }
 
 class ShareTableViewCell: UITableViewCell{
@@ -109,25 +107,7 @@ extension ShareViewController: UITableViewDataSource {
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
-//		let category = categoryList[indexPath.row]
-//		cell.textLabel?.text =  category.value(forKey: "title") as? String
 		cell.textLabel?.text = categoryList[indexPath.row].title
 		return cell
 	}
 }
-
-
-//기본 디폴트 값
-//class ShareViewController: SLComposeServiceViewController {
-//    override func isContentValid() -> Bool {
-//        return true
-//    }
-//    override func didSelectPost() {
-//        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-//    }
-//    override func configurationItems() -> [Any]! {
-//        return []
-//    }
-//}
-
-
