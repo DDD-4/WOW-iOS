@@ -273,28 +273,17 @@ class TableViewModel{
     
     //AddCellList
     func checklocate(_ locate: String) -> Bool{
-        if locate.isEmpty{
-            return false
-        }else{
-            return true
-        }
+
+        return locate.isEmpty ? false : true
     }
     func checkURL(_ urlString: String) -> Bool{
-        if urlString.isEmpty{
-            
-            return false
-        }else{
-            
-            return true
-        }
+
+        return urlString.isEmpty ? false : true
     }
     
     func checkTitle(_ titleText: String) -> Bool{
-        if titleText.isEmpty{
-            return false
-        }else{
-            return true
-        }
+
+        return titleText.isEmpty ? false : true
     }
 }
 

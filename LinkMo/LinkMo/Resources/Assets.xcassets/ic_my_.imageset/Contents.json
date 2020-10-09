@@ -1,21 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "ic_my_.png",
       "idiom" : "universal",
-      "filename" : "스크린샷 2020-10-02 오후 5.39.07.png",
       "scale" : "1x"
     },
     {
+      "filename" : "ic_my_@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "ic_my_@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

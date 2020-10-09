@@ -47,7 +47,7 @@ class SecondTableVC: UIViewController {
     var sectionConstraint: Constraint? = nil
     
     
-    var tableView = UITableView()
+    var tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     //  addBtn, label
     let addBtn = UIButton(type: .system)
