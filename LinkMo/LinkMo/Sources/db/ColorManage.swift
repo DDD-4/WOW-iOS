@@ -12,7 +12,7 @@ import UIKit
 enum neumorphismColor{
     case bgColor
     case listHeaderColor
-    
+    case pureBlue
 }
 extension UIColor{
     static func appColor(_ name: neumorphismColor) -> UIColor{
@@ -23,6 +23,9 @@ extension UIColor{
             
         case .listHeaderColor:
             return UIColor(red: 241/255, green: 222/255, blue: 207/255, alpha: 1.0)
+            
+        case .pureBlue:
+            return UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 1.0)
         }
         
     }

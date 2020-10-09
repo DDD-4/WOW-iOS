@@ -150,9 +150,9 @@ class SecondTableVC: UIViewController {
     func floatingBtn(){
         //플로팅버튼
         addBtn.frame = CGRect(x: 0, y: 0, width: 62, height: 62)
-        addBtn.setTitle("Add", for: .normal)
+        addBtn.setImage(UIImage(named: "ic_plus"), for: .normal)
         addBtn.layer.cornerRadius = addBtn.frame.size.width / 2
-        addBtn.backgroundColor = .blue
+        addBtn.backgroundColor = UIColor.appColor(.pureBlue)
         
         addBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
@@ -228,10 +228,10 @@ class SecondTableVC: UIViewController {
     }
     //MARK: - AddSection
     func AddSectionPush(){
-        addSectionBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        addSectionBtn.setTitle("Section", for: .normal)
+        addSectionBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        addSectionBtn.setImage(UIImage(named: "ic_folder"), for: .normal)
         addSectionBtn.layer.cornerRadius = addSectionBtn.frame.size.height / 2
-        addSectionBtn.backgroundColor = .orange
+        addSectionBtn.backgroundColor = UIColor.appColor(.pureBlue)
         // bottom -200
         addSectionBtn.snp.makeConstraints {  snp in
             sectionConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
@@ -267,9 +267,9 @@ class SecondTableVC: UIViewController {
     //MARK: - AddCell
     func AddCellPush(){
         addCellBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        addCellBtn.setTitle("Cell", for: .normal)
+        addCellBtn.setImage(UIImage(named: "ic_link"), for: .normal)
         addCellBtn.layer.cornerRadius = addCellBtn.frame.size.height / 2
-        addCellBtn.backgroundColor = .orange
+        addCellBtn.backgroundColor = UIColor.appColor(.pureBlue)
         
         
         // bottom -110
@@ -532,12 +532,11 @@ extension SecondTableVC: UITableViewDelegate{
         let numberLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         numberLbl.text = "\(dataSource.sectionModels[section].linked.count)개"
         numberLbl.textAlignment = .right
-        
         numberLbl.font = .systemFont(ofSize: 15)
         
         let sectionUpdateBtn = UIButton(type: .system)
-        sectionUpdateBtn.setImage(UIImage(named: "36"), for: .normal)
-        sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        sectionUpdateBtn.setImage(UIImage(named: "ic_delete"), for: .normal)
+        sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         
         //MARK: - section 선택, expandable
         let expandable = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
@@ -696,7 +695,7 @@ class SecondCell: EMTNeumorphicTableCell{
         
         
         updateBtn.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        updateBtn.setImage(UIImage(named: "24"), for: .normal)
+        updateBtn.setImage(UIImage(named: "ic_delete"), for: .normal)
         
         updateBtn.snp.makeConstraints { snp in
             snp.top.equalTo(contentView).offset(20)

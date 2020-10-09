@@ -46,28 +46,28 @@ class HomeViewController: UIViewController {
         button.backgroundColor = .lightGray
         button.layer.masksToBounds = false
         button.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-        let cornerRadius: CGFloat = 15
-        let shadowRadius: CGFloat = 4
-
-        let darkShadow = CALayer()
-        darkShadow.frame = button.bounds
-        darkShadow.backgroundColor = view.backgroundColor?.cgColor
-        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
-        darkShadow.cornerRadius = cornerRadius
-        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
-        darkShadow.shadowOpacity = 1
-        darkShadow.shadowRadius = shadowRadius
-        button.layer.insertSublayer(darkShadow, at: 0)
-
-        let lightShadow = CALayer()
-        lightShadow.frame = button.bounds
-        lightShadow.backgroundColor = view.backgroundColor?.cgColor
-        lightShadow.shadowColor = UIColor.white.cgColor
-        lightShadow.cornerRadius = cornerRadius
-        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
-        lightShadow.shadowOpacity = 1
-        lightShadow.shadowRadius = shadowRadius
-        button.layer.insertSublayer(lightShadow, at: 0)
+//        let cornerRadius: CGFloat = 15
+//        let shadowRadius: CGFloat = 4
+//
+//        let darkShadow = CALayer()
+//        darkShadow.frame = button.bounds
+//        darkShadow.backgroundColor = view.backgroundColor?.cgColor
+//        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+//        darkShadow.cornerRadius = cornerRadius
+//        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+//        darkShadow.shadowOpacity = 1
+//        darkShadow.shadowRadius = shadowRadius
+//        button.layer.insertSublayer(darkShadow, at: 0)
+//
+//        let lightShadow = CALayer()
+//        lightShadow.frame = button.bounds
+//        lightShadow.backgroundColor = view.backgroundColor?.cgColor
+//        lightShadow.shadowColor = UIColor.white.cgColor
+//        lightShadow.cornerRadius = cornerRadius
+//        lightShadow.shadowOffset = CGSize(width: -shadowRadius, height: -shadowRadius)
+//        lightShadow.shadowOpacity = 1
+//        lightShadow.shadowRadius = shadowRadius
+//        button.layer.insertSublayer(lightShadow, at: 0)
     
         
         var imageLosgo = UIImage(named: "ic_my_")
@@ -112,7 +112,7 @@ class HomeViewController: UIViewController {
     func flottingBtn(){
         view.addSubview(AddBtn)
         AddBtn.frame = CGRect(x: 0, y: 0, width: 62, height: 62)
-		AddBtn.setTitle("+", for: .normal)
+        AddBtn.setImage(UIImage(named: "ic_plus"), for: .normal)
 		AddBtn.setTitleColor(.white, for: .normal)
 		AddBtn.titleLabel?.font = .systemFont(ofSize: 26)
 		AddBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
