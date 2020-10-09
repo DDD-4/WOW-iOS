@@ -51,6 +51,7 @@ class ShareViewController: UIViewController {
 		
 		tableView.tableFooterView = UIView()
 		tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+		navigationController?.isNavigationBarHidden = true
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +63,7 @@ class ShareViewController: UIViewController {
 		self.view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
 			tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -85,9 +86,9 @@ class ShareTableViewCell: UITableViewCell{
 		label.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
-			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
-			label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-			label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10)
+			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+			label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
 	}
 
@@ -122,12 +123,9 @@ extension ShareViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
 		cell.label.text = categoryList[indexPath.row].title
-//		cell.label.textColor = UIColor.gray
-//		cell.label.font = UIFont(name:"AppleSDGothicNeo-Medium" , size: 18)
-//
-//		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
+		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
 		
-		let imageView = UIImageView(frame: CGRect(x: -10, y: -10, width: cell.frame.width, height: cell.frame.height))
+		let imageView = UIImageView(frame: CGRect(x: -10, y: -10, width: cell.frame.width + 10, height: cell.frame.height))
 		let image = UIImage(named: "rectangle2Copy.png")
 		imageView.image = image
 		cell.backgroundView = UIView()
