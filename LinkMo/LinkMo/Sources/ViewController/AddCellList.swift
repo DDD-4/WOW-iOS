@@ -41,6 +41,8 @@ class AddCellList: UIViewController {
         view.backgroundColor = UIColor.appColor(.bgColor)
         scrollonView.backgroundColor = UIColor.appColor(.bgColor)
         
+        navigationItem.title = "링크 추가"
+        
         pickerView.delegate = self
         pickerView.dataSource = self
         
