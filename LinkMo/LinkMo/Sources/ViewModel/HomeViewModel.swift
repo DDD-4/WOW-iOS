@@ -55,13 +55,7 @@ class HomeViewModel: CommonViewModel, HomeViewModelInput, HomeViewModelOutput, H
 	func updateTitle(category: Category, title: String, icon: String) {
 		let newCategory = Category(id: category.id, title: title, icon: icon)
 		storage.updateTitle(category: newCategory)
-			.subscribe().disposed(by: disposeBag)
-		
-//		updateFrequents(frequent: frequent)
-//			.bind { _ in
-//				self.sceneCoordinator.close(animated: true, completion: nil)
-//		}.disposed(by: self.disposeBag)
-		
+			.subscribe().disposed(by: disposeBag)		
 	}
 	
 	func deleteTitle(indexPath: IndexPath, category: Category) {
