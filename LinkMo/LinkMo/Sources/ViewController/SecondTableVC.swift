@@ -239,10 +239,20 @@ class SecondTableVC: UIViewController {
                 
                 let ok = UIAlertAction(title: "ok", style: .default) { _ in
                     let addText = alert.textFields?[0].text
-                    
-                    _ = self.tableShardVM.addSections(categoryId: self.categoryID, header: addText!)
-                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                    if self.tableShardVM.limitSection.value{
+                        let alert = UIAlertController(title: nil, message: "카테고리는 최대 20개까지 가능합니다", preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "OK", style: .default) { (_) in
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                        alert.addAction(ok)
+                        self.present(alert, animated: true)
+                    }else{
+                        _ = self.tableShardVM.addSections(categoryId: self.categoryID, header: addText!)
+                        _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                    }
+
                     self.tableState()
+                    
                 }
                 let cancel = UIAlertAction(title: "cancel", style: .destructive) { _ in
                     self.dismiss(animated: true, completion: nil)
@@ -452,6 +462,7 @@ class SecondTableVC: UIViewController {
             
         }
         let dataSource = RxTableViewSectionedReloadDataSource<TableSection>.init(configureCell: configureCells)
+        
         dataSource.titleForHeaderInSection = { ds, index in
             return ds.sectionModels[index].header
         }

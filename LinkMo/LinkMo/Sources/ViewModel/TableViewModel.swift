@@ -33,6 +33,9 @@ class TableViewModel{
     let categoryfetch = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
     var sectionDic: Dictionary = [Int64:[TableSection]]()
     
+    var limitSection: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    var limitCell: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    
     //addCellList
     let listlocateS: BehaviorSubject<String> = BehaviorSubject(value: "")
     let listlocateBool: BehaviorSubject<Bool> = BehaviorSubject(value: false)
@@ -99,6 +102,12 @@ class TableViewModel{
             let sectionMap  = sectionRead.map{$0.toTableSection()}
             sectionDic[ids] = sectionMap.filter{$0.categoryid == ids}
             
+            if sectionDic[ids]!.count >= 20{
+                limitSection.accept(true)
+                
+            }else{
+                limitSection.accept(false)
+            }
             sections = sectionDic[ids]!
             
             subject.accept(sections)
@@ -185,11 +194,11 @@ class TableViewModel{
             
             //table
             let sectionRead = try self.context.fetch(fetch)
-            let deleteValue = sectionRead.filter{$0.categoryid == ids}
+            let addValue = sectionRead.filter{$0.categoryid == ids}
             
-            deleteValue[sectionNumber].setValue([linkTitle], forKey: "title")
-            deleteValue[sectionNumber].setValue([linkUrl], forKey: "url")
-            deleteValue[sectionNumber].fromTableSection(list: sections[sectionNumber])
+            addValue[sectionNumber].setValue([linkTitle], forKey: "title")
+            addValue[sectionNumber].setValue([linkUrl], forKey: "url")
+            addValue[sectionNumber].fromTableSection(list: sections[sectionNumber])
             
             try self.context.save()
             return .just(sections)
@@ -198,7 +207,27 @@ class TableViewModel{
             return .error(error)
         }
     }
-    
+    func checkLimit(categoryid: Int, sectionNumber: Int){
+        
+        do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryid].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let addValue = sectionRead.filter{$0.categoryid == ids}
+            
+            if addValue[sectionNumber].title.count >= 1000{
+                limitCell.accept(true)
+            }else{
+                limitCell.accept(false)
+            }
+        }catch{
+            print("ERrror", error)
+        }
+        
+    }
     func updateCells(categoryid: Int, section: Int, cellrow: Int, title: String, link: String) -> Observable<[TableSection]>{
         
         do{
