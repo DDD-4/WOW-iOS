@@ -211,29 +211,39 @@ class AddCellList: UIViewController {
         confirmBtn.backgroundColor = .lightGray
         confirmBtn.rx.tap
             .subscribe(onNext: { b in
+                
                 var urlHttps = self.urlFd.value
                 
-                defer{
-                    _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
-                    self.tableShardVM.subject.accept(self.tableShardVM.sections)
-                    
-                    self.navigationController?.popViewController(animated: true)
-                }
-                if self.urlFd.value.contains("https://") || self.urlFd.value.contains("http://"){
-                    return
+                self.tableShardVM.checkLimit(categoryid: self.selectSection, sectionNumber: self.didselectNumber)
+                
+                if self.tableShardVM.limitCell.value{
+                    let alert = UIAlertController(title: nil, message: "한 카테고리의 링크는 최대 1000개입니다", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style: .default) { (_) in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    alert.addAction(ok)
+                    self.present(alert, animated: true)
                 }else{
-                    urlHttps = "https://\(urlHttps)"
+                    defer{
+                        _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
+                        self.tableShardVM.subject.accept(self.tableShardVM.sections)
+                        
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    if self.urlFd.value.contains("https://") || self.urlFd.value.contains("http://"){
+                        return
+                    }else{
+                        urlHttps = "https://\(urlHttps)/"
+                    }
                 }
+                
                 
             })
             .disposed(by: bag)
-        
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            
-            print("first", view.frame.origin.y)
             
             if self.view.frame.origin.y == 64 {
                 self.view.frame.origin.y -= keyboardSize.height
@@ -244,7 +254,6 @@ class AddCellList: UIViewController {
     @objc func keyboardWillhide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 64
-            print("third",view.frame.origin.y)
         }
 
     }
