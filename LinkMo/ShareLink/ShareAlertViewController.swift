@@ -20,7 +20,7 @@ class ShareAlertViewController: SLComposeServiceViewController {
 	var categoryid: Int64 = 0
 	var categoryIndex = 0
 	var sectionIndex = 0 
-	
+    let tableshard = TableViewModel.shard
     override func isContentValid() -> Bool {
         return true
     }
@@ -32,6 +32,8 @@ class ShareAlertViewController: SLComposeServiceViewController {
 			itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { (url, error) in
 				if let shareURL = url as? URL {
 					self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.textView.text, linkUrl: "\(shareURL)")
+                    
+                    
 				}
 				self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
 			}

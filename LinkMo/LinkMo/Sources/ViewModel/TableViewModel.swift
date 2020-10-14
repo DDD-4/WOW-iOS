@@ -283,12 +283,16 @@ class TableViewModel{
             //table
             let sectionRead = try self.context.fetch(fetch)
             let deleteValue = sectionRead.filter{$0.categoryid == ids}
-            let tt = deleteValue.count - 1
-            
-            for i in 0...tt{
-                self.context.delete(deleteValue[i])
+            let SectionCount = deleteValue.count - 1
+            if SectionCount < 0{
+                return .just(sections)
+            }else{
+                for i in 0...SectionCount{
+                    self.context.delete(deleteValue[i])
+                }
             }
             
+
             try self.context.save()
             return .just(sections)
         }catch{

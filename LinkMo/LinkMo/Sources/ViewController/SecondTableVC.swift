@@ -33,7 +33,7 @@ class SecondTableVC: UIViewController {
             }
         }
     }
-    
+    private var pullControl = UIRefreshControl()
     let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
     //floating btn
     var bools = false
@@ -96,8 +96,21 @@ class SecondTableVC: UIViewController {
         AddCellPush()
         sectionLabel()
         cellLabel()
+        
+        pullControl.attributedTitle = NSAttributedString(string: "새로고침")
+        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = pullControl
+        } else {
+            tableView.addSubview(pullControl)
+        }
+        
     }
-    
+    @objc private func refreshListData(_ sender: Any) {
+        self.pullControl.endRefreshing()
+        _ = tableShardVM.readSections(categoryId: categoryID)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // 뉴모피즘 색
