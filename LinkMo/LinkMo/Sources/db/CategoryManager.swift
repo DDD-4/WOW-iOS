@@ -13,7 +13,6 @@ import CoreData
 
 class CategoryManager {
 	static let share = CategoryManager()
-	
 	lazy var persistentContainer: NSPersistentContainer = {
 		let container = CustomPersistantContainer(name: "LinkMo")
 		container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -38,6 +37,7 @@ class CategoryManager {
 	}
 	
 	func createCells(category: Category, tablesection: TableSection, categoryNumber: Int, sectionNumber: Int, linkTitle: String, linkUrl: String){
+        
 		let fetchRequestCa = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
 		let fetchRequestLi = NSFetchRequest<ManagedList>(entityName: "ManagedList")
 		
@@ -51,6 +51,7 @@ class CategoryManager {
 		deleteValue[sectionNumber].url.append(linkUrl)
 		try! context.save()
 		fetchTableSection()
+        
 	}
 }
 

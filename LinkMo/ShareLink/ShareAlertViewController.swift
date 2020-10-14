@@ -31,6 +31,7 @@ class ShareAlertViewController: SLComposeServiceViewController {
 			itemProvider.hasItemConformingToTypeIdentifier("public.url") {
 			itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { (url, error) in
 				if let shareURL = url as? URL {
+                    
 					self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.textView.text, linkUrl: "\(shareURL)")
                     
                     

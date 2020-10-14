@@ -13,10 +13,8 @@ import RxDataSources
 import SnapKit
 import LinkPresentation
 import EMTNeumorphicView
-/*
- 수정할거
- 
- */
+import RxUIAlert
+
 class SecondTableVC: UIViewController {
     
     //MARK: - TableView isEmpty didSet

@@ -12,6 +12,8 @@ target 'LinkMo' do
     pod 'RxDataSources', '~> 4.0'
     pod 'SnapKit', '~> 5.0.0'
     pod 'EMTNeumorphicView'
+    pod 'RxUIAlert'
+    
   end
 
 end
