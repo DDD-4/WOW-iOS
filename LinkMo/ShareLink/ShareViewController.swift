@@ -51,7 +51,7 @@ class ShareViewController: UIViewController {
 		
 		tableView.tableFooterView = UIView()
 		tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-		navigationController?.isNavigationBarHidden = true
+//		navigationController?.isNavigationBarHidden = true
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
