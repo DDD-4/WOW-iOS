@@ -126,7 +126,7 @@ extension ShareViewController: UITableViewDataSource {
 		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
 		
 		let imageView = UIImageView(frame: CGRect(x: -10, y: -10, width: cell.frame.width + 10, height: cell.frame.height))
-		let image = UIImage(named: "rectangle2Copy.png")
+		let image = UIImage(named: "retangle2Copy")
 		imageView.image = image
 		cell.backgroundView = UIView()
 		cell.backgroundView!.addSubview(imageView)
