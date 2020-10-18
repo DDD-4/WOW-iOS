@@ -13,14 +13,9 @@ import RxSwift
 import EMTNeumorphicView
 
 class ShareViewController: UIViewController {
-	private let tableView: UITableView = {
-		let tableview = UITableView()
-		return tableview
-	}()
+	//MARK: - Properties
 	let viewModel = HomeViewModel()
 	let disposeBag = DisposeBag()
-//	let share = CategoryManager.share
-//	var categoryList: [NSManagedObject] = []
 	var categoryList: [Category] = [] {
 		didSet{
 			DispatchQueue.main.async {
@@ -28,15 +23,19 @@ class ShareViewController: UIViewController {
 			}
 		}
 	}
+	//MARK: - Views
+	private let tableView: UITableView = {
+		let tableview = UITableView()
+		return tableview
+	}()
 	
+	// MARK: - View Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-//		share.fetchCategory()
-//		categoryList = share.fetchedCategory.reversed()
 		viewModel.outputs.categories
-		.subscribe(onNext: {[weak self] categories in
-			self?.categoryList = categories })
-		.disposed(by: disposeBag)
+			.subscribe(onNext: {[weak self] categories in
+				self?.categoryList = categories })
+			.disposed(by: disposeBag)
 		
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -45,30 +44,40 @@ class ShareViewController: UIViewController {
 		// autoHeight
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
+		
+		//view
+		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		tableView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		
+		tableView.tableFooterView = UIView()
+		tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+//		navigationController?.isNavigationBarHidden = true
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		viewModel.inputs.readTitle()
 	}
 	
+	// MARK: - Methods
 	private func setConstraint() {
 		self.view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
 			tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
 		])
 	}
 	
-	
 }
 
 class ShareTableViewCell: UITableViewCell{
-	private let label: UILabel = {
+	var label: UILabel = {
 		let label = UILabel()
-		label.textColor = UIColor.gray
+		label.textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 100)
+		label.font = UIFont(name:"AppleSDGothicNeo-Medium" , size: 18)
+		
 		return label
 	}()
 	
@@ -76,8 +85,10 @@ class ShareTableViewCell: UITableViewCell{
 		contentView.addSubview(label)
 		label.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16)
+			label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+			label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+			label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
 	}
 
@@ -94,12 +105,14 @@ extension ShareViewController: UITableViewDelegate{
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as! ShareTableViewCell
-		
+
+		//navigation
 		let vc = ShareTableViewController()
 		vc.categoryIndex = indexPath.row
 		vc.categoryID = categoryList[indexPath.row].id
 		vc.categoryAll = categoryList[indexPath.row].self
 		self.navigationController?.pushViewController(vc, animated: true)
+		
 	}
 }
 
@@ -109,25 +122,19 @@ extension ShareViewController: UITableViewDataSource {
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
-//		let category = categoryList[indexPath.row]
-//		cell.textLabel?.text =  category.value(forKey: "title") as? String
-		cell.textLabel?.text = categoryList[indexPath.row].title
+		cell.label.text = categoryList[indexPath.row].title
+		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
+		
+		let imageView = UIImageView(frame: CGRect(x: -10, y: -10, width: cell.frame.width + 10, height: cell.frame.height))
+		let image = UIImage(named: "rectangle2Copy.png")
+		imageView.image = image
+		cell.backgroundView = UIView()
+		cell.backgroundView!.addSubview(imageView)
+		
 		return cell
 	}
+	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 68
+	}
 }
-
-
-//기본 디폴트 값
-//class ShareViewController: SLComposeServiceViewController {
-//    override func isContentValid() -> Bool {
-//        return true
-//    }
-//    override func didSelectPost() {
-//        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-//    }
-//    override func configurationItems() -> [Any]! {
-//        return []
-//    }
-//}
-
-
