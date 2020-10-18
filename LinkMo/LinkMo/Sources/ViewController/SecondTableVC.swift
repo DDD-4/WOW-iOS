@@ -125,16 +125,16 @@ class SecondTableVC: UIViewController {
     }
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
-        emptyLabel.text = "데이터 추가바람"
-        emptyLabel.font = UIFont.systemFont(ofSize: 20)
+        emptyLabel.text = "+ 버튼을 눌러 \n 카테고리를 만들어보세요!"
+        emptyLabel.font = UIFont.systemFont(ofSize: 26)
+        emptyLabel.numberOfLines = 0
         emptyLabel.textAlignment = .center
-        emptyLabel.backgroundColor = .orange
+        emptyLabel.textColor = .lightGray
         
         emptyLabel.snp.makeConstraints { snp in
-            snp.topMargin.equalTo(view).offset(20)
-            snp.leading.equalTo(view).offset(20)
-            snp.trailing.equalTo(view).offset(-20)
-            snp.height.equalTo(30)
+            snp.centerX.equalTo(view)
+            snp.centerY.equalTo(view).offset(-80)
+            snp.height.equalTo(80)
         }
         
         emptyLabel.isHidden = state
