@@ -7,20 +7,12 @@
 		<key>LinkMo.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-<<<<<<< Updated upstream
-			<integer>11</integer>
-=======
-			<integer>8</integer>
->>>>>>> Stashed changes
+			<integer>10</integer>
 		</dict>
 		<key>ShareLink.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-<<<<<<< Updated upstream
-			<integer>10</integer>
-=======
-			<integer>7</integer>
->>>>>>> Stashed changes
+			<integer>11</integer>
 		</dict>
 	</dict>
 </dict>
