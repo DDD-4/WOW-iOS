@@ -13,7 +13,7 @@ import RxDataSources
 import SnapKit
 import LinkPresentation
 import EMTNeumorphicView
-import RxUIAlert
+import SwiftUI
 
 class SecondTableVC: UIViewController {
     
@@ -41,7 +41,7 @@ class SecondTableVC: UIViewController {
     var sectionConstraint: Constraint? = nil
     var navigationTitle = ""
     
-    var tableView = UITableView(frame: .zero, style: .insetGrouped)
+    var tableView = UITableView(frame: .zero, style: .plain)
     
     //  addBtn, label
     let addBtn = UIButton(type: .custom)
@@ -79,10 +79,12 @@ class SecondTableVC: UIViewController {
         //TableView 세팅
         tableView.register(SecondCell.self, forCellReuseIdentifier: "second")
         tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = true
         tableView.separatorStyle = .none
         tableView.alwaysBounceHorizontal = false
         
+        print(tableView.contentInset)
+        print(tableView.contentOffset)
         tableState()
         tableSetting()
         tableView.rx.setDelegate(self)
@@ -299,11 +301,13 @@ class SecondTableVC: UIViewController {
         addCellBtn.rx.tap
             .subscribe(onNext: { _ in
                 
-                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
-                addcellvc.selectSection = self.categoryID
-                self.navigationController?.pushViewController(addcellvc, animated: true)
+//                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+//                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
+//                addcellvc.selectSection = self.categoryID
+//                self.navigationController?.pushViewController(addcellvc, animated: true)
                 
+                let swiftuiVC = UIHostingController(rootView: SwiftUIView())
+                self.navigationController?.pushViewController(swiftuiVC, animated: true)
             })
             .disposed(by: bag)
     }
@@ -552,7 +556,9 @@ extension SecondTableVC: UITableViewDelegate{
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         
         //MARK: - section 선택, expandable
-        let expandable = UIButton(frame: CGRect(x: 0, y: 0, width: header.frame.size.width, height: header.frame.size.height))
+        let expandable = UIButton(frame: CGRect(x: -5, y: -20, width: header.frame.size.width + 5, height: header.frame.size.height))
+        expandable.setImage(UIImage(named: "table_back"), for: .normal)
+//        expandable.backgroundColor = .orange
         expandable.rx.tap
             .subscribe(onNext: { _ in
                 var expandable = self.dataSource.sectionModels[section].expanded
@@ -569,7 +575,7 @@ extension SecondTableVC: UITableViewDelegate{
         header.addSubview(titleLbl)
         header.addSubview(numberLbl)
         header.addSubview(sectionUpdateBtn)
-        header.backgroundColor = UIColor.appColor(.listHeaderColor)
+//        header.backgroundColor = UIColor.appColor(.listHeaderColor)
         header.layer.cornerRadius = 20
         
         //MARK: - Section, 수정 삭제

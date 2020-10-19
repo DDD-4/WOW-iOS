@@ -239,6 +239,14 @@
             </objects>
             <point key="canvasLocation" x="4490" y="117"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="zOP-uw-1XN">
+            <objects>
+                <hostingController id="ZIU-Ag-fyC" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dDj-dO-8pM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3629" y="814"/>
+        </scene>
         <!--Add Cell List-->
         <scene sceneID="BHU-J5-TXe">
             <objects>
