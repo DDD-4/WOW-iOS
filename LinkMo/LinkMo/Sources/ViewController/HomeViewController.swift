@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
 	let tableshared = TableViewModel.shard
 	@IBOutlet weak var collectionView: UICollectionView!
 	
-    let AddBtn = UIButton(type: .system)
+    let AddBtn = UIButton(type: .custom)
 	let numberRow = 2
 	var collectionList: [Category] = [] {
 		didSet{

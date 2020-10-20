@@ -16,7 +16,7 @@
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="BYZ-38-t0r" customClass="HomeViewController" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -239,6 +239,14 @@
             </objects>
             <point key="canvasLocation" x="4490" y="117"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="zOP-uw-1XN">
+            <objects>
+                <hostingController id="ZIU-Ag-fyC" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dDj-dO-8pM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3629" y="814"/>
+        </scene>
         <!--Add Cell List-->
         <scene sceneID="BHU-J5-TXe">
             <objects>
@@ -368,7 +376,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ZeI-Y5-L2m">
             <objects>
-                <navigationController storyboardIdentifier="tableSet" automaticallyAdjustsScrollViewInsets="NO" id="mM8-SI-pU0" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainId" automaticallyAdjustsScrollViewInsets="NO" id="mM8-SI-pU0" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KuP-Fu-w40">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

@@ -55,6 +55,9 @@
 		A94B0D4824FF619D0072A34A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4724FF619D0072A34A /* LoginViewModel.swift */; };
 		A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */; };
 		A98C76D1253BFEEB008B667C /* share.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A98C76D0253BFEEB008B667C /* share.xcassets */; };
+		A99936DC253DC5B50009EE22 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936DB253DC5B50009EE22 /* SwiftUIView.swift */; };
+		A99936DE253EAA490009EE22 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936DD253EAA490009EE22 /* SplashView.swift */; };
+		A99936E2253EAF0A0009EE22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936E1253EAF0A0009EE22 /* SceneDelegate.swift */; };
 		A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* SecondTableVC.swift */; };
 		A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddCellList.swift */; };
 		A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
@@ -128,6 +131,9 @@
 		A94B0D4724FF619D0072A34A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A94B0D4924FF61AB0072A34A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		A98C76D0253BFEEB008B667C /* share.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = share.xcassets; sourceTree = "<group>"; };
+		A99936DB253DC5B50009EE22 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		A99936DD253EAA490009EE22 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		A99936E1253EAF0A0009EE22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A9C5925324F53B200010FDAD /* SecondTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableVC.swift; sourceTree = "<group>"; };
 		A9C5925524F53B3D0010FDAD /* AddCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellList.swift; sourceTree = "<group>"; };
 		A9C5925724F53B580010FDAD /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
@@ -214,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				29D0447924DE394500CB33EA /* AppDelegate.swift */,
+				A99936E1253EAF0A0009EE22 /* SceneDelegate.swift */,
 				29D0448524DE394900CB33EA /* Assets.xcassets */,
 				29D0448A24DE394900CB33EA /* Info.plist */,
 				2959750725301B4F0074FFCB /* GmarketSansLight.otf */,
@@ -263,6 +270,8 @@
 				A9C5925524F53B3D0010FDAD /* AddCellList.swift */,
 				A94B0D4124FF61200072A34A /* LoginVC.swift */,
 				A94B0D4524FF617F0072A34A /* SignUpVC.swift */,
+				A99936DB253DC5B50009EE22 /* SwiftUIView.swift */,
+				A99936DD253EAA490009EE22 /* SplashView.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -516,7 +525,10 @@
 				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
 				29D044A724DE3E9900CB33EA /* StorageType.swift in Sources */,
 				29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */,
+				A99936DC253DC5B50009EE22 /* SwiftUIView.swift in Sources */,
+				A99936E2253EAF0A0009EE22 /* SceneDelegate.swift in Sources */,
 				A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */,
+				A99936DE253EAA490009EE22 /* SplashView.swift in Sources */,
 				A9C5925A24F53B690010FDAD /* TableSection.swift in Sources */,
 				29D044A924DE3EAD00CB33EA /* CategoryStorageType.swift in Sources */,
 				29D044AB24DE3EDE00CB33EA /* CategoryManager.swift in Sources */,
