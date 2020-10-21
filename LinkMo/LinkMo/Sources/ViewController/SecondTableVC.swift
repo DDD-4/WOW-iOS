@@ -556,7 +556,7 @@ extension SecondTableVC: UITableViewDelegate{
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         
         //MARK: - section 선택, expandable
-        let expandable = UIButton(frame: CGRect(x: -5, y: -20, width: header.frame.size.width + 5, height: header.frame.size.height))
+        let expandable = UIButton(frame: CGRect(x: -5, y: -15, width: header.frame.size.width + 5, height: header.frame.size.height))
         expandable.setImage(UIImage(named: "table_back"), for: .normal)
 //        expandable.backgroundColor = .orange
         expandable.rx.tap
@@ -639,7 +639,11 @@ extension SecondTableVC: UITableViewDelegate{
         
         return header
     }
-    
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
+//        footer.backgroundColor = .orange
+//        return footer
+//    }
 }
 
 

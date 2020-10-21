@@ -58,6 +58,7 @@
 		A99936DC253DC5B50009EE22 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936DB253DC5B50009EE22 /* SwiftUIView.swift */; };
 		A99936DE253EAA490009EE22 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936DD253EAA490009EE22 /* SplashView.swift */; };
 		A99936E2253EAF0A0009EE22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936E1253EAF0A0009EE22 /* SceneDelegate.swift */; };
+		A99936E4253FE68B0009EE22 /* HomeSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936E3253FE68B0009EE22 /* HomeSettingVC.swift */; };
 		A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* SecondTableVC.swift */; };
 		A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddCellList.swift */; };
 		A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
@@ -134,6 +135,7 @@
 		A99936DB253DC5B50009EE22 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		A99936DD253EAA490009EE22 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		A99936E1253EAF0A0009EE22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A99936E3253FE68B0009EE22 /* HomeSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSettingVC.swift; sourceTree = "<group>"; };
 		A9C5925324F53B200010FDAD /* SecondTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableVC.swift; sourceTree = "<group>"; };
 		A9C5925524F53B3D0010FDAD /* AddCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellList.swift; sourceTree = "<group>"; };
 		A9C5925724F53B580010FDAD /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				A94B0D4524FF617F0072A34A /* SignUpVC.swift */,
 				A99936DB253DC5B50009EE22 /* SwiftUIView.swift */,
 				A99936DD253EAA490009EE22 /* SplashView.swift */,
+				A99936E3253FE68B0009EE22 /* HomeSettingVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				29D0449924DE3B9700CB33EA /* Storage.swift in Sources */,
 				29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */,
 				29597506252866140074FFCB /* ShareAlertViewController.swift in Sources */,
+				A99936E4253FE68B0009EE22 /* HomeSettingVC.swift in Sources */,
 				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
 				29D044A724DE3E9900CB33EA /* StorageType.swift in Sources */,
 				29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */,
