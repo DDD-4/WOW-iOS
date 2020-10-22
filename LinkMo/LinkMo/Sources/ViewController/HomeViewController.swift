@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
 	let disposeBag = DisposeBag()
 	let tableshared = TableViewModel.shard
 	@IBOutlet weak var collectionView: UICollectionView!
-	
+    @IBOutlet weak var linkname: UILabel!
     let AddBtn = UIButton(type: .custom)
 	let numberRow = 2
 	var collectionList: [Category] = [] {
@@ -74,6 +74,7 @@ class HomeViewController: UIViewController {
         var imageLosgo = UIImage(named: "ic_my_")
         imageLosgo = imageLosgo?.withRenderingMode(.alwaysOriginal)
         button.setImage(imageLosgo, for: .normal)
+        button.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
         let barButton = UIBarButtonItem(customView: button)
         navigationItem.rightBarButtonItem = barButton
 
@@ -89,6 +90,13 @@ class HomeViewController: UIViewController {
         }
 	}
 
+    @objc func barbutton(_ sender: Any){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+        let addcellvc = storyBoard.instantiateViewController(withIdentifier: "HomeSettingVC") as! HomeSettingVC
+        
+        self.present(addcellvc, animated: true)
+        
+    }
 	@objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
 		self.collectionView.reloadData()
@@ -106,6 +114,8 @@ class HomeViewController: UIViewController {
         
         view.backgroundColor = UIColor.appColor(.bgColor)
         collectionView.backgroundColor = UIColor.appColor(.bgColor)
+        let names = UserDefaults.standard.object(forKey: "linkname")
+        linkname.text = "\(names ?? "link")님의 링크"
         
 	}
 
