@@ -11,7 +11,7 @@ import SnapKit
 
 class HomeSettingVC: UIViewController {
 
-    let tableView = UITableView()
+    let tableView = UITableView(frame: .zero, style: .grouped)
     
     let settingList = ["이름 바꾸기"]
     override func viewDidLoad() {
