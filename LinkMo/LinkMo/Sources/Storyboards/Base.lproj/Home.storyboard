@@ -134,10 +134,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="u8S-w3-4oc"/>
                     </view>
+                    <navigationItem key="navigationItem" id="j1E-LY-DVn"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Mf-30-Imq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1942" y="814"/>
+            <point key="canvasLocation" x="2850.7246376811595" y="813.61607142857144"/>
         </scene>
         <!--Second TableVC-->
         <scene sceneID="itj-6s-fCT">
@@ -261,7 +262,7 @@
                 <hostingController id="ZIU-Ag-fyC" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dDj-dO-8pM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3629" y="814"/>
+            <point key="canvasLocation" x="4539.130434782609" y="813.61607142857144"/>
         </scene>
         <!--Add Cell List-->
         <scene sceneID="BHU-J5-TXe">
@@ -406,6 +407,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hjw-oE-IHF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1031.8840579710145" y="116.51785714285714"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="BK5-lL-HWZ">
+            <objects>
+                <navigationController storyboardIdentifier="SettingNav" automaticallyAdjustsScrollViewInsets="NO" id="d4d-is-vue" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Hjx-s4-wCD">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lm9-s3-AEP" kind="relationship" relationship="rootViewController" id="D65-KZ-yZ8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9MG-q6-Apb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1940.5797101449277" y="813.61607142857144"/>
         </scene>
     </scenes>
     <resources>

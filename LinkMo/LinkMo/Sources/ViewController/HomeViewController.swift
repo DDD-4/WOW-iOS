@@ -92,9 +92,11 @@ class HomeViewController: UIViewController {
 
     @objc func barbutton(_ sender: Any){
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-        let addcellvc = storyBoard.instantiateViewController(withIdentifier: "HomeSettingVC") as! HomeSettingVC
-        
+        let addcellvc = storyBoard.instantiateViewController(withIdentifier: "SettingNav")
+        addcellvc.modalPresentationStyle = .fullScreen
         self.present(addcellvc, animated: true)
+        
+//        self.navigationController?.pushViewController(addcellvc, animated: true)
         
     }
 	@objc private func refreshListData(_ sender: Any) {

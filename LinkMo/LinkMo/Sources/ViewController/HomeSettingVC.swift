@@ -14,6 +14,7 @@ class HomeSettingVC: UIViewController {
     let tableView = UITableView(frame: .zero, style: .grouped)
     
     let settingList = ["이름 바꾸기"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,8 +23,15 @@ class HomeSettingVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableviewAutolayout()
+        
+        navigationController?.navigationBar.topItem?.title = "설정"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(backVC(_:)))
     }
 
+    @objc func backVC(_ sender: UIButton){
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func tableviewAutolayout(){
         tableView.snp.makeConstraints { (snp) in
             snp.top.equalTo(view)

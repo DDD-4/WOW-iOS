@@ -369,28 +369,29 @@ class SecondTableVC: UIViewController {
             let url = URL(string: encoding)!
             
             
-            //                //  PreView, 썸네일이미지
-            //                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-            //                    guard let linkMetadata = linkMetadata,
-            //                        let imageProvider = linkMetadata.imageProvider else {
-            //                        return DispatchQueue.main.async {
-            //                                cell.linkImage.image = UIImage(named: "12")
-            //                            }
-            //                    }
-            //                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-            //                        guard error == nil else {
-            //                            return
-            //                        }
-            //                        if let image = image as? UIImage {
-            //                            // do something with image
-            //                            DispatchQueue.main.async {
-            //                                cell.linkImage.image = image
-            //                            }
-            //                        } else {
-            //                            print("no image available")
-            //                        }
-            //                    }
-            //                }
+//                            //  PreView, 썸네일이미지
+//                            LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+//                                guard let linkMetadata = linkMetadata,
+//                                    let imageProvider = linkMetadata.imageProvider else {
+//                                    return DispatchQueue.main.async {
+//                                            cell.linkImage.image = UIImage(named: "12")
+//                                        }
+//                                }
+//                                imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+//                                    guard error == nil else {
+//                                        return
+//                                    }
+//                                    if let image = image as? UIImage {
+//                                        // do something with image
+//                                        DispatchQueue.main.async {
+//                                            cell.linkImage.image = image
+//                                        }
+//                                    } else {
+//                                        print("no image available")
+//                                    }
+//                                }
+//                            }
+            
             
             
             //MARK: - Cell 수정 삭제
@@ -558,7 +559,7 @@ extension SecondTableVC: UITableViewDelegate{
         //MARK: - section 선택, expandable
         let expandable = UIButton(frame: CGRect(x: -5, y: -15, width: header.frame.size.width + 5, height: header.frame.size.height))
         expandable.setImage(UIImage(named: "table_back"), for: .normal)
-//        expandable.backgroundColor = .orange
+
         expandable.rx.tap
             .subscribe(onNext: { _ in
                 var expandable = self.dataSource.sectionModels[section].expanded
@@ -706,7 +707,10 @@ class SecondCell: UITableViewCell{
         }
         
     }
-    
+//    override func prepareForReuse() {
+//        linkTitle.attributedText = nil
+//        linkUrl.attributedText = nil
+//    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
