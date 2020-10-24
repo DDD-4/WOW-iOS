@@ -20,7 +20,7 @@ class ShareAlertViewController: SLComposeServiceViewController {
 	var categoryid: Int64 = 0
 	var categoryIndex = 0
 	var sectionIndex = 0 
-    let tableshard = TableViewModel.shard
+    
     override func isContentValid() -> Bool {
         return true
     }

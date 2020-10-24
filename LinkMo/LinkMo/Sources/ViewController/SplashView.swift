@@ -40,7 +40,7 @@ struct SplashView: View {
                         
                         Spacer()
                     }
-                    .padding(.bottom, 200)
+                    .padding(.bottom, 50)
                     
                 }
                 Spacer()

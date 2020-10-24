@@ -301,13 +301,13 @@ class SecondTableVC: UIViewController {
         addCellBtn.rx.tap
             .subscribe(onNext: { _ in
                 
-//                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-//                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
-//                addcellvc.selectSection = self.categoryID
-//                self.navigationController?.pushViewController(addcellvc, animated: true)
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
+                addcellvc.selectSection = self.categoryID
+                self.navigationController?.pushViewController(addcellvc, animated: true)
                 
-                let swiftuiVC = UIHostingController(rootView: SwiftUIView())
-                self.navigationController?.pushViewController(swiftuiVC, animated: true)
+//                let swiftuiVC = UIHostingController(rootView: SwiftUIView())
+//                self.navigationController?.pushViewController(swiftuiVC, animated: true)
             })
             .disposed(by: bag)
     }
