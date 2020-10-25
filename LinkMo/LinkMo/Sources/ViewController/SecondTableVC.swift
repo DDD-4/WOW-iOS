@@ -62,7 +62,12 @@ class SecondTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = navigationTitle
+
+        let backBtnImage = UIImage(named: "chevronLeft")
+        navigationController?.navigationBar.backIndicatorImage = backBtnImage
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backBtnImage
+        navigationController?.navigationBar.topItem?.title = ""
+
         
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
@@ -81,10 +86,8 @@ class SecondTableVC: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = true
         tableView.separatorStyle = .none
-        tableView.alwaysBounceHorizontal = false
+    
         
-        print(tableView.contentInset)
-        print(tableView.contentOffset)
         tableState()
         tableSetting()
         tableView.rx.setDelegate(self)
@@ -116,13 +119,11 @@ class SecondTableVC: UIViewController {
         // 뉴모피즘 색
         view.backgroundColor = UIColor.appColor(.bgColor)
         tableView.backgroundColor = UIColor.appColor(.bgColor)
-        
+        navigationItem.title = navigationTitle
         // 버튼으로 만들기
         //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
         //        tableView.addGestureRecognizer(tapGesture)
         //        tableView.isUserInteractionEnabled = true
-        
-        
         
     }
     // MARK: - 데이터 isEmpty 상태
@@ -551,8 +552,9 @@ extension SecondTableVC: UITableViewDelegate{
         numberLbl.text = "\(dataSource.sectionModels[section].linked.count)개"
         numberLbl.textAlignment = .right
         numberLbl.font = .systemFont(ofSize: 15)
+        numberLbl.textColor = UIColor.appColor(.numberColor)
         
-        let sectionUpdateBtn = UIButton(type: .system)
+        let sectionUpdateBtn = UIButton(type: .custom)
         sectionUpdateBtn.setImage(UIImage(named: "ic_delete copy"), for: .normal)
         sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         
@@ -653,7 +655,7 @@ class SecondCell: UITableViewCell{
     let linkImage = UIImageView()
     let linkTitle = UILabel()
     let linkUrl = UILabel()
-    let updateBtn = UIButton(type: .system)
+    let updateBtn = UIButton(type: .custom)
     var data: (Int, Int) = (0, 0)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -701,7 +703,7 @@ class SecondCell: UITableViewCell{
         
         updateBtn.snp.makeConstraints { snp in
             snp.top.equalTo(contentView).offset(20)
-            snp.trailing.equalTo(contentView).offset(-10)
+            snp.trailing.equalTo(contentView).offset(-20)
             snp.bottom.equalTo(contentView).offset(-20)
             snp.width.equalTo(24)
         }

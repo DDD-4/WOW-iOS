@@ -40,6 +40,7 @@ class AddCellList: UIViewController {
         
         view.backgroundColor = UIColor.appColor(.bgColor)
         scrollonView.backgroundColor = UIColor.appColor(.bgColor)
+        navigationController?.navigationBar.topItem?.title = ""
         
         navigationItem.title = "링크 추가"
         
