@@ -36,7 +36,11 @@ class HomeViewController: UIViewController {
 		navigationController?.isNavigationBarHidden = false
         collectionView.showsVerticalScrollIndicator = false
         
-
+        viewModel.inputs.readTitle()
+        flottingBtn()
+        navsettingVC()
+        
+        
 		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		
@@ -70,39 +74,38 @@ class HomeViewController: UIViewController {
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
-		viewModel.inputs.readTitle()
-        flottingBtn()
+		
         
         view.backgroundColor = UIColor.appColor(.bgColor)
         collectionView.backgroundColor = UIColor.appColor(.bgColor)
-        
-            //  navigationBar
-            navigationItem.title = "link"
-            navigationController?.navigationBar.isTranslucent = false
-            navigationController?.navigationBar.barTintColor = UIColor.appColor(.bgColor)
-            navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationController?.navigationBar.shadowImage = UIImage()
-            
-        
-            let button = UIButton(type: .custom)
-            button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-            button.backgroundColor = .lightGray
-            button.layer.masksToBounds = false
-            button.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-        
-            
-            var imageLosgo = UIImage(named: "ic_my_")
-            imageLosgo = imageLosgo?.withRenderingMode(.alwaysOriginal)
-            button.setImage(imageLosgo, for: .normal)
-            button.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-            let barButton = UIBarButtonItem(customView: button)
-            navigationItem.rightBarButtonItem = barButton
-        
+
         let names = UserDefaults.standard.object(forKey: "linkname")
         linkname.text = "\(names ?? "link")님의 링크"
         
 	}
 
+    func navsettingVC(){
+        //  navigationBar
+        navigationItem.title = "link"
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor.appColor(.bgColor)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        
+        let button = UIButton(type: .custom)
+        button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        button.backgroundColor = .lightGray
+        button.layer.masksToBounds = false
+        button.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
+        
+        
+        var imageLosgo = UIImage(named: "ic_my_")
+        imageLosgo = imageLosgo?.withRenderingMode(.alwaysOriginal)
+        button.setImage(imageLosgo, for: .normal)
+        button.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = barButton
+    }
     //Autolayout
     func flottingBtn(){
         view.addSubview(AddBtn)

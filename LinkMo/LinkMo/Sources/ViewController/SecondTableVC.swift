@@ -67,8 +67,7 @@ class SecondTableVC: UIViewController {
 //
 //        navigationController?.navigationBar.backIndicatorImage = backBtnImage
 //        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backBtnImage
-        navigationController?.navigationBar.topItem?.title = ""
-        addBackButton()
+//        navigationController?.navigationBar.topItem?.title = ""
         
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
@@ -113,24 +112,6 @@ class SecondTableVC: UIViewController {
     @objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
         _ = tableShardVM.readSections(categoryId: categoryID)
-    }
-
-    func addBackButton() {
-         
-         let containerView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 50)))
-    
-         let btnBack = UIButton(frame: CGRect(x: -10, y: 0, width: 45, height: 45))
-         btnBack.setImage(UIImage(named: "chevronLeft")?.withRenderingMode(.alwaysTemplate), for: .normal)
-         btnBack.tintColor = .black
-         btnBack.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
-         containerView.addSubview(btnBack)
-
-         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: containerView)
-     }
-    
-    @objc func backAction(_ sender: UIButton) {
-        
-       self.navigationController?.popViewController(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
