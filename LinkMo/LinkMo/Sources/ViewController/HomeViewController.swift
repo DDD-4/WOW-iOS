@@ -61,7 +61,7 @@ class HomeViewController: UIViewController {
 		buttonSet.contentVerticalAlignment = .fill
 		buttonSet.contentHorizontalAlignment = .fill
 		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
-		buttonSet.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
+		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
 		buttonSet.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
 		buttonSet.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
