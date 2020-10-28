@@ -33,13 +33,21 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
-		navigationController?.isNavigationBarHidden = false
+		navigationController?.isNavigationBarHidden = true
         collectionView.showsVerticalScrollIndicator = false
         
         viewModel.inputs.readTitle()
         flottingBtn()
         navsettingVC()
-        
+		
+		let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
+		linkLabel.text = "Link"
+		linkLabel.myLabel()
+		view.addSubview(linkLabel)
+		linkLabel.translatesAutoresizingMaskIntoConstraints = false
+		linkLabel.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+		linkLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 55).isActive = true
+
         
 		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
@@ -52,6 +60,20 @@ class HomeViewController: UIViewController {
             collectionView.addSubview(pullControl)
         }
 	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+        view.backgroundColor = UIColor.appColor(.bgColor)
+        collectionView.backgroundColor = UIColor.appColor(.bgColor)
+		navigationController?.isNavigationBarHidden = true
+		
+        let names = UserDefaults.standard.object(forKey: "linkname")
+        linkname.text = "\(names ?? "link")님의 링크"
+        
+	}
+	override func viewWillDisappear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = false
+	}
+
 
     @objc func barbutton(_ sender: Any){
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
@@ -73,20 +95,9 @@ class HomeViewController: UIViewController {
 		button.isSelected = !button.isSelected
 	}
 	
-	override func viewWillAppear(_ animated: Bool) {
-		
-        
-        view.backgroundColor = UIColor.appColor(.bgColor)
-        collectionView.backgroundColor = UIColor.appColor(.bgColor)
-
-        let names = UserDefaults.standard.object(forKey: "linkname")
-        linkname.text = "\(names ?? "link")님의 링크"
-        
-	}
-
     func navsettingVC(){
         //  navigationBar
-        navigationItem.title = "link"
+//        navigationItem.title = "link"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.appColor(.bgColor)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -348,4 +359,12 @@ class EmojiTextField: UITextField {
         }
         return super.canPerformAction(action, withSender: sender)
     }
+}
+
+extension UILabel {
+	func myLabel() {
+		textAlignment = .center
+		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 1)
+		font = UIFont(name:"GmarketSansLight",size:21)
+	}
 }

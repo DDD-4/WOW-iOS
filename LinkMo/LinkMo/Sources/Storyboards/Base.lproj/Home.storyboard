@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mM8-SI-pU0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mM8-SI-pU0">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -102,12 +102,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="eEw-ds-mS0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="67" id="41p-By-8v5"/>
+                            <constraint firstAttribute="bottom" secondItem="9gA-8Y-DVm" secondAttribute="bottom" id="60d-fp-z2w"/>
                             <constraint firstItem="9gA-8Y-DVm" firstAttribute="top" secondItem="eEw-ds-mS0" secondAttribute="bottom" constant="19" id="GnS-C8-atK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9gA-8Y-DVm" secondAttribute="trailing" id="Z3Z-eK-1NI"/>
                             <constraint firstItem="eEw-ds-mS0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="iXI-1p-sS5"/>
                             <constraint firstItem="9gA-8Y-DVm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jgI-PV-tSj"/>
-                            <constraint firstAttribute="bottom" secondItem="9gA-8Y-DVm" secondAttribute="bottom" id="kz7-vi-6sa"/>
+                            <constraint firstItem="eEw-ds-mS0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="67" id="n2e-7L-MFi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eEw-ds-mS0" secondAttribute="trailing" constant="20" id="rC4-hS-96g"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
