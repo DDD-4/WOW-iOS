@@ -24,7 +24,6 @@ class TableViewModel{
     var ListSection: [String] = []
     
     var sections: [TableSection] = [
-        //TableSection(header: "A", items: ["A"], link: ["A"])
 //        TableSection(categoryid: 323, header: "a", items: [], link: [], expand: true)
     ]
     

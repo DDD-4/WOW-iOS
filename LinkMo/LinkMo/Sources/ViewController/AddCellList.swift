@@ -9,8 +9,7 @@
 
 /*
  수정할거
- 
- keyboard 가리는 현상
+ confirm버튼 뉴모피즘
  */
 import UIKit
 import RxSwift
@@ -143,7 +142,7 @@ class AddCellList: UIViewController {
             let frame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
                 return
         }
-        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height, right: 0)
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height + 60, right: 0)
         scrollView.contentInset = contentInset
     }
     
@@ -210,6 +209,7 @@ class AddCellList: UIViewController {
         confirmBtn.layer.cornerRadius = confirmBtn.frame.size.height / 2
         confirmBtn.setTitleColor(.blue, for: .normal)
         confirmBtn.backgroundColor = .lightGray
+        
         confirmBtn.rx.tap
             .subscribe(onNext: { b in
                 

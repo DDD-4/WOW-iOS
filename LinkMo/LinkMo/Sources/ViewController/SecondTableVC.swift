@@ -363,35 +363,37 @@ class SecondTableVC: UIViewController {
             cell.selectionStyle = .none
             cell.linkTitle.text = element
             cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
-            
+            cell.backgroundColor = UIColor.appColor(.bgColor)
             
             let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
             let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             let url = URL(string: encoding)!
             
             
-//                            //  PreView, 썸네일이미지
-//                            LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-//                                guard let linkMetadata = linkMetadata,
-//                                    let imageProvider = linkMetadata.imageProvider else {
-//                                    return DispatchQueue.main.async {
-//                                            cell.linkImage.image = UIImage(named: "12")
-//                                        }
-//                                }
-//                                imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                                    guard error == nil else {
-//                                        return
-//                                    }
-//                                    if let image = image as? UIImage {
-//                                        // do something with image
-//                                        DispatchQueue.main.async {
-//                                            cell.linkImage.image = image
-//                                        }
-//                                    } else {
-//                                        print("no image available")
-//                                    }
-//                                }
-//                            }
+            //  PreView, 썸네일이미지
+            LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+                guard let linkMetadata = linkMetadata,
+                    let imageProvider = linkMetadata.imageProvider else {
+                        return DispatchQueue.main.async {
+                            cell.linkImage.image = UIImage(named: "12")
+                        }
+                }
+                imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                    guard error == nil else {
+                        return
+                    }
+                    if let image = image as? UIImage {
+                        // do something with image
+                        DispatchQueue.main.async {
+                            cell.linkImage.image = image
+                            let data = image.pngData()
+                            print("image data = \(String(describing: data))")
+                        }
+                    } else {
+                        print("no image available")
+                    }
+                }
+            }
             
             
             
@@ -419,6 +421,7 @@ class SecondTableVC: UIViewController {
                             }else{
                                 updatelink = "https://\(updatelink!)"
                             }
+                            
                             if updateTitle!.isEmpty{
                                 updateTitle = dataSource.sectionModels[cell.data.0].titled[cell.data.1]
                             }
