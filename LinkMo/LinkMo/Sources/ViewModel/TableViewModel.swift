@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import CoreData
-
+import LinkPresentation
 
 class TableViewModel{
     
@@ -24,7 +24,6 @@ class TableViewModel{
     var ListSection: [String] = []
     
     var sections: [TableSection] = [
-        //TableSection(header: "A", items: ["A"], link: ["A"])
 //        TableSection(categoryid: 323, header: "a", items: [], link: [], expand: true)
     ]
     
@@ -75,7 +74,7 @@ class TableViewModel{
             let categorys = try self.context.fetch(categoryfetch)
             let ids = categorys[categoryId].id
             //table
-            let headerAppend = TableSection(categoryid: ids, header: header, items: [], link: [], expand: true)
+            let headerAppend = TableSection(categoryid: ids, header: header, items: [], link: [], thumbnail: [], expand: true)
             
             let managedTable = ManagedList(context: context)
             managedTable.fromTableSection(list: headerAppend)
@@ -187,6 +186,7 @@ class TableViewModel{
         sections[sectionNumber].items.append(linkTitle)
         sections[sectionNumber].link.append(linkUrl)
         
+        
         do{
             //category
             let categorys = try self.context.fetch(categoryfetch)
@@ -207,6 +207,67 @@ class TableViewModel{
             return .error(error)
         }
     }
+    func addPng(categoryid: Int, sectionNumber: Int, png: Data) -> Observable<[TableSection]>{
+        
+        sections[sectionNumber].thumbnail.append(png)
+        do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryid].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let addValue = sectionRead.filter{$0.categoryid == ids}
+            
+            addValue[sectionNumber].setValue([png], forKey: "thumbnail")
+            addValue[sectionNumber].fromTableSection(list: sections[sectionNumber])
+            
+            try self.context.save()
+            return .just(sections)
+        }catch{
+            return .error(error)
+        }
+    }
+    
+//    func addThumbnails(linkurl: String, sectionNumber: Int) -> Data{
+//
+//        let urlstring = linkurl
+//        let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+////        let url = URL(string: encoding)!
+//        let url = URL(string: "https://www.apple.com/ipad")!
+//
+//
+//        print(url)
+//
+//        //  PreView, 썸네일이미지
+//        LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+//            guard let linkMetadata = linkMetadata,
+//                let imageProvider = linkMetadata.imageProvider else {
+//                    return DispatchQueue.main.async {
+//                        let defaultsImage = UIImage(named: "12")
+//                        let convertData = defaultsImage?.pngData()
+//                        self.sections[sectionNumber].thumbnail.append(convertData!)
+//
+//
+//                    }
+//            }
+//            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+//                guard error == nil else {
+//                    return
+//                }
+//                if let image = image as? UIImage {
+//                    // do something with image
+//                    DispatchQueue.main.async {
+//                        let data = image.pngData()
+//                        self.sections[sectionNumber].thumbnail.append(data!)
+//                    }
+//                } else {
+//                    print("no image available")
+//                }
+//            }
+//        }
+//        return Data()
+//    }
     func checkLimit(categoryid: Int, sectionNumber: Int){
         
         do{

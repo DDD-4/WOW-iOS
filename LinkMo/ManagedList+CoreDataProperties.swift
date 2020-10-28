@@ -24,9 +24,14 @@ extension ManagedList {
         return NSFetchRequest<ManagedList>(entityName: "ManagedList")
     }
 
-    @NSManaged public var title: [String]
+    
     @NSManaged public var section: String
-    @NSManaged public var url: [String]
     @NSManaged public var categoryid: Int64
     @NSManaged public var expand: Bool
+    @NSManaged public var title: [String]
+    @NSManaged public var url: [String]
+    @NSManaged public var thumbnail: [Data]
+
+
+    
 }
