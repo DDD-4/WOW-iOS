@@ -361,11 +361,7 @@ class SecondTableVC: UIViewController {
             }
             
             cell.selectionStyle = .none
-            cell.linkTitle.text = element
-            cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
             cell.backgroundColor = UIColor.appColor(.bgColor)
-            cell.linkImage.image = UIImage(data: dataSource.sectionModels[indexPath.section].thumbnail[indexPath.row])
-                
             
             let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
             let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -373,36 +369,36 @@ class SecondTableVC: UIViewController {
             
             
             //  PreView, 썸네일이미지
-
-//            LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-//                guard let linkMetadata = linkMetadata,
-//                    let imageProvider = linkMetadata.imageProvider else {
-//                        return DispatchQueue.main.async {
-//                            let images = UIImage(named: "12")
-//                            let convert = images?.pngData()
-//                            _ = self.tableShardVM.addPng(categoryid: self.categoryID, sectionNumber: indexPath.section, png: convert!)
-//                            cell.linkImage.image = UIImage(named: "12")
-//
-//                        }
-//                }
-//                imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                    guard error == nil else {
-//                        return
-//                    }
-//                    if let image = image as? UIImage {
-//                        // do something with image
-//                        DispatchQueue.main.async {
-//                            let images = image
-//                            let convert = images.pngData()
-//
-//                            _ = self.tableShardVM.addPng(categoryid: self.categoryID, sectionNumber: indexPath.section, png: convert!)
-//                            cell.linkImage.image = image
-//                        }
-//                    } else {
-//                        print("no image available")
-//                    }
-//                }
-//            }
+            let titleCount = dataSource.sectionModels[indexPath.section].titled.count
+            let imageCount = dataSource.sectionModels[indexPath.section].thumbnail.count
+            
+            if titleCount != imageCount{
+                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+                    guard let linkMetadata = linkMetadata,
+                        let imageProvider = linkMetadata.imageProvider else {
+                            return DispatchQueue.main.async {
+                                cell.linkImage.image = UIImage(named: "12")
+                            }
+                    }
+                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                        guard error == nil else {
+                            return
+                        }
+                        if let image = image as? UIImage {
+                            // do something with image
+                            DispatchQueue.main.async {
+                                cell.linkImage.image = image
+                            }
+                        } else {
+                            print("no image available")
+                        }
+                    }
+                }
+            }else{
+                cell.linkImage.image = UIImage(data: dataSource.sectionModels[indexPath.section].thumbnail[indexPath.row])
+            }
+            cell.linkTitle.text = element
+            cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
             
             
             
@@ -527,7 +523,7 @@ class SecondTableVC: UIViewController {
             }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         })
-            .disposed(by: bag)
+        .disposed(by: bag)
         
         tableView.snp.makeConstraints { snp in
             snp.top.equalTo(view)

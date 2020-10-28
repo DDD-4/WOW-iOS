@@ -14,6 +14,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import LinkPresentation
 
 class AddCellList: UIViewController {
     
@@ -55,19 +56,6 @@ class AddCellList: UIViewController {
         tableShardVM.sectionsList(sectionid: selectSection)
         rxButton()
         toolbar()
-        
-        
-//        categoryName.rx.text.orEmpty
-//            .subscribe(onNext: { b in
-//                if b == ""{
-//                    self.confirmBtn.isEnabled = false
-//                    self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
-//                }else{
-//                    self.confirmBtn.isEnabled = true
-//                    self.confirmBtn.setTitleColor(.blue, for: .normal)
-//                }
-//            })
-//            .disposed(by: bag)
         
         categoryName.rx.text.orEmpty
             .bind(to: tableShardVM.listlocateS)
@@ -229,7 +217,7 @@ class AddCellList: UIViewController {
                         _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
                         self.tableShardVM.subject.accept(self.tableShardVM.sections)
                         
-                        self.navigationController?.popViewController(animated: true)
+                        
                     }
                     if self.urlFd.value.contains("https://") || self.urlFd.value.contains("http://"){
                         return
@@ -237,7 +225,41 @@ class AddCellList: UIViewController {
                         urlHttps = "https://\(urlHttps)/"
                     }
                 }
+                let urlstring = urlHttps
+                let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                let url = URL(string: encoding)!
                 
+                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+                    guard let linkMetadata = linkMetadata,
+                        let imageProvider = linkMetadata.imageProvider else {
+                            return DispatchQueue.main.async {
+                                let images = UIImage(named: "12")
+                                let convert = images?.pngData()
+                                
+                                _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
+                                self.navigationController?.popViewController(animated: true)
+
+                            }
+                    }
+                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                        guard error == nil else {
+                            return
+                        }
+                        if let image = image as? UIImage {
+                            // do something with image
+                            DispatchQueue.main.async {
+                                let images = image
+                                let convert = images.pngData()
+
+                                _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        } else {
+                            print("no image available")
+                        }
+                    }
+                    
+                }
                 
             })
             .disposed(by: bag)
