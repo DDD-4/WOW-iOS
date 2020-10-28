@@ -29,36 +29,49 @@ class HomeViewController: UIViewController {
 		}
 	}
 	private var pullControl = UIRefreshControl()
+	let buttonSet = EMTNeumorphicButton(type: .custom)
+	let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
 		navigationController?.isNavigationBarHidden = true
         collectionView.showsVerticalScrollIndicator = false
-        
+		view.addSubview(linkLabel)
+        view.addSubview(buttonSet)
+		
         viewModel.inputs.readTitle()
         flottingBtn()
-        navsettingVC()
+//        navsettingVC()
+		refresh()
 		
-		let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
+		
 		linkLabel.text = "Link"
 		linkLabel.myLabel()
-		view.addSubview(linkLabel)
 		linkLabel.translatesAutoresizingMaskIntoConstraints = false
-		linkLabel.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-		linkLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 55).isActive = true
 
         
 		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		
-		pullControl.attributedTitle = NSAttributedString(string: "새로고침")
-        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            collectionView.refreshControl = pullControl
-        } else {
-            collectionView.addSubview(pullControl)
-        }
+		buttonSet.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+		buttonSet.layer.cornerRadius = 5
+		buttonSet.setImage(UIImage(named: "ic_my_"), for: .normal)
+		buttonSet.setImage(UIImage(named: "ic_my_"), for: .selected)
+		buttonSet.contentVerticalAlignment = .fill
+		buttonSet.contentHorizontalAlignment = .fill
+		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
+		buttonSet.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
+		buttonSet.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
+		buttonSet.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			linkLabel.centerXAnchor.constraint(equalTo:view.centerXAnchor),
+			linkLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 55),
+			buttonSet.centerYAnchor.constraint(equalTo: linkLabel.centerYAnchor),
+			buttonSet.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14)
+		])
+		
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -74,7 +87,6 @@ class HomeViewController: UIViewController {
 		navigationController?.isNavigationBarHidden = false
 	}
 
-
     @objc func barbutton(_ sender: Any){
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
         let addcellvc = storyBoard.instantiateViewController(withIdentifier: "SettingNav")
@@ -84,11 +96,21 @@ class HomeViewController: UIViewController {
 //        self.navigationController?.pushViewController(addcellvc, animated: true)
         
     }
+	
+	func refresh(){
+		pullControl.attributedTitle = NSAttributedString(string: "새로고침")
+        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = pullControl
+        } else {
+            collectionView.addSubview(pullControl)
+        }
+	}
+	
 	@objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
 		self.collectionView.reloadData()
     }
-
 	
 	@objc func tapped(_ button: EMTNeumorphicButton) {
 		// isSelected property changes neumorphicLayer?.depthType automatically
