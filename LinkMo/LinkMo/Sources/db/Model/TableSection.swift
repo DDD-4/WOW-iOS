@@ -21,7 +21,9 @@ struct TableSection {
     var header: String
     var items: [Item]
     var link: [Link]
+    var thumbnail: [Data]
     var expand: Bool
+    
 }
 
 extension TableSection: SectionModelType {
@@ -53,5 +55,8 @@ extension TableSection: SectionModelType {
     }
     var expanded: Bool{
         return expand
+    }
+    var thumbnails: [Data]{
+        return thumbnail
     }
 }

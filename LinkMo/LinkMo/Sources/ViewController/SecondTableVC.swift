@@ -152,7 +152,7 @@ class SecondTableVC: UIViewController {
                 self.state = .show
             }
         })
-            .disposed(by: bag)
+        .disposed(by: bag)
     }
     // MARK: - FloatingButton
     func floatingBtn(){
@@ -364,6 +364,8 @@ class SecondTableVC: UIViewController {
             cell.linkTitle.text = element
             cell.linkUrl.text = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
             cell.backgroundColor = UIColor.appColor(.bgColor)
+            cell.linkImage.image = UIImage(data: dataSource.sectionModels[indexPath.section].thumbnail[indexPath.row])
+                
             
             let urlstring = "\(dataSource.sectionModels[indexPath.section].linked[indexPath.row])"
             let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -371,29 +373,36 @@ class SecondTableVC: UIViewController {
             
             
             //  PreView, 썸네일이미지
-            LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-                guard let linkMetadata = linkMetadata,
-                    let imageProvider = linkMetadata.imageProvider else {
-                        return DispatchQueue.main.async {
-                            cell.linkImage.image = UIImage(named: "12")
-                        }
-                }
-                imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                    guard error == nil else {
-                        return
-                    }
-                    if let image = image as? UIImage {
-                        // do something with image
-                        DispatchQueue.main.async {
-                            cell.linkImage.image = image
-                            let data = image.pngData()
-                            print("image data = \(String(describing: data))")
-                        }
-                    } else {
-                        print("no image available")
-                    }
-                }
-            }
+
+//            LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+//                guard let linkMetadata = linkMetadata,
+//                    let imageProvider = linkMetadata.imageProvider else {
+//                        return DispatchQueue.main.async {
+//                            let images = UIImage(named: "12")
+//                            let convert = images?.pngData()
+//                            _ = self.tableShardVM.addPng(categoryid: self.categoryID, sectionNumber: indexPath.section, png: convert!)
+//                            cell.linkImage.image = UIImage(named: "12")
+//
+//                        }
+//                }
+//                imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+//                    guard error == nil else {
+//                        return
+//                    }
+//                    if let image = image as? UIImage {
+//                        // do something with image
+//                        DispatchQueue.main.async {
+//                            let images = image
+//                            let convert = images.pngData()
+//
+//                            _ = self.tableShardVM.addPng(categoryid: self.categoryID, sectionNumber: indexPath.section, png: convert!)
+//                            cell.linkImage.image = image
+//                        }
+//                    } else {
+//                        print("no image available")
+//                    }
+//                }
+//            }
             
             
             
@@ -645,11 +654,6 @@ extension SecondTableVC: UITableViewDelegate{
         
         return header
     }
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let footer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
-//        footer.backgroundColor = .orange
-//        return footer
-//    }
 }
 
 
