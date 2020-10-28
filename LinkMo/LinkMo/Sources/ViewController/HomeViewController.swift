@@ -29,28 +29,62 @@ class HomeViewController: UIViewController {
 		}
 	}
 	private var pullControl = UIRefreshControl()
+	let buttonSet = EMTNeumorphicButton(type: .custom)
+	let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
-		navigationController?.isNavigationBarHidden = false
+		navigationController?.isNavigationBarHidden = true
         collectionView.showsVerticalScrollIndicator = false
-        
+		view.addSubview(linkLabel)
+        view.addSubview(buttonSet)
+		
         viewModel.inputs.readTitle()
         flottingBtn()
-        navsettingVC()
-        
+//        navsettingVC()
+		refresh()
+		
+		
+		linkLabel.text = "Link"
+		linkLabel.myLabel()
+		linkLabel.translatesAutoresizingMaskIntoConstraints = false
+
         
 		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		
-		pullControl.attributedTitle = NSAttributedString(string: "새로고침")
-        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            collectionView.refreshControl = pullControl
-        } else {
-            collectionView.addSubview(pullControl)
-        }
+		buttonSet.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+		buttonSet.layer.cornerRadius = 5
+		buttonSet.setImage(UIImage(named: "ic_my_"), for: .normal)
+		buttonSet.setImage(UIImage(named: "ic_my_"), for: .selected)
+		buttonSet.contentVerticalAlignment = .fill
+		buttonSet.contentHorizontalAlignment = .fill
+		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
+		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+		buttonSet.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
+		buttonSet.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			linkLabel.centerXAnchor.constraint(equalTo:view.centerXAnchor),
+			linkLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 55),
+			buttonSet.centerYAnchor.constraint(equalTo: linkLabel.centerYAnchor),
+			buttonSet.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14)
+		])
+		
+		
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+        view.backgroundColor = UIColor.appColor(.bgColor)
+        collectionView.backgroundColor = UIColor.appColor(.bgColor)
+		navigationController?.isNavigationBarHidden = true
+		
+        let names = UserDefaults.standard.object(forKey: "linkname")
+        linkname.text = "\(names ?? "link")님의 링크"
+        
+	}
+	override func viewWillDisappear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = false
 	}
 
     @objc func barbutton(_ sender: Any){
@@ -62,31 +96,30 @@ class HomeViewController: UIViewController {
 //        self.navigationController?.pushViewController(addcellvc, animated: true)
         
     }
+	
+	func refresh(){
+		pullControl.attributedTitle = NSAttributedString(string: "새로고침")
+        pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = pullControl
+        } else {
+            collectionView.addSubview(pullControl)
+        }
+	}
+	
 	@objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
 		self.collectionView.reloadData()
     }
-
 	
 	@objc func tapped(_ button: EMTNeumorphicButton) {
 		// isSelected property changes neumorphicLayer?.depthType automatically
 		button.isSelected = !button.isSelected
 	}
 	
-	override func viewWillAppear(_ animated: Bool) {
-		
-        
-        view.backgroundColor = UIColor.appColor(.bgColor)
-        collectionView.backgroundColor = UIColor.appColor(.bgColor)
-
-        let names = UserDefaults.standard.object(forKey: "linkname")
-        linkname.text = "\(names ?? "link")님의 링크"
-        
-	}
-
     func navsettingVC(){
         //  navigationBar
-        navigationItem.title = "link"
+//        navigationItem.title = "link"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.appColor(.bgColor)
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -142,21 +175,38 @@ class HomeViewController: UIViewController {
 	
 	func showAlert(title: String) {
 		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		let saveAction = UIAlertAction(title:"Save", style: .default, handler: { (action) -> Void in
+			let icon = alert.textFields![0] as UITextField
+			let title = alert.textFields![1] as UITextField
+			if self.collectionList.count < 20 {
+				self.viewModel.addTitle(title: title.text!, icon: icon.text ?? " ")
+			}else {
+				let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 150, y: self.view.frame.size.height-100, width: 300, height: 35))
+				toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+				toastLabel.textColor = UIColor.white
+				toastLabel.textAlignment = .center
+				toastLabel.text = "카테고리는 20개 까지만 추가됩니다."
+				toastLabel.alpha = 1.0
+				toastLabel.layer.cornerRadius = 10
+				toastLabel.clipsToBounds = true
+				self.view.addSubview(toastLabel)
+				UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: { toastLabel.alpha = 0.0 }, completion: {(isCompleted) in toastLabel.removeFromSuperview() })
+			}
+			
+		})
+		saveAction.isEnabled = false
+		alert.addAction(saveAction)
 		alert.addTextField(configurationHandler: { (textField) -> Void in
 			textField.placeholder = "대표 아이콘"
 		})
-		alert.addTextField(configurationHandler: { (textField) -> Void in
+		alert.addTextField(configurationHandler: { (textField) in
 			textField.placeholder = "카테고리 이름"
+			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main) { (notification) in
+				saveAction.isEnabled = textField.text?.count ?? 0 > 0
+			}
 		})
-		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
-		}))
-		alert.addAction(UIAlertAction(title: "추가", style: .default, handler: { (action) -> Void in
-			let icon = alert.textFields![0] as UITextField
-			let title = alert.textFields![1] as UITextField
-			self.viewModel.addTitle(title: title.text ?? " ", icon: icon.text ?? " ")
-		}))
-
 		self.present(alert, animated: true, completion: nil)
 	}
 	
@@ -324,3 +374,19 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+class EmojiTextField: UITextField {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(UIResponderStandardEditActions.paste(_:)) {
+            return false
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+}
+
+extension UILabel {
+	func myLabel() {
+		textAlignment = .center
+		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 1)
+		font = UIFont(name:"GmarketSansLight",size:21)
+	}
+}
