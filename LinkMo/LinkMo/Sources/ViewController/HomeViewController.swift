@@ -142,21 +142,24 @@ class HomeViewController: UIViewController {
 	
 	func showAlert(title: String) {
 		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		let saveAction = UIAlertAction(title:"Save", style: .default, handler: { (action) -> Void in
+			let icon = alert.textFields![0] as UITextField
+			let title = alert.textFields![1] as UITextField
+			self.viewModel.addTitle(title: title.text!, icon: icon.text ?? " ")
+		})
+		saveAction.isEnabled = false
+		alert.addAction(saveAction)
 		alert.addTextField(configurationHandler: { (textField) -> Void in
 			textField.placeholder = "대표 아이콘"
 		})
-		alert.addTextField(configurationHandler: { (textField) -> Void in
-			textField.placeholder = "카테고리 이름"
+		alert.addTextField(configurationHandler: { (textField) in
+			textField.placeholder = "Enter something"
+			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main) { (notification) in
+				saveAction.isEnabled = textField.text?.count ?? 0 > 0
+			}
 		})
-		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
-		}))
-		alert.addAction(UIAlertAction(title: "추가", style: .default, handler: { (action) -> Void in
-			let icon = alert.textFields![0] as UITextField
-			let title = alert.textFields![1] as UITextField
-			self.viewModel.addTitle(title: title.text ?? " ", icon: icon.text ?? " ")
-		}))
-
 		self.present(alert, animated: true, completion: nil)
 	}
 	
