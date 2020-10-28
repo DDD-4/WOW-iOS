@@ -147,7 +147,21 @@ class HomeViewController: UIViewController {
 		let saveAction = UIAlertAction(title:"Save", style: .default, handler: { (action) -> Void in
 			let icon = alert.textFields![0] as UITextField
 			let title = alert.textFields![1] as UITextField
-			self.viewModel.addTitle(title: title.text!, icon: icon.text ?? " ")
+			if self.collectionList.count < 20 {
+				self.viewModel.addTitle(title: title.text!, icon: icon.text ?? " ")
+			}else {
+				let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 150, y: self.view.frame.size.height-100, width: 300, height: 35))
+				toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+				toastLabel.textColor = UIColor.white
+				toastLabel.textAlignment = .center
+				toastLabel.text = "카테고리는 20개 까지만 추가됩니다."
+				toastLabel.alpha = 1.0
+				toastLabel.layer.cornerRadius = 10
+				toastLabel.clipsToBounds = true
+				self.view.addSubview(toastLabel)
+				UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: { toastLabel.alpha = 0.0 }, completion: {(isCompleted) in toastLabel.removeFromSuperview() })
+			}
+			
 		})
 		saveAction.isEnabled = false
 		alert.addAction(saveAction)
@@ -155,7 +169,7 @@ class HomeViewController: UIViewController {
 			textField.placeholder = "대표 아이콘"
 		})
 		alert.addTextField(configurationHandler: { (textField) in
-			textField.placeholder = "Enter something"
+			textField.placeholder = "카테고리 이름"
 			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main) { (notification) in
 				saveAction.isEnabled = textField.text?.count ?? 0 > 0
 			}
@@ -327,3 +341,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+class EmojiTextField: UITextField {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(UIResponderStandardEditActions.paste(_:)) {
+            return false
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+}
