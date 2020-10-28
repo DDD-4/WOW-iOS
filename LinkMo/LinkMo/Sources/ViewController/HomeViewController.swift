@@ -386,7 +386,7 @@ class EmojiTextField: UITextField {
 extension UILabel {
 	func myLabel() {
 		textAlignment = .center
-		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 1)
+		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 100)
 		font = UIFont(name:"GmarketSansLight",size:21)
 	}
 }
