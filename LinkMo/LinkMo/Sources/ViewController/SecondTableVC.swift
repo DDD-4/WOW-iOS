@@ -371,6 +371,8 @@ class SecondTableVC: UIViewController {
             //  PreView, 썸네일이미지
             let titleCount = dataSource.sectionModels[indexPath.section].titled.count
             let imageCount = dataSource.sectionModels[indexPath.section].thumbnail.count
+            print("title", titleCount)
+            print("image", imageCount)
             
             if titleCount != imageCount{
                 LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in

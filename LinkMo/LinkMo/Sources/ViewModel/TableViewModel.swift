@@ -229,45 +229,6 @@ class TableViewModel{
         }
     }
     
-//    func addThumbnails(linkurl: String, sectionNumber: Int) -> Data{
-//
-//        let urlstring = linkurl
-//        let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-////        let url = URL(string: encoding)!
-//        let url = URL(string: "https://www.apple.com/ipad")!
-//
-//
-//        print(url)
-//
-//        //  PreView, 썸네일이미지
-//        LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-//            guard let linkMetadata = linkMetadata,
-//                let imageProvider = linkMetadata.imageProvider else {
-//                    return DispatchQueue.main.async {
-//                        let defaultsImage = UIImage(named: "12")
-//                        let convertData = defaultsImage?.pngData()
-//                        self.sections[sectionNumber].thumbnail.append(convertData!)
-//
-//
-//                    }
-//            }
-//            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                guard error == nil else {
-//                    return
-//                }
-//                if let image = image as? UIImage {
-//                    // do something with image
-//                    DispatchQueue.main.async {
-//                        let data = image.pngData()
-//                        self.sections[sectionNumber].thumbnail.append(data!)
-//                    }
-//                } else {
-//                    print("no image available")
-//                }
-//            }
-//        }
-//        return Data()
-//    }
     func checkLimit(categoryid: Int, sectionNumber: Int){
         
         do{
@@ -325,6 +286,7 @@ class TableViewModel{
             
             deleteValue[section].title.remove(at: cellrow)
             deleteValue[section].url.remove(at: cellrow)
+            deleteValue[section].thumbnail.remove(at: cellrow)
             
             try self.context.save()
             return .just(sections)
