@@ -23,13 +23,13 @@
 		2959750425285E4C0074FFCB /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A624DE3E9900CB33EA /* StorageType.swift */; };
 		2959750525285E5E0074FFCB /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AC24DE3F3000CB33EA /* CommonViewModel.swift */; };
 		29597506252866140074FFCB /* ShareAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29597500252326160074FFCB /* ShareAlertViewController.swift */; };
-		2959750825301B500074FFCB /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2959750725301B4F0074FFCB /* GmarketSansLight.otf */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		29C2B1EB251DB1F400B8A5A9 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AA24DE3EDE00CB33EA /* CategoryManager.swift */; };
 		29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29D0448224DE394500CB33EA /* LinkMo.xcdatamodeld */; };
 		29C2B1ED251DB26F00B8A5A9 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0449E24DE3C2D00CB33EA /* Category.swift */; };
+		29C5A729254934BD00CA4C7E /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */; };
 		29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447D24DE394500CB33EA /* HomeViewController.swift */; };
 		29D0448124DE394500CB33EA /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29D0447F24DE394500CB33EA /* Home.storyboard */; };
@@ -100,6 +100,8 @@
 		29C2234D25075C93004ECCD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29C2235525075F1B004ECCD3 /* LinkMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LinkMo.entitlements; sourceTree = "<group>"; };
 		29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareLink.entitlements; sourceTree = "<group>"; };
+		29C5A7252549346200CA4C7E /* GmarketSansOTF (2) */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "GmarketSansOTF (2)"; path = "LinkMo/Resources/GmarketSansOTF (2)"; sourceTree = "<group>"; };
+		29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = GmarketSansLight.otf; path = "LinkMo/Resources/GmarketSansOTF (2)/GmarketSansLight.otf"; sourceTree = "<group>"; };
 		29D0447624DE394500CB33EA /* LinkMo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkMo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D0447924DE394500CB33EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29D0447D24DE394500CB33EA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,8 @@
 		29D0446D24DE394500CB33EA = {
 			isa = PBXGroup;
 			children = (
+				29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */,
+				29C5A7252549346200CA4C7E /* GmarketSansOTF (2) */,
 				29D0447824DE394500CB33EA /* LinkMo */,
 				29C2234725075C93004ECCD3 /* ShareLink */,
 				29D0447724DE394500CB33EA /* Products */,
@@ -415,8 +419,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29C5A729254934BD00CA4C7E /* GmarketSansLight.otf in Resources */,
 				29D0448624DE394900CB33EA /* Assets.xcassets in Resources */,
-				2959750825301B500074FFCB /* GmarketSansLight.otf in Resources */,
 				29D0448124DE394500CB33EA /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

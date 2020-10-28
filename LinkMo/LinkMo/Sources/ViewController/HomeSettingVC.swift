@@ -52,7 +52,7 @@ extension HomeSettingVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            UserDefaults.standard.set("A", forKey: "linkname")
+            UserDefaults.standard.set("c", forKey: "linkname")
         }
     }
 }
