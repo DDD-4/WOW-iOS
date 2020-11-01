@@ -85,12 +85,18 @@ class ShareSecondTableViewCell: UITableViewCell{
 		label.font = UIFont(name:"AppleSDGothicNeo-Regular" , size: 16)
 		return label
 	}()
-	let linkTitle = UILabel()
-    let linkUrl = UILabel()
+	let imgView: UIImageView = {
+		var img = UIImageView()
+		img = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+		img.image = UIImage(named: "checkmark")
+		return img
+	}()
 	
 	private func setConstraint() {
 		contentView.addSubview(tableLabel)
+		contentView.addSubview(imgView)
 		tableLabel.translatesAutoresizingMaskIntoConstraints = false
+		imgView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			tableLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 36),
 			tableLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -122,10 +128,12 @@ extension ShareTableViewController: UITableViewDelegate{
 //		vc.tablesectionAll = sectionList[indexPath.row].self
 //		self.navigationController?.pushViewController(vc, animated: false)
 		
-		tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//		tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+		tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = false
 	}
 	func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-		tableView.cellForRow(at: indexPath)?.accessoryType = .none
+//		tableView.cellForRow(at: indexPath)?.accessoryType = .none
+		tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = true
 	}
 }
 
@@ -139,7 +147,11 @@ extension ShareTableViewController: UITableViewDataSource{
 		let section = sectionList[indexPath.row]
 		cell.tableLabel.text = section.header
 		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-		
+		cell.accessoryView = cell.imgView
+		cell.accessoryView?.isHidden = true
+		cell.accessoryView?.leadingAnchor.constraint(equalTo: cell.tableLabel.leadingAnchor).isActive = true
+		cell.accessoryView?.topAnchor.constraint(equalTo: cell.tableLabel.topAnchor, constant: 20).isActive = true
+		cell.accessoryView?.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -34).isActive = true
 		
 		return cell
 	}
@@ -157,4 +169,3 @@ extension UILabel {
 		backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 	}
 }
-
