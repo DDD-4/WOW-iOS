@@ -13,7 +13,6 @@ import RxDataSources
 import SnapKit
 import LinkPresentation
 import EMTNeumorphicView
-import SwiftUI
 
 class SecondTableVC: UIViewController {
     
@@ -49,6 +48,7 @@ class SecondTableVC: UIViewController {
     let addCellBtn = UIButton(type: .custom)
     let sectionLbl = UILabel()
     let cellLbl = UILabel()
+    let hiddenBackBtn = UIButton(type: .system)
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var removeBtn: UIBarButtonItem!
@@ -71,15 +71,12 @@ class SecondTableVC: UIViewController {
         
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
+        view.addSubview(hiddenBackBtn)
         view.addSubview(addSectionBtn)
         view.addSubview(addCellBtn)
         view.addSubview(addBtn)
         view.addSubview(sectionLbl)
         view.addSubview(cellLbl)
-        view.backgroundColor = .black
-        
-        tableShardVM.subject.accept(tableShardVM.sections)
-        
         
         //TableView 세팅
         tableView.register(SecondCell.self, forCellReuseIdentifier: "second")
@@ -99,6 +96,7 @@ class SecondTableVC: UIViewController {
         AddCellPush()
         sectionLabel()
         cellLabel()
+        hiddenBtn()
         
         pullControl.attributedTitle = NSAttributedString(string: "새로고침")
         pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
@@ -120,11 +118,6 @@ class SecondTableVC: UIViewController {
         view.backgroundColor = UIColor.appColor(.bgColor)
         tableView.backgroundColor = UIColor.appColor(.bgColor)
         navigationItem.title = navigationTitle
-        // 버튼으로 만들기
-        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
-        //        tableView.addGestureRecognizer(tapGesture)
-        //        tableView.isUserInteractionEnabled = true
-        
     }
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
@@ -154,6 +147,25 @@ class SecondTableVC: UIViewController {
         })
         .disposed(by: bag)
     }
+    // MARK: - Hidden Button
+    func hiddenBtn(){
+        hiddenBackBtn.isHidden = true
+        hiddenBackBtn.backgroundColor = UIColor.black
+        hiddenBackBtn.alpha = 0.4
+        hiddenBackBtn.frame = CGRect(x: .zero, y: .zero, width: view.frame.size.width, height: view.frame.size.height)
+        hiddenBackBtn.rx.tap
+            .subscribe(onNext: { _ in
+                self.adds()
+            })
+        .disposed(by: bag)
+        hiddenBackBtn.snp.makeConstraints { snp in
+            snp.bottom.equalTo(view)
+            snp.trailing.equalTo(view)
+            snp.width.equalTo(view)
+            snp.height.equalTo(view)
+        }
+        tableShardVM.subject.accept(tableShardVM.sections)
+    }
     // MARK: - FloatingButton
     func floatingBtn(){
         //플로팅버튼
@@ -182,6 +194,7 @@ class SecondTableVC: UIViewController {
             
             view.layoutIfNeeded()
             UIView.animate(withDuration: firstDuration) {
+                self.hiddenBackBtn.isHidden = false
                 self.addCellBtn.snp.updateConstraints { snp in
                     self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-80).constraint
                     self.addBtn.transform = CGAffineTransform(rotationAngle: .pi/4)
@@ -199,6 +212,7 @@ class SecondTableVC: UIViewController {
         }else{
             view.layoutIfNeeded()
             UIView.animate(withDuration: firstDuration) {
+                self.hiddenBackBtn.isHidden = true
                 self.addCellBtn.snp.updateConstraints { snp in
                     self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
                     self.addBtn.transform = CGAffineTransform(rotationAngle: .pi)
@@ -206,27 +220,6 @@ class SecondTableVC: UIViewController {
                 self.view.layoutIfNeeded()
             }
             UIView.animate(withDuration: secondDuration) {
-                self.addSectionBtn.snp.updateConstraints { snp in
-                    self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
-                }
-                self.view.layoutIfNeeded()
-                self.sectionLbl.self.isHidden = true
-                self.cellLbl.self.isHidden = true
-            }
-        }
-    }
-    // MARK: tap으로 플로팅 버튼비활성화
-    @objc func tapandhide(_ sender: UITapGestureRecognizer){
-        if bools{
-            bools = false
-            view.layoutIfNeeded()
-            UIView.animate(withDuration: 0.3) {
-                self.addCellBtn.snp.updateConstraints { snp in
-                    self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
-                }
-                self.view.layoutIfNeeded()
-            }
-            UIView.animate(withDuration: 0.35) {
                 self.addSectionBtn.snp.updateConstraints { snp in
                     self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
                 }
@@ -308,9 +301,6 @@ class SecondTableVC: UIViewController {
                 let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
                 addcellvc.selectSection = self.categoryID
                 self.navigationController?.pushViewController(addcellvc, animated: true)
-                
-//                let swiftuiVC = UIHostingController(rootView: SwiftUIView())
-//                self.navigationController?.pushViewController(swiftuiVC, animated: true)
             })
             .disposed(by: bag)
     }
@@ -609,7 +599,6 @@ extension SecondTableVC: UITableViewDelegate{
         header.addSubview(titleLbl)
         header.addSubview(numberLbl)
         header.addSubview(sectionUpdateBtn)
-//        header.backgroundColor = UIColor.appColor(.listHeaderColor)
         header.layer.cornerRadius = 20
         
         //MARK: - Section, 수정 삭제

@@ -160,7 +160,7 @@ class AddCellList: UIViewController {
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let spaceText = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width / 4, height: 50))
         spaceText.font = .systemFont(ofSize: 14)
-        spaceText.text = "섹션 선택하세영"
+        spaceText.text = "카테고리를 선택하세요."
         let labelButton = UIBarButtonItem(customView: spaceText)
         toolbar.setItems([cancel, spaceButton, labelButton, spaceButton, done], animated: false)
         toolbar.isUserInteractionEnabled = true
@@ -198,6 +198,19 @@ class AddCellList: UIViewController {
         confirmBtn.setTitleColor(.blue, for: .normal)
         confirmBtn.backgroundColor = .lightGray
         
+//        let cornerRadius: CGFloat = 15
+//        let shadowRadius: CGFloat = 4
+//
+//        let darkShadow = CALayer()
+//        darkShadow.frame = confirmBtn.bounds
+//        darkShadow.backgroundColor = view.backgroundColor?.cgColor
+//        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+//        darkShadow.cornerRadius = cornerRadius
+//        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+//        darkShadow.shadowOpacity = 1
+//        darkShadow.shadowRadius = shadowRadius
+        
+//        confirmBtn.layer.insertSublayer(darkShadow, at: 0)
         confirmBtn.rx.tap
             .subscribe(onNext: { b in
                 

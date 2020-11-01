@@ -348,7 +348,7 @@ class TableViewModel{
 
         if !UIApplication.shared.canOpenURL(url) { return false }
 
-        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+(|/)"
+        let regEx = "((https|http)://)((\\w|-)+)()(([.]|[/])((\\w|-)+))+(|/)"
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
         return predicate.evaluate(with: string)
     }
