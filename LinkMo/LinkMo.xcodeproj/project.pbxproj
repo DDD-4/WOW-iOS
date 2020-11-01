@@ -17,6 +17,7 @@
 		2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A824DE3EAD00CB33EA /* CategoryStorageType.swift */; };
 		2911E902251DD8020068077F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
+		2934916D254EAE7D00EF8386 /* EditTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */; };
 		29597501252326160074FFCB /* ShareAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29597500252326160074FFCB /* ShareAlertViewController.swift */; };
 		2959750225284EFF0074FFCB /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
 		2959750325285E430074FFCB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0449824DE3B9700CB33EA /* Storage.swift */; };
@@ -90,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		2911E8F8251DBCE80068077F /* ShareTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTableViewController.swift; sourceTree = "<group>"; };
+		2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTitleViewController.swift; sourceTree = "<group>"; };
 		29597500252326160074FFCB /* ShareAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlertViewController.swift; sourceTree = "<group>"; };
 		2959750725301B4F0074FFCB /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = GmarketSansLight.otf; path = "../../../../../../GmarketSansOTF (2)/GmarketSansLight.otf"; sourceTree = "<group>"; };
 		29C2234025075838004ECCD3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				A94B0D4524FF617F0072A34A /* SignUpVC.swift */,
 				A99936DD253EAA490009EE22 /* SplashView.swift */,
 				A99936E3253FE68B0009EE22 /* HomeSettingVC.swift */,
+				2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				A94B0D4624FF617F0072A34A /* SignUpVC.swift in Sources */,
 				A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */,
 				29D044AD24DE3F3000CB33EA /* CommonViewModel.swift in Sources */,
+				2934916D254EAE7D00EF8386 /* EditTitleViewController.swift in Sources */,
 				29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */,
 				29D044A524DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift in Sources */,
 				A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */,

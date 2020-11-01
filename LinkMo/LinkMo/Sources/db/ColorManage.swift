@@ -14,26 +14,29 @@ enum neumorphismColor{
     case listHeaderColor
     case pureBlue
     case numberColor
-    
+    case titleGray
 }
 extension UIColor{
-    static func appColor(_ name: neumorphismColor) -> UIColor{
-        switch name {
-            
-        case .bgColor:
-            return UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 1.0)
-            
-        case .listHeaderColor:
-            return UIColor(red: 241/255, green: 222/255, blue: 207/255, alpha: 1.0)
-            
-        case .pureBlue:
-            return UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 1.0)
-            
-        case .numberColor:
-            return UIColor(red: 148/255, green: 146/255, blue: 161/255, alpha: 1.0)
-            
-        }
-        
-        
+	static func appColor(_ name: neumorphismColor) -> UIColor{
+		switch name {
+			
+			case .bgColor:
+				return UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 1.0)
+			
+			case .listHeaderColor:
+				return UIColor(red: 241/255, green: 222/255, blue: 207/255, alpha: 1.0)
+			
+			case .pureBlue:
+				return UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 1.0)
+			
+			case .numberColor:
+				return UIColor(red: 148/255, green: 146/255, blue: 161/255, alpha: 1.0)
+			
+			case .titleGray:
+				return UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 1.0)
+		}
+		
+		
+		
     }
 }

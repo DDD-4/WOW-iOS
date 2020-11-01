@@ -211,16 +211,20 @@ class HomeViewController: UIViewController {
 	
 	func showActionsheet(indexPath: IndexPath, category: Category){
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {(action) in
+		alert.view.tintColor = .black
+		let cancelAction = UIAlertAction(title: "취소", style: .cancel) {(action) in
 			self.dismiss(animated: true, completion: nil)
 		}
 		alert.addAction(cancelAction)
-		let EditAction = UIAlertAction(title: "Edit", style: .default) { (action) in
-			self.editAlert(category: category)
-			self.collectionView.reloadData()
+		let EditAction = UIAlertAction(title: "타이틀 수정", style: .default) { (action) in
+//			self.editAlert(category: category)
+//			self.collectionView.reloadData()
+			let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+			let editVC = storyBoard.instantiateViewController(withIdentifier: "EditTitleViewController") as! EditTitleViewController
+			self.navigationController?.pushViewController(editVC, animated: true)
 		}
 		alert.addAction(EditAction)
-		let destroyAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+		let destroyAction = UIAlertAction(title: "카테고리 삭제하기", style: .destructive) { (action) in
             _ = self.tableshared.removeCategory(categoryId: indexPath.row)
 			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
             
