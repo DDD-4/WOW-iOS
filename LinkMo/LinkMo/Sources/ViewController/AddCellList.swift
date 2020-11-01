@@ -160,7 +160,7 @@ class AddCellList: UIViewController {
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let spaceText = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width / 4, height: 50))
         spaceText.font = .systemFont(ofSize: 14)
-        spaceText.text = "섹션 선택하세영"
+        spaceText.text = "카테고리를 선택하세요."
         let labelButton = UIBarButtonItem(customView: spaceText)
         toolbar.setItems([cancel, spaceButton, labelButton, spaceButton, done], animated: false)
         toolbar.isUserInteractionEnabled = true
