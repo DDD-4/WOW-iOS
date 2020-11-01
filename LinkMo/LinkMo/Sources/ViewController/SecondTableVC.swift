@@ -416,13 +416,46 @@ class SecondTableVC: UIViewController {
                             var updateTitle = alert.textFields![0].text
                             var updatelink = alert.textFields![1].text
                             
+                            
+                            
                             defer{
                                 _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
                                 _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                                let encodings = updatelink!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                                let updateUrl = URL(string: encodings)!
+                                LPMetadataProvider().startFetchingMetadata(for: updateUrl) { (linkMetadata, error) in
+                                    guard let linkMetadata = linkMetadata,
+                                        let imageProvider = linkMetadata.imageProvider else {
+                                            return DispatchQueue.main.async {
+                                                let images = UIImage(named: "12")
+                                                let convert = images?.pngData()
+                                                
+                                                _ = self.tableShardVM.updatePng(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, png: convert!)
+
+                                            }
+                                    }
+                                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                                        guard error == nil else {
+                                            return
+                                        }
+                                        if let image = image as? UIImage {
+                                            // do something with image
+                                            DispatchQueue.main.async {
+                                                let images = image
+                                                let convert = images.pngData()
+
+                                               _ = self.tableShardVM.updatePng(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, png: convert!)
+                                            }
+                                        } else {
+                                            print("no image available")
+                                        }
+                                    }
+                                    
+                                }
                             }
                             
                             if updatelink!.contains("https://") || updatelink!.contains("http://"){
-                                return
+                                
                             }else if updatelink!.isEmpty{
                                 updatelink = dataSource.sectionModels[cell.data.0].linked[cell.data.1]
                             }else{
@@ -452,25 +485,11 @@ class SecondTableVC: UIViewController {
                         
                     }
                     let remove = UIAlertAction(title: "삭제", style: .default) { _ in
+                        _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: cell.data.0, cellrow: cell.data.1)
+                        //                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
                         
-                        let alertConfirm = UIAlertController(title: nil, message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
-                        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-                        let ok = UIAlertAction(title: "확인", style: .default) { _ in
-                            //cell delete
-                            
-                            print("section = ", indexPath.section)
-                            print("row =", indexPath.row)
-                            print("update Tag =", indexPath.row)
-                            
-                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: cell.data.0, cellrow: cell.data.1)
-//                            _ = self.tableShardVM.removeCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row)
-                            
-                            _ = self.tableShardVM.readSections(categoryId: self.categoryID)
-                        }
-                        alertConfirm.addAction(cancel)
-                        alertConfirm.addAction(ok)
+                        _ = self.tableShardVM.readSections(categoryId: self.categoryID)
                         
-                        self.present(alertConfirm, animated: true)
                     }
                     
                     let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
@@ -619,9 +638,19 @@ extension SecondTableVC: UITableViewDelegate{
                     
                 }
                 let remove = UIAlertAction(title: "제거", style: .default) { _ in
+                    let alertConfirm = UIAlertController(title: nil, message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                    let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                    let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                        //cell delete
+                        _ = self.tableShardVM.deleteSections(section: section, categoryId: self.categoryID)
+                        _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                        
+                    }
+                    alertConfirm.addAction(cancel)
+                    alertConfirm.addAction(ok)
                     
-                    _ = self.tableShardVM.deleteSections(section: section, categoryId: self.categoryID)
-                    _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                    self.present(alertConfirm, animated: true)
+                    
                     self.tableState()
                 }
                 let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in

@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 import CoreData
-import LinkPresentation
 
 class TableViewModel{
     
@@ -228,7 +227,24 @@ class TableViewModel{
             return .error(error)
         }
     }
-    
+    func updatePng(categoryid: Int, section: Int, cellrow: Int, png: Data) -> Observable<[TableSection]>{
+        do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryid].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let updatePNG = sectionRead.filter{$0.categoryid == ids}
+            
+            updatePNG[section].thumbnail[cellrow] = png
+            
+            try self.context.save()
+            return .just(sections)
+        }catch{
+            return .error(error)
+        }
+    }
     func checkLimit(categoryid: Int, sectionNumber: Int){
         
         do{
@@ -240,7 +256,7 @@ class TableViewModel{
             let sectionRead = try self.context.fetch(fetch)
             let addValue = sectionRead.filter{$0.categoryid == ids}
             
-            if addValue[sectionNumber].title.count >= 1000{
+            if addValue[sectionNumber].title.count >= 500{
                 limitCell.accept(true)
             }else{
                 limitCell.accept(false)
@@ -324,22 +340,6 @@ class TableViewModel{
         }
     }
     
-    //전체 삭제
-    func deleteAllRecords() {
-//        let delegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = delegate.persistentContainer.viewContext
-
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedList")
-        
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        
-        do {
-            try context.execute(deleteRequest)
-            try context.save()
-        } catch {
-            print ("There was an error")
-        }
-    }
     // url 주소
     func canOpenURL(_ string: String?) -> Bool {
         guard let urlString = string,
