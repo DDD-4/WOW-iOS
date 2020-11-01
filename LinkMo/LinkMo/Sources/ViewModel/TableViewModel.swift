@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 import CoreData
-import LinkPresentation
 
 class TableViewModel{
     
@@ -228,46 +227,24 @@ class TableViewModel{
             return .error(error)
         }
     }
-    
-//    func addThumbnails(linkurl: String, sectionNumber: Int) -> Data{
-//
-//        let urlstring = linkurl
-//        let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-////        let url = URL(string: encoding)!
-//        let url = URL(string: "https://www.apple.com/ipad")!
-//
-//
-//        print(url)
-//
-//        //  PreView, 썸네일이미지
-//        LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-//            guard let linkMetadata = linkMetadata,
-//                let imageProvider = linkMetadata.imageProvider else {
-//                    return DispatchQueue.main.async {
-//                        let defaultsImage = UIImage(named: "12")
-//                        let convertData = defaultsImage?.pngData()
-//                        self.sections[sectionNumber].thumbnail.append(convertData!)
-//
-//
-//                    }
-//            }
-//            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                guard error == nil else {
-//                    return
-//                }
-//                if let image = image as? UIImage {
-//                    // do something with image
-//                    DispatchQueue.main.async {
-//                        let data = image.pngData()
-//                        self.sections[sectionNumber].thumbnail.append(data!)
-//                    }
-//                } else {
-//                    print("no image available")
-//                }
-//            }
-//        }
-//        return Data()
-//    }
+    func updatePng(categoryid: Int, section: Int, cellrow: Int, png: Data) -> Observable<[TableSection]>{
+        do{
+            //category
+            let categorys = try self.context.fetch(categoryfetch)
+            let ids = categorys[categoryid].id
+            
+            //table
+            let sectionRead = try self.context.fetch(fetch)
+            let updatePNG = sectionRead.filter{$0.categoryid == ids}
+            
+            updatePNG[section].thumbnail[cellrow] = png
+            
+            try self.context.save()
+            return .just(sections)
+        }catch{
+            return .error(error)
+        }
+    }
     func checkLimit(categoryid: Int, sectionNumber: Int){
         
         do{
@@ -279,7 +256,7 @@ class TableViewModel{
             let sectionRead = try self.context.fetch(fetch)
             let addValue = sectionRead.filter{$0.categoryid == ids}
             
-            if addValue[sectionNumber].title.count >= 1000{
+            if addValue[sectionNumber].title.count >= 500{
                 limitCell.accept(true)
             }else{
                 limitCell.accept(false)
@@ -325,6 +302,7 @@ class TableViewModel{
             
             deleteValue[section].title.remove(at: cellrow)
             deleteValue[section].url.remove(at: cellrow)
+            deleteValue[section].thumbnail.remove(at: cellrow)
             
             try self.context.save()
             return .just(sections)
@@ -362,22 +340,6 @@ class TableViewModel{
         }
     }
     
-    //전체 삭제
-    func deleteAllRecords() {
-//        let delegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = delegate.persistentContainer.viewContext
-
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ManagedList")
-        
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        
-        do {
-            try context.execute(deleteRequest)
-            try context.save()
-        } catch {
-            print ("There was an error")
-        }
-    }
     // url 주소
     func canOpenURL(_ string: String?) -> Bool {
         guard let urlString = string,

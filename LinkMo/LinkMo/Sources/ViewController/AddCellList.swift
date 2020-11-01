@@ -206,7 +206,7 @@ class AddCellList: UIViewController {
                 self.tableShardVM.checkLimit(categoryid: self.selectSection, sectionNumber: self.didselectNumber)
                 
                 if self.tableShardVM.limitCell.value{
-                    let alert = UIAlertController(title: nil, message: "한 카테고리의 링크는 최대 1000개입니다", preferredStyle: .alert)
+                    let alert = UIAlertController(title: nil, message: "한 카테고리의 링크는 최대 500개입니다", preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style: .default) { (_) in
                         self.dismiss(animated: true, completion: nil)
                     }
@@ -215,6 +215,40 @@ class AddCellList: UIViewController {
                 }else{
                     defer{
                         _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
+                        let urlstring = urlHttps
+                        let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                        let url = URL(string: encoding)!
+                        
+                        LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+                            guard let linkMetadata = linkMetadata,
+                                let imageProvider = linkMetadata.imageProvider else {
+                                    return DispatchQueue.main.async {
+                                        let images = UIImage(named: "12")
+                                        let convert = images?.pngData()
+                                        
+                                        _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
+                                        self.navigationController?.popViewController(animated: true)
+                                    }
+                            }
+                            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                                guard error == nil else {
+                                    return
+                                }
+                                if let image = image as? UIImage {
+                                    // do something with image
+                                    DispatchQueue.main.async {
+                                        let images = image
+                                        let convert = images.pngData()
+
+                                        _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
+                                        self.navigationController?.popViewController(animated: true)
+                                    }
+                                } else {
+                                    print("no image available")
+                                }
+                            }
+                        }
+                        
                         self.tableShardVM.subject.accept(self.tableShardVM.sections)
                         
                         
@@ -224,41 +258,6 @@ class AddCellList: UIViewController {
                     }else{
                         urlHttps = "https://\(urlHttps)/"
                     }
-                }
-                let urlstring = urlHttps
-                let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                let url = URL(string: encoding)!
-                
-                LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
-                    guard let linkMetadata = linkMetadata,
-                        let imageProvider = linkMetadata.imageProvider else {
-                            return DispatchQueue.main.async {
-                                let images = UIImage(named: "12")
-                                let convert = images?.pngData()
-                                
-                                _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
-                                self.navigationController?.popViewController(animated: true)
-
-                            }
-                    }
-                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                        guard error == nil else {
-                            return
-                        }
-                        if let image = image as? UIImage {
-                            // do something with image
-                            DispatchQueue.main.async {
-                                let images = image
-                                let convert = images.pngData()
-
-                                _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        } else {
-                            print("no image available")
-                        }
-                    }
-                    
                 }
                 
             })
