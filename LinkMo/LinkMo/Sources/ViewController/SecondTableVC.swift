@@ -48,7 +48,8 @@ class SecondTableVC: UIViewController {
     let addCellBtn = UIButton(type: .custom)
     let sectionLbl = UILabel()
     let cellLbl = UILabel()
-    let hiddenBackBtn = UIButton(type: .system)
+	let buttonSet = EMTNeumorphicButton(type: .custom)
+	let designLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var removeBtn: UIBarButtonItem!
@@ -77,6 +78,9 @@ class SecondTableVC: UIViewController {
         view.addSubview(addBtn)
         view.addSubview(sectionLbl)
         view.addSubview(cellLbl)
+		view.addSubview(buttonSet)
+		view.addSubview(designLabel)
+        view.backgroundColor = .black
         
         //TableView 세팅
         tableView.register(SecondCell.self, forCellReuseIdentifier: "second")
@@ -105,12 +109,39 @@ class SecondTableVC: UIViewController {
         } else {
             tableView.addSubview(pullControl)
         }
+		
+		designLabel.text = "디자인 기사"
+		designLabel.textAlignment = .center
+		designLabel.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 100)
+		designLabel.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
+		designLabel.translatesAutoresizingMaskIntoConstraints = false
+		
+		buttonSet.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+		buttonSet.layer.cornerRadius = 5
+		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .normal)
+		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
+		buttonSet.contentVerticalAlignment = .fill
+		buttonSet.contentHorizontalAlignment = .fill
+		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
+		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+		buttonSet.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
+		buttonSet.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			buttonSet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+			buttonSet.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+			designLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			designLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 58)
+		])
+		
         
     }
     @objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
         _ = tableShardVM.readSections(categoryId: categoryID)
     }
+	@objc func barbutton(_ sender: Any){
+	        self.navigationController?.popViewController(animated: true)
+		}
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -118,7 +149,17 @@ class SecondTableVC: UIViewController {
         view.backgroundColor = UIColor.appColor(.bgColor)
         tableView.backgroundColor = UIColor.appColor(.bgColor)
         navigationItem.title = navigationTitle
+        // 버튼으로 만들기
+        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
+        //        tableView.addGestureRecognizer(tapGesture)
+        //        tableView.isUserInteractionEnabled = true
+        navigationController?.isNavigationBarHidden = true
     }
+	override func viewWillDisappear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = false
+		navigationController?.interactivePopGestureRecognizer?.delegate = nil
+	}
+	
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
         emptyLabel.text = "+ 버튼을 눌러 \n 카테고리를 만들어보세요!"
@@ -539,7 +580,7 @@ class SecondTableVC: UIViewController {
         .disposed(by: bag)
         
         tableView.snp.makeConstraints { snp in
-            snp.top.equalTo(view)
+			snp.top.equalTo(view).offset(145)
             snp.bottom.equalTo(view)
             snp.trailing.equalTo(view)
             snp.leading.equalTo(view)

@@ -51,7 +51,12 @@ class ShareViewController: UIViewController {
 		
 		tableView.tableFooterView = UIView()
 		tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-//		navigationController?.isNavigationBarHidden = true
+		
+		self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 78)
+		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+		self.navigationController?.navigationBar.shadowImage = UIImage()
+		self.navigationController?.navigationBar.layoutIfNeeded()
+		self.title = "카테고리 선택"
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +68,7 @@ class ShareViewController: UIViewController {
 		self.view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+			tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
 			tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -75,7 +80,7 @@ class ShareViewController: UIViewController {
 class ShareTableViewCell: UITableViewCell{
 	var label: UILabel = {
 		let label = UILabel()
-		label.textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 100)
+		label.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100)
 		label.font = UIFont(name:"AppleSDGothicNeo-Medium" , size: 18)
 		
 		return label
@@ -85,9 +90,9 @@ class ShareTableViewCell: UITableViewCell{
 		contentView.addSubview(label)
 		label.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+			label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-			label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+			label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
 			label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
 	}

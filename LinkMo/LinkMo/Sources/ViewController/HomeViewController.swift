@@ -35,7 +35,6 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		bindViewModel()
-		navigationController?.isNavigationBarHidden = true
         collectionView.showsVerticalScrollIndicator = false
 		view.addSubview(linkLabel)
         view.addSubview(buttonSet)
@@ -47,7 +46,7 @@ class HomeViewController: UIViewController {
 		
 		
 		linkLabel.text = "Link"
-		linkLabel.myLabel()
+		linkLabel.linkLabel()
 		linkLabel.translatesAutoresizingMaskIntoConstraints = false
 
         
@@ -384,9 +383,9 @@ class EmojiTextField: UITextField {
 }
 
 extension UILabel {
-	func myLabel() {
+	func linkLabel() {
 		textAlignment = .center
-		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 1)
+		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 100)
 		font = UIFont(name:"GmarketSansLight",size:21)
 	}
 }
