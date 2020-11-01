@@ -159,6 +159,7 @@ class SecondTableVC: UIViewController {
     }
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
+		navigationController?.interactivePopGestureRecognizer?.delegate = nil
 	}
 	
     // MARK: - 데이터 isEmpty 상태
