@@ -184,6 +184,7 @@ class SecondTableVC: UIViewController {
             UIView.animate(withDuration: firstDuration) {
                 self.addCellBtn.snp.updateConstraints { snp in
                     self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-80).constraint
+                    self.addBtn.transform = CGAffineTransform(rotationAngle: .pi/4)
                 }
                 self.view.layoutIfNeeded()
             }
@@ -200,6 +201,7 @@ class SecondTableVC: UIViewController {
             UIView.animate(withDuration: firstDuration) {
                 self.addCellBtn.snp.updateConstraints { snp in
                     self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
+                    self.addBtn.transform = CGAffineTransform(rotationAngle: .pi)
                 }
                 self.view.layoutIfNeeded()
             }
