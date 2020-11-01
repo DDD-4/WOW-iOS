@@ -83,6 +83,7 @@ class ShareSecondTableViewCell: UITableViewCell{
 		let label = UILabel()
 		label.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
 		label.font = UIFont(name:"AppleSDGothicNeo-Regular" , size: 16)
+
 		return label
 	}()
 	let imgView: UIImageView = {
@@ -117,7 +118,6 @@ class ShareSecondTableViewCell: UITableViewCell{
 
 extension ShareTableViewController: UITableViewDelegate{
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		
 //		tableView.deselectRow(at: indexPath, animated: true)
 		
 //		let vc = ShareAlertViewController()
@@ -128,12 +128,13 @@ extension ShareTableViewController: UITableViewDelegate{
 //		vc.tablesectionAll = sectionList[indexPath.row].self
 //		self.navigationController?.pushViewController(vc, animated: false)
 		
-//		tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
 		tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = false
+		tableView.cellForRow(at: indexPath)?.textLabel?.textColor = UIColor.blue
+		
 	}
 	func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//		tableView.cellForRow(at: indexPath)?.accessoryType = .none
 		tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = true
+		tableView.cellForRow(at: indexPath)?.textLabel?.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
 	}
 }
 
@@ -145,13 +146,19 @@ extension ShareTableViewController: UITableViewDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareSecondTableViewCell", for: indexPath) as? ShareSecondTableViewCell else { return UITableViewCell() }
 		let section = sectionList[indexPath.row]
-		cell.tableLabel.text = section.header
+		
 		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
+		cell.textLabel?.text = section.header
+		cell.textLabel?.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
+		cell.textLabel?.font = UIFont(name:"AppleSDGothicNeo-Regular" , size: 16)
+		cell.textLabel?.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 36).isActive = true
 		cell.accessoryView = cell.imgView
 		cell.accessoryView?.isHidden = true
-		cell.accessoryView?.leadingAnchor.constraint(equalTo: cell.tableLabel.leadingAnchor).isActive = true
-		cell.accessoryView?.topAnchor.constraint(equalTo: cell.tableLabel.topAnchor, constant: 20).isActive = true
+		cell.accessoryView?.leadingAnchor.constraint(equalTo: cell.textLabel!.leadingAnchor).isActive = true
+		cell.accessoryView?.topAnchor.constraint(equalTo: cell.textLabel!.topAnchor, constant: 20).isActive = true
 		cell.accessoryView?.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -34).isActive = true
+		
+		cell.selectionStyle = .none
 		
 		return cell
 	}
@@ -169,3 +176,4 @@ extension UILabel {
 		backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 	}
 }
+
