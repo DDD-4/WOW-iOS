@@ -50,6 +50,7 @@ class SecondTableVC: UIViewController {
     let cellLbl = UILabel()
 	let buttonSet = EMTNeumorphicButton(type: .custom)
 	let designLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
+    let hiddenBackBtn = UIButton(type: .system)
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var removeBtn: UIBarButtonItem!
@@ -63,23 +64,17 @@ class SecondTableVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-//        let backBtnImage = UIImage(named: "chevronLeft")
-//
-//        navigationController?.navigationBar.backIndicatorImage = backBtnImage
-//        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backBtnImage
-//        navigationController?.navigationBar.topItem?.title = ""
-        
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
+        view.addSubview(buttonSet)
+        view.addSubview(designLabel)
         view.addSubview(hiddenBackBtn)
         view.addSubview(addSectionBtn)
         view.addSubview(addCellBtn)
         view.addSubview(addBtn)
         view.addSubview(sectionLbl)
         view.addSubview(cellLbl)
-		view.addSubview(buttonSet)
-		view.addSubview(designLabel)
+        
         view.backgroundColor = .black
         
         //TableView 세팅
@@ -101,6 +96,7 @@ class SecondTableVC: UIViewController {
         sectionLabel()
         cellLabel()
         hiddenBtn()
+        navigationBar()
         
         pullControl.attributedTitle = NSAttributedString(string: "새로고침")
         pullControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
@@ -109,31 +105,30 @@ class SecondTableVC: UIViewController {
         } else {
             tableView.addSubview(pullControl)
         }
-		
-		designLabel.text = "디자인 기사"
-		designLabel.textAlignment = .center
-		designLabel.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 100)
-		designLabel.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
-		designLabel.translatesAutoresizingMaskIntoConstraints = false
-		
-		buttonSet.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-		buttonSet.layer.cornerRadius = 5
-		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .normal)
-		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
-		buttonSet.contentVerticalAlignment = .fill
-		buttonSet.contentHorizontalAlignment = .fill
-		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
-		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-		buttonSet.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
-		buttonSet.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			buttonSet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-			buttonSet.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-			designLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			designLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 58)
-		])
-		
+    }
+    func navigationBar(){
+        designLabel.text = navigationTitle
+        designLabel.textAlignment = .center
+        designLabel.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 100)
+        designLabel.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
+        designLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        buttonSet.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        buttonSet.layer.cornerRadius = 5
+        buttonSet.setImage(UIImage(named: "chevronLeft"), for: .normal)
+        buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
+        buttonSet.contentVerticalAlignment = .fill
+        buttonSet.contentHorizontalAlignment = .fill
+        buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
+        buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+        buttonSet.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
+        buttonSet.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonSet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            buttonSet.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            designLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            designLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 58)
+        ])
     }
     @objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
@@ -149,10 +144,6 @@ class SecondTableVC: UIViewController {
         view.backgroundColor = UIColor.appColor(.bgColor)
         tableView.backgroundColor = UIColor.appColor(.bgColor)
         navigationItem.title = navigationTitle
-        // 버튼으로 만들기
-        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapandhide(_:)))
-        //        tableView.addGestureRecognizer(tapGesture)
-        //        tableView.isUserInteractionEnabled = true
         navigationController?.isNavigationBarHidden = true
     }
 	override func viewWillDisappear(_ animated: Bool) {
