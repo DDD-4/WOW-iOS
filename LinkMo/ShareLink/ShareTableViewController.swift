@@ -25,6 +25,8 @@ class ShareTableViewController: UIViewController {
 	let viewModel = TableViewModel()
 	let disposeBag = DisposeBag()
 	let categoryLabel = UILabel()
+	var sectionIndex: Int = 0
+	var tablesectionAll: TableSection? = nil
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -63,13 +65,25 @@ class ShareTableViewController: UIViewController {
 		
 		setConstraint()
 		
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(addTapped))
+		
+	}
+	
+	@objc func addTapped(){
+		let vc = ShareAlertViewController()
+		vc.categoryid = categoryID
+		vc.categoryIndex = categoryIndex
+		vc.sectionIndex = self.sectionIndex
+		vc.categoryAll = categoryAll
+		vc.tablesectionAll = self.tablesectionAll
+		self.navigationController?.pushViewController(vc, animated: false)
 	}
 	private func setConstraint() {
 		self.view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		NSLayoutConstraint.activate([
-			tableView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 12),
+			tableView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 24),
 			tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
 			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -118,18 +132,11 @@ class ShareSecondTableViewCell: UITableViewCell{
 
 extension ShareTableViewController: UITableViewDelegate{
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//		tableView.deselectRow(at: indexPath, animated: true)
-		
-//		let vc = ShareAlertViewController()
-//		vc.categoryid = categoryID
-//		vc.categoryIndex = categoryIndex
-//		vc.sectionIndex = indexPath.row
-//		vc.categoryAll = categoryAll
-//		vc.tablesectionAll = sectionList[indexPath.row].self
-//		self.navigationController?.pushViewController(vc, animated: false)
-		
 		tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = false
 		tableView.cellForRow(at: indexPath)?.textLabel?.textColor = UIColor.blue
+		
+		self.sectionIndex = indexPath.row
+		self.tablesectionAll = sectionList[indexPath.row].self
 		
 	}
 	func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -151,7 +158,11 @@ extension ShareTableViewController: UITableViewDataSource{
 		cell.textLabel?.text = section.header
 		cell.textLabel?.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
 		cell.textLabel?.font = UIFont(name:"AppleSDGothicNeo-Regular" , size: 16)
-		cell.textLabel?.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 36).isActive = true
+		cell.textLabel?.translatesAutoresizingMaskIntoConstraints = false
+		cell.textLabel?.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 36).isActive = true
+		cell.textLabel?.trailingAnchor.constraint(equalTo: tableView.layoutMarginsGuide.trailingAnchor).isActive = true
+		
+		
 		cell.accessoryView = cell.imgView
 		cell.accessoryView?.isHidden = true
 		cell.accessoryView?.leadingAnchor.constraint(equalTo: cell.textLabel!.leadingAnchor).isActive = true
