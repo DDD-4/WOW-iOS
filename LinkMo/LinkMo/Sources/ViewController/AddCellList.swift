@@ -198,6 +198,19 @@ class AddCellList: UIViewController {
         confirmBtn.setTitleColor(.blue, for: .normal)
         confirmBtn.backgroundColor = .lightGray
         
+//        let cornerRadius: CGFloat = 15
+//        let shadowRadius: CGFloat = 4
+//
+//        let darkShadow = CALayer()
+//        darkShadow.frame = confirmBtn.bounds
+//        darkShadow.backgroundColor = view.backgroundColor?.cgColor
+//        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
+//        darkShadow.cornerRadius = cornerRadius
+//        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
+//        darkShadow.shadowOpacity = 1
+//        darkShadow.shadowRadius = shadowRadius
+        
+//        confirmBtn.layer.insertSublayer(darkShadow, at: 0)
         confirmBtn.rx.tap
             .subscribe(onNext: { b in
                 
