@@ -24,7 +24,7 @@ class AddCellList: UIViewController {
     @IBOutlet weak var categoryName: UITextField!
     @IBOutlet weak var categoryUrl: UITextField!
     @IBOutlet weak var categoryTitle: UITextField!
-    @IBOutlet weak var confirmBtn: UIButton!
+    @IBOutlet weak var confirmBtn: EMTNeumorphicButton!
     @IBOutlet weak var scrollonView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -92,10 +92,10 @@ class AddCellList: UIViewController {
             .subscribe(onNext: { b in
                 if b == false{
                     self.confirmBtn.isEnabled = false
-                    self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
+                    self.confirmBtn.setTitleColor(UIColor.lightGray, for: .normal)
                 }else{
                     self.confirmBtn.isEnabled = true
-                    self.confirmBtn.setTitleColor(.blue, for: .normal)
+                    self.confirmBtn.setTitleColor(UIColor.appColor(.pureBlue), for: .normal)
                 }
             })
             .disposed(by: bag)
@@ -225,9 +225,9 @@ class AddCellList: UIViewController {
             .bind(to: titleFd)
             .disposed(by: bag)
         
+
         confirmBtn.layer.cornerRadius = confirmBtn.frame.size.height / 2
-        confirmBtn.setTitleColor(.blue, for: .normal)
-        confirmBtn.backgroundColor = .lightGray
+        confirmBtn.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
         
         
         confirmBtn.rx.tap
