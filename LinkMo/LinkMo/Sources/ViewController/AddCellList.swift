@@ -15,6 +15,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import LinkPresentation
+import EMTNeumorphicView
 
 class AddCellList: UIViewController {
     
@@ -23,7 +24,7 @@ class AddCellList: UIViewController {
     @IBOutlet weak var categoryName: UITextField!
     @IBOutlet weak var categoryUrl: UITextField!
     @IBOutlet weak var categoryTitle: UITextField!
-    @IBOutlet weak var confirmBtn: UIButton!
+    @IBOutlet weak var confirmBtn: EMTNeumorphicButton!
     @IBOutlet weak var scrollonView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -32,17 +33,20 @@ class AddCellList: UIViewController {
     let titleFd = BehaviorRelay<String>(value: "")
     let urlFd = BehaviorRelay<String>(value: "")
     
+    let naviTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
+    let buttonBack = EMTNeumorphicButton(type: .custom)
+    
     lazy var didselectNumber = 0
     lazy var selectSection = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(naviTitle)
+        view.addSubview(buttonBack)
+        navigationBar()
         
         view.backgroundColor = UIColor.appColor(.bgColor)
         scrollonView.backgroundColor = UIColor.appColor(.bgColor)
-        navigationController?.navigationBar.topItem?.title = ""
-        
-        navigationItem.title = "링크 추가"
         
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -85,37 +89,66 @@ class AddCellList: UIViewController {
             .disposed(by: bag)
         
         Observable.combineLatest(tableShardVM.listlocateBool, tableShardVM.urlVBool, tableShardVM.titleVBool, resultSelector: {$0 && $1 && $2})
-        .subscribe(onNext: { b in
-            if b == false{
-                self.confirmBtn.isEnabled = false
-                self.confirmBtn.setTitleColor(UIColor.appColor(.bgColor), for: .normal)
-            }else{
-                self.confirmBtn.isEnabled = true
-                self.confirmBtn.setTitleColor(.blue, for: .normal)
-            }
-        })
-        .disposed(by: bag)
+            .subscribe(onNext: { b in
+                if b == false{
+                    self.confirmBtn.isEnabled = false
+                    self.confirmBtn.setTitleColor(UIColor.lightGray, for: .normal)
+                }else{
+                    self.confirmBtn.isEnabled = true
+                    self.confirmBtn.setTitleColor(UIColor.appColor(.pureBlue), for: .normal)
+                }
+            })
+            .disposed(by: bag)
         
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
         view.addGestureRecognizer(tapGesture)
     }
     
+    @objc func barbutton(_ sender: Any){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addObservers()
+        navigationController?.isNavigationBarHidden = true
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeObservers()
+        navigationController?.isNavigationBarHidden = false
     }
     
     @objc func didTapView(gesture: UITapGestureRecognizer){
         view.endEditing(true)
     }
-    
+    func navigationBar(){
+        naviTitle.text = "링크 추가"
+        naviTitle.textAlignment = .center
+        naviTitle.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 100)
+        naviTitle.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
+        naviTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        buttonBack.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        buttonBack.layer.cornerRadius = 5
+        buttonBack.setImage(UIImage(named: "chevronLeft"), for: .normal)
+        buttonBack.setImage(UIImage(named: "chevronLeft"), for: .selected)
+        buttonBack.contentVerticalAlignment = .fill
+        buttonBack.contentHorizontalAlignment = .fill
+        buttonBack.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
+        buttonBack.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+        buttonBack.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
+        buttonBack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            buttonBack.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            naviTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            naviTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 58)
+        ])
+    }
     func addObservers(){
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (notification) in
             self.keyboardWillShow(notification: notification)
@@ -171,8 +204,6 @@ class AddCellList: UIViewController {
     
     @objc func dones(){
         categoryName.resignFirstResponder()
-        print("Done")
-        
     }
     
     @objc func cancel(){
@@ -194,23 +225,11 @@ class AddCellList: UIViewController {
             .bind(to: titleFd)
             .disposed(by: bag)
         
+
         confirmBtn.layer.cornerRadius = confirmBtn.frame.size.height / 2
-        confirmBtn.setTitleColor(.blue, for: .normal)
-        confirmBtn.backgroundColor = .lightGray
+        confirmBtn.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
         
-//        let cornerRadius: CGFloat = 15
-//        let shadowRadius: CGFloat = 4
-//
-//        let darkShadow = CALayer()
-//        darkShadow.frame = confirmBtn.bounds
-//        darkShadow.backgroundColor = view.backgroundColor?.cgColor
-//        darkShadow.shadowColor = UIColor(red: 0.87, green: 0.89, blue: 0.93, alpha: 1.0).cgColor
-//        darkShadow.cornerRadius = cornerRadius
-//        darkShadow.shadowOffset = CGSize(width: shadowRadius, height: shadowRadius)
-//        darkShadow.shadowOpacity = 1
-//        darkShadow.shadowRadius = shadowRadius
         
-//        confirmBtn.layer.insertSublayer(darkShadow, at: 0)
         confirmBtn.rx.tap
             .subscribe(onNext: { b in
                 
@@ -252,7 +271,7 @@ class AddCellList: UIViewController {
                                     DispatchQueue.main.async {
                                         let images = image
                                         let convert = images.pngData()
-
+                                        
                                         _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
                                         self.navigationController?.popViewController(animated: true)
                                     }
@@ -285,12 +304,12 @@ class AddCellList: UIViewController {
             }
         }
     }
-
+    
     @objc func keyboardWillhide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 64
         }
-
+        
     }
 }
 

@@ -171,35 +171,36 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="650"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="카테고리 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkT-sm-q3g">
-                                                <rect key="frame" x="32" y="60" width="76.5" height="17"/>
+                                                <rect key="frame" x="32" y="145" width="76.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Awj-66-n5G">
-                                                <rect key="frame" x="20" y="83" width="374" height="54"/>
+                                                <rect key="frame" x="20" y="168" width="374" height="54"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="54" id="L2y-iU-GXA"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nf7-eB-mrj">
-                                                <rect key="frame" x="20" y="403" width="374" height="54"/>
-                                                <color key="backgroundColor" red="0.63921568630000003" green="0.8862745098" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nf7-eB-mrj" customClass="EMTNeumorphicButton" customModule="EMTNeumorphicView">
+                                                <rect key="frame" x="20" y="488" width="374" height="54"/>
+                                                <color key="backgroundColor" red="0.96470588235294119" green="0.96862745098039216" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="54" id="1gB-RY-cYw"/>
                                                 </constraints>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="추가하기"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="링크 주소 추가" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q21-ev-ehh">
-                                                <rect key="frame" x="32" y="153" width="80.5" height="17"/>
+                                                <rect key="frame" x="32" y="238" width="80.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yrN-W2-smE">
-                                                <rect key="frame" x="20" y="269" width="374" height="54"/>
+                                                <rect key="frame" x="20" y="354" width="374" height="54"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="54" id="5VM-kN-44U"/>
                                                 </constraints>
@@ -207,13 +208,13 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="링크 이름" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zz2-oI-foK">
-                                                <rect key="frame" x="32" y="246" width="52.5" height="17"/>
+                                                <rect key="frame" x="32" y="331" width="52.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PTt-cH-gA2">
-                                                <rect key="frame" x="20" y="176" width="374" height="54"/>
+                                                <rect key="frame" x="20" y="261" width="374" height="54"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="54" id="1bf-UN-Pyb"/>
                                                 </constraints>
@@ -245,7 +246,7 @@
                                             <constraint firstAttribute="trailing" secondItem="yrN-W2-smE" secondAttribute="trailing" constant="20" id="tK9-t0-I6q"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Q21-ev-ehh" secondAttribute="trailing" constant="32" id="txq-Ie-LTf"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Zz2-oI-foK" secondAttribute="trailing" constant="32" id="xiu-6N-GdO"/>
-                                            <constraint firstItem="nkT-sm-q3g" firstAttribute="top" secondItem="8Gf-JR-IZf" secondAttribute="top" constant="60" id="z1Q-jB-F2b"/>
+                                            <constraint firstItem="nkT-sm-q3g" firstAttribute="top" secondItem="8Gf-JR-IZf" secondAttribute="top" constant="145" id="z1Q-jB-F2b"/>
                                         </constraints>
                                     </view>
                                 </subviews>
