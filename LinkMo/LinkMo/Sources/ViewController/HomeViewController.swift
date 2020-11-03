@@ -41,9 +41,7 @@ class HomeViewController: UIViewController {
 		
         viewModel.inputs.readTitle()
         flottingBtn()
-//        navsettingVC()
 		refresh()
-		
 		
 		linkLabel.text = "Link"
 		linkLabel.linkLabel()
@@ -94,8 +92,6 @@ class HomeViewController: UIViewController {
         addcellvc.modalPresentationStyle = .fullScreen
         self.present(addcellvc, animated: true)
         
-//        self.navigationController?.pushViewController(addcellvc, animated: true)
-        
     }
 	
 	func refresh(){
@@ -118,28 +114,6 @@ class HomeViewController: UIViewController {
 		button.isSelected = !button.isSelected
 	}
 	
-    func navsettingVC(){
-        //  navigationBar
-//        navigationItem.title = "link"
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.appColor(.bgColor)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        
-        let button = UIButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        button.backgroundColor = .lightGray
-        button.layer.masksToBounds = false
-        button.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-        
-        
-        var imageLosgo = UIImage(named: "ic_my_")
-        imageLosgo = imageLosgo?.withRenderingMode(.alwaysOriginal)
-        button.setImage(imageLosgo, for: .normal)
-        button.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-        let barButton = UIBarButtonItem(customView: button)
-        navigationItem.rightBarButtonItem = barButton
-    }
     //Autolayout
     func flottingBtn(){
         view.addSubview(AddBtn)
@@ -228,45 +202,30 @@ class HomeViewController: UIViewController {
 		}
 		alert.addAction(EditAction)
 		let destroyAction = UIAlertAction(title: "카테고리 삭제하기", style: .destructive) { (action) in
-            _ = self.tableshared.removeCategory(categoryId: indexPath.row)
-			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
-            
+//            _ = self.tableshared.removeCategory(categoryId: indexPath.row)
+//			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
+			self.deleteAlert(indexPath: indexPath, category: category)
+			self.collectionView.reloadData()
 		}
 		alert.addAction(destroyAction)
 		self.present(alert, animated: true, completion: nil)
 	}
 	
-	func editAlert(category: Category) {
-		let alert = UIAlertController(title: "카테고리 수정하기", message: nil, preferredStyle: .alert)
-		alert.addTextField(configurationHandler: { (textField) -> Void in
-			textField.placeholder = "\(category.icon)"
-		})
-		alert.addTextField(configurationHandler: { (textField) -> Void in
-			textField.placeholder = "\(category.title)"
-		})
-		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
+	func deleteAlert(indexPath: IndexPath, category: Category) {
+		let alert = UIAlertController(title: "카테고리 삭제하기", message: nil, preferredStyle: .alert)
+		alert.message = "해당 카테고리에 포함된 모든 링크도 \n 함께 삭제합니다."
+		alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { (action) -> Void in
+			_ = self.tableshared.removeCategory(categoryId: indexPath.row)
+			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
 		}))
-		alert.addAction(UIAlertAction(title: "수정", style: .default, handler: { (action) -> Void in
-			let icon = alert.textFields![0] as UITextField
-			let title = alert.textFields![1] as UITextField
-			if title.text!.isEmpty {
-				title.text = "\(category.title)"
-			}
-			if icon.text!.isEmpty {
-				icon.text = "\(category.icon)"
-			}
-			self.viewModel.inputs.updateTitle(category: category, title: title.text ?? "\(category.title)", icon: icon.text ?? "\(category.icon)")
-			DispatchQueue.main.async {
-				self.collectionView.reloadData()
-			}
+		alert.addAction(UIAlertAction(title: "취소", style: .default, handler: { (action) -> Void in
+			
 		}))
 		DispatchQueue.main.async {
 			self.collectionView.reloadData()
 		}
 		self.present(alert, animated: true, completion: nil)
-		DispatchQueue.main.async {
-			self.collectionView.reloadData()
-		}
+		
 	}
 	
 	func btnCloseTapped(cell: CategoryCollectionCell) {
