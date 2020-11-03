@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
 		}
 	}
 	private var pullControl = UIRefreshControl()
-	let buttonSet = EMTNeumorphicButton(type: .custom)
+	let buttonSet = UIButton()
 	let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
 	
 	override func viewDidLoad() {
@@ -41,27 +41,23 @@ class HomeViewController: UIViewController {
 		
         viewModel.inputs.readTitle()
         flottingBtn()
-//        navsettingVC()
 		refresh()
 		
-		
-		linkLabel.text = "Link"
+		linkLabel.text = "linkmo"
 		linkLabel.linkLabel()
 		linkLabel.translatesAutoresizingMaskIntoConstraints = false
 
         
-		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
-		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		view.backgroundColor = UIColor.appColor(.bgColor)
+		collectionView.backgroundColor = UIColor.appColor(.bgColor)
 		
 		buttonSet.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-		buttonSet.layer.cornerRadius = 5
-		buttonSet.setImage(UIImage(named: "ic_my_"), for: .normal)
-		buttonSet.setImage(UIImage(named: "ic_my_"), for: .selected)
+		buttonSet.setImage(UIImage(named: "icMysetting"), for: .normal)
+		buttonSet.setImage(UIImage(named: "icMysetting"), for: .selected)
 		buttonSet.contentVerticalAlignment = .fill
 		buttonSet.contentHorizontalAlignment = .fill
-		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
 		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-		buttonSet.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
+		buttonSet.backgroundColor = view.backgroundColor
 		buttonSet.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			linkLabel.centerXAnchor.constraint(equalTo:view.centerXAnchor),
@@ -94,8 +90,6 @@ class HomeViewController: UIViewController {
         addcellvc.modalPresentationStyle = .fullScreen
         self.present(addcellvc, animated: true)
         
-//        self.navigationController?.pushViewController(addcellvc, animated: true)
-        
     }
 	
 	func refresh(){
@@ -118,28 +112,6 @@ class HomeViewController: UIViewController {
 		button.isSelected = !button.isSelected
 	}
 	
-    func navsettingVC(){
-        //  navigationBar
-//        navigationItem.title = "link"
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.appColor(.bgColor)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        
-        let button = UIButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        button.backgroundColor = .lightGray
-        button.layer.masksToBounds = false
-        button.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-        
-        
-        var imageLosgo = UIImage(named: "ic_my_")
-        imageLosgo = imageLosgo?.withRenderingMode(.alwaysOriginal)
-        button.setImage(imageLosgo, for: .normal)
-        button.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-        let barButton = UIBarButtonItem(customView: button)
-        navigationItem.rightBarButtonItem = barButton
-    }
     //Autolayout
     func flottingBtn(){
         view.addSubview(AddBtn)
@@ -150,7 +122,7 @@ class HomeViewController: UIViewController {
 		AddBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
 		AddBtn.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         AddBtn.layer.cornerRadius = AddBtn.frame.size.width / 2
-		AddBtn.backgroundColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 100)
+		AddBtn.backgroundColor = UIColor.appColor(.pureBlue)
         
         AddBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
@@ -177,8 +149,8 @@ class HomeViewController: UIViewController {
 	func showAlert(title: String) {
 		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
 		
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		let saveAction = UIAlertAction(title:"Save", style: .default, handler: { (action) -> Void in
+		alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+		let saveAction = UIAlertAction(title:"추가", style: .default, handler: { (action) -> Void in
 			let icon = alert.textFields![0] as UITextField
 			let title = alert.textFields![1] as UITextField
 			if self.collectionList.count < 20 {
@@ -199,6 +171,7 @@ class HomeViewController: UIViewController {
 		})
 		saveAction.isEnabled = false
 		alert.addAction(saveAction)
+		alert.preferredAction = saveAction
 		alert.addTextField(configurationHandler: { (textField) -> Void in
 			textField.placeholder = "대표 아이콘"
 		})
@@ -228,45 +201,28 @@ class HomeViewController: UIViewController {
 		}
 		alert.addAction(EditAction)
 		let destroyAction = UIAlertAction(title: "카테고리 삭제하기", style: .destructive) { (action) in
-            _ = self.tableshared.removeCategory(categoryId: indexPath.row)
-			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
-            
+			self.deleteAlert(indexPath: indexPath, category: category)
+			self.collectionView.reloadData()
 		}
 		alert.addAction(destroyAction)
 		self.present(alert, animated: true, completion: nil)
 	}
 	
-	func editAlert(category: Category) {
-		let alert = UIAlertController(title: "카테고리 수정하기", message: nil, preferredStyle: .alert)
-		alert.addTextField(configurationHandler: { (textField) -> Void in
-			textField.placeholder = "\(category.icon)"
-		})
-		alert.addTextField(configurationHandler: { (textField) -> Void in
-			textField.placeholder = "\(category.title)"
-		})
-		alert.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { (action) -> Void in
+	func deleteAlert(indexPath: IndexPath, category: Category) {
+		let alert = UIAlertController(title: "카테고리 삭제하기", message: nil, preferredStyle: .alert)
+		alert.message = "해당 카테고리에 포함된 모든 링크도 \n 함께 삭제합니다."
+		alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { (action) -> Void in
+			_ = self.tableshared.removeCategory(categoryId: indexPath.row)
+			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
 		}))
-		alert.addAction(UIAlertAction(title: "수정", style: .default, handler: { (action) -> Void in
-			let icon = alert.textFields![0] as UITextField
-			let title = alert.textFields![1] as UITextField
-			if title.text!.isEmpty {
-				title.text = "\(category.title)"
-			}
-			if icon.text!.isEmpty {
-				icon.text = "\(category.icon)"
-			}
-			self.viewModel.inputs.updateTitle(category: category, title: title.text ?? "\(category.title)", icon: icon.text ?? "\(category.icon)")
-			DispatchQueue.main.async {
-				self.collectionView.reloadData()
-			}
+		alert.addAction(UIAlertAction(title: "취소", style: .default, handler: { (action) -> Void in
+			
 		}))
 		DispatchQueue.main.async {
 			self.collectionView.reloadData()
 		}
 		self.present(alert, animated: true, completion: nil)
-		DispatchQueue.main.async {
-			self.collectionView.reloadData()
-		}
+		
 	}
 	
 	func btnCloseTapped(cell: CategoryCollectionCell) {
@@ -392,7 +348,7 @@ class EmojiTextField: UITextField {
 extension UILabel {
 	func linkLabel() {
 		textAlignment = .center
-		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 100)
-		font = UIFont(name:"GmarketSansLight",size:21)
+		textColor = UIColor.appColor(.titleGray)
+		font = UIFont(name:"GmarketSansLight",size:18)
 	}
 }

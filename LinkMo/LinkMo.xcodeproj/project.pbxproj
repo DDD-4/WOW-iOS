@@ -17,13 +17,12 @@
 		2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A824DE3EAD00CB33EA /* CategoryStorageType.swift */; };
 		2911E902251DD8020068077F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
+		29277ADD2551528100B3D515 /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */; };
 		2934916D254EAE7D00EF8386 /* EditTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */; };
-		29597501252326160074FFCB /* ShareAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29597500252326160074FFCB /* ShareAlertViewController.swift */; };
 		2959750225284EFF0074FFCB /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
 		2959750325285E430074FFCB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0449824DE3B9700CB33EA /* Storage.swift */; };
 		2959750425285E4C0074FFCB /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A624DE3E9900CB33EA /* StorageType.swift */; };
 		2959750525285E5E0074FFCB /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AC24DE3F3000CB33EA /* CommonViewModel.swift */; };
-		29597506252866140074FFCB /* ShareAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29597500252326160074FFCB /* ShareAlertViewController.swift */; };
 		29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2234825075C93004ECCD3 /* ShareViewController.swift */; };
 		29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C2234A25075C93004ECCD3 /* MainInterface.storyboard */; };
 		29C2235025075C93004ECCD3 /* ShareLink.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 29C2234625075C93004ECCD3 /* ShareLink.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -93,7 +92,6 @@
 /* Begin PBXFileReference section */
 		2911E8F8251DBCE80068077F /* ShareTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTableViewController.swift; sourceTree = "<group>"; };
 		2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTitleViewController.swift; sourceTree = "<group>"; };
-		29597500252326160074FFCB /* ShareAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlertViewController.swift; sourceTree = "<group>"; };
 		2959750725301B4F0074FFCB /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = GmarketSansLight.otf; path = "../../../../../../GmarketSansOTF (2)/GmarketSansLight.otf"; sourceTree = "<group>"; };
 		29C2234025075838004ECCD3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		29C2234625075C93004ECCD3 /* ShareLink.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareLink.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,7 +170,6 @@
 				29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */,
 				29C2234825075C93004ECCD3 /* ShareViewController.swift */,
 				2911E8F8251DBCE80068077F /* ShareTableViewController.swift */,
-				29597500252326160074FFCB /* ShareAlertViewController.swift */,
 				29C2234A25075C93004ECCD3 /* MainInterface.storyboard */,
 				29C2234D25075C93004ECCD3 /* Info.plist */,
 				A98C76D0253BFEEB008B667C /* share.xcassets */,
@@ -413,6 +410,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29277ADD2551528100B3D515 /* GmarketSansLight.otf in Resources */,
 				A98C76D1253BFEEB008B667C /* share.xcassets in Resources */,
 				29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */,
 			);
@@ -504,7 +502,6 @@
 				29C2234925075C93004ECCD3 /* ShareViewController.swift in Sources */,
 				2911E8FF251DCC0E0068077F /* ManagedCategory+CoreDataProperties.swift in Sources */,
 				29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */,
-				29597501252326160074FFCB /* ShareAlertViewController.swift in Sources */,
 				2911E8FA251DC7540068077F /* TableSection.swift in Sources */,
 				2959750425285E4C0074FFCB /* StorageType.swift in Sources */,
 				2911E8FD251DCBFC0068077F /* ManagedList+CoreDataProperties.swift in Sources */,
@@ -532,7 +529,6 @@
 				29D0449924DE3B9700CB33EA /* Storage.swift in Sources */,
 				29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */,
 				A9AF993225516F6B00E0CF88 /* LinkTitleUpdateVC.swift in Sources */,
-				29597506252866140074FFCB /* ShareAlertViewController.swift in Sources */,
 				A99936E4253FE68B0009EE22 /* HomeSettingVC.swift in Sources */,
 				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
 				29D044A724DE3E9900CB33EA /* StorageType.swift in Sources */,
