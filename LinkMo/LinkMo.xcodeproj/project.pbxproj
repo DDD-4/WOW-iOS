@@ -17,6 +17,7 @@
 		2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A824DE3EAD00CB33EA /* CategoryStorageType.swift */; };
 		2911E902251DD8020068077F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
+		29277ADD2551528100B3D515 /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */; };
 		2934916D254EAE7D00EF8386 /* EditTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */; };
 		29597501252326160074FFCB /* ShareAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29597500252326160074FFCB /* ShareAlertViewController.swift */; };
 		2959750225284EFF0074FFCB /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
@@ -410,6 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29277ADD2551528100B3D515 /* GmarketSansLight.otf in Resources */,
 				A98C76D1253BFEEB008B667C /* share.xcassets in Resources */,
 				29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */,
 			);

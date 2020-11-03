@@ -23,6 +23,11 @@ class ShareViewController: UIViewController {
 			}
 		}
 	}
+	let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 24))
+	let buttonSet = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+	let saveLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 28, height: 22))
+	let nameLabel = UILabel()
+	
 	//MARK: - Views
 	private let tableView: UITableView = {
 		let tableview = UITableView()
@@ -32,6 +37,7 @@ class ShareViewController: UIViewController {
 	// MARK: - View Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		navigationController?.isNavigationBarHidden = true
 		viewModel.outputs.categories
 			.subscribe(onNext: {[weak self] categories in
 				self?.categoryList = categories })
@@ -39,61 +45,112 @@ class ShareViewController: UIViewController {
 		
 		tableView.delegate = self
 		tableView.dataSource = self
-		tableView.register(ShareTableViewCell.self, forCellReuseIdentifier: "ShareTableViewCell")
 		setConstraint()
-		// autoHeight
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = UITableView.automaticDimension
+		tableView.register(ShareTableViewCell.self, forCellReuseIdentifier: "ShareTableViewCell")
 		
 		//view
-		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		tableView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
-		
 		tableView.tableFooterView = UIView()
-		tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
 		
-		self.navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 78)
-		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-		self.navigationController?.navigationBar.shadowImage = UIImage()
-		self.navigationController?.navigationBar.layoutIfNeeded()
-		self.title = "카테고리 선택"
+		
+		titleLabel.text = "linkmo"
+		titleLabel.textAlignment = .center
+		titleLabel.textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 100)
+		titleLabel.font = UIFont(name:"GmarketSansLight",size:18)
+		
+		
+		buttonSet.layer.cornerRadius = 5
+		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .normal)
+		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
+		buttonSet.contentVerticalAlignment = .fill
+		buttonSet.contentHorizontalAlignment = .fill
+		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+		buttonSet.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		
+		saveLabel.text = "저장"
+		saveLabel.textAlignment = .center
+		saveLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 100)
+		saveLabel.font = UIFont(name:"AppleSDGothicNeo-Regular",size:16)
+		
+		nameLabel.text = "linkmo님의 링크."
+		nameLabel.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
+		nameLabel.font = UIFont(name:"GmarketSansLight",size:26)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		viewModel.inputs.readTitle()
+		navigationController?.isNavigationBarHidden = true
+		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = false
 	}
 	
 	// MARK: - Methods
 	private func setConstraint() {
 		self.view.addSubview(tableView)
+		self.view.addSubview(titleLabel)
+		self.view.addSubview(buttonSet)
+		self.view.addSubview(saveLabel)
+		self.view.addSubview(nameLabel)
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = UITableView.automaticDimension
 		tableView.translatesAutoresizingMaskIntoConstraints = false
+		titleLabel.translatesAutoresizingMaskIntoConstraints = false
+		buttonSet.translatesAutoresizingMaskIntoConstraints = false
+		saveLabel.translatesAutoresizingMaskIntoConstraints = false
+		nameLabel.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+			titleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 24),
+			
+			buttonSet.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 14),
+			buttonSet.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+			
+			saveLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -20),
+			saveLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+			
+			nameLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 45),
+			nameLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 24),
+			
+			tableView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 41),
 			tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -24)
 		])
+	}
+	
+	@objc func barbutton(_ sender: Any){
+		self.navigationController?.popViewController(animated: true)
 	}
 	
 }
 
 class ShareTableViewCell: UITableViewCell{
-	var label: UILabel = {
+	var emojilabel: UILabel = {
+		let label = UILabel()
+		label.font = UIFont(name:"AppleColorEmoji" , size: 15)
+		return label
+	}()
+	
+	var titlelabel: UILabel = {
 		let label = UILabel()
 		label.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100)
-		label.font = UIFont(name:"AppleSDGothicNeo-Medium" , size: 18)
-		
+		label.font = UIFont(name:"AppleSDGothicNeo-Medium" , size: 17)
 		return label
 	}()
 	
 	private func setConstraint() {
-		contentView.addSubview(label)
-		label.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(emojilabel)
+		contentView.addSubview(titlelabel)
+		emojilabel.translatesAutoresizingMaskIntoConstraints = false
+		titlelabel.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-			label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-			label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
-			label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+			emojilabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+			emojilabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 26),
+			titlelabel.leftAnchor.constraint(equalTo: emojilabel.rightAnchor, constant: 7),
+			titlelabel.centerYAnchor.constraint(equalTo: emojilabel.centerYAnchor)
 		])
 	}
 
@@ -127,19 +184,14 @@ extension ShareViewController: UITableViewDataSource {
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
-		cell.label.text = categoryList[indexPath.row].title
+		cell.emojilabel.text = categoryList[indexPath.row].icon
+		cell.titlelabel.text = categoryList[indexPath.row].title
 		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-		
-		let imageView = UIImageView(frame: CGRect(x: -10, y: -10, width: cell.frame.width + 10, height: cell.frame.height))
-		let image = UIImage(named: "retangle2Copy")
-		imageView.image = image
-		cell.backgroundView = UIView()
-		cell.backgroundView!.addSubview(imageView)
 		
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 68
+		return 60
 	}
 }
