@@ -152,17 +152,14 @@ class CustomField: UITextField {
     }
 
     func applyDesign() {
-//        innerShadow.frame = bounds
 		innerShadow.frame = safeAreaLayoutGuide.layoutFrame
         let radius = self.frame.size.height/2
         let path = UIBezierPath(roundedRect: innerShadow.bounds.insetBy(dx: -1, dy:-1), cornerRadius:radius)
         let cutout = UIBezierPath(roundedRect: innerShadow.bounds, cornerRadius:radius).reversing()
 
-
         path.append(cutout)
         innerShadow.shadowPath = path.cgPath
         innerShadow.masksToBounds = true
-        // Shadow properties
         innerShadow.shadowColor = UIColor.darkGray.cgColor
         innerShadow.shadowOffset = CGSize(width: 0, height: 2)
         innerShadow.shadowOpacity = 0.5
