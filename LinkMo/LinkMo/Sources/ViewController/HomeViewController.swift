@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
 		}
 	}
 	private var pullControl = UIRefreshControl()
-	let buttonSet = EMTNeumorphicButton(type: .custom)
+	let buttonSet = UIButton()
 	let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
 	
 	override func viewDidLoad() {
@@ -43,23 +43,21 @@ class HomeViewController: UIViewController {
         flottingBtn()
 		refresh()
 		
-		linkLabel.text = "Link"
+		linkLabel.text = "linkmo"
 		linkLabel.linkLabel()
 		linkLabel.translatesAutoresizingMaskIntoConstraints = false
 
         
-		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
-		collectionView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+		view.backgroundColor = UIColor.appColor(.bgColor)
+		collectionView.backgroundColor = UIColor.appColor(.bgColor)
 		
 		buttonSet.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-		buttonSet.layer.cornerRadius = 5
-		buttonSet.setImage(UIImage(named: "ic_my_"), for: .normal)
-		buttonSet.setImage(UIImage(named: "ic_my_"), for: .selected)
+		buttonSet.setImage(UIImage(named: "icMysetting"), for: .normal)
+		buttonSet.setImage(UIImage(named: "icMysetting"), for: .selected)
 		buttonSet.contentVerticalAlignment = .fill
 		buttonSet.contentHorizontalAlignment = .fill
-		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
 		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-		buttonSet.neumorphicLayer?.elementBackgroundColor = view.backgroundColor!.cgColor
+		buttonSet.backgroundColor = view.backgroundColor
 		buttonSet.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			linkLabel.centerXAnchor.constraint(equalTo:view.centerXAnchor),
@@ -124,7 +122,7 @@ class HomeViewController: UIViewController {
 		AddBtn.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
 		AddBtn.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         AddBtn.layer.cornerRadius = AddBtn.frame.size.width / 2
-		AddBtn.backgroundColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 100)
+		AddBtn.backgroundColor = UIColor.appColor(.pureBlue)
         
         AddBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
@@ -151,8 +149,8 @@ class HomeViewController: UIViewController {
 	func showAlert(title: String) {
 		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
 		
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		let saveAction = UIAlertAction(title:"Save", style: .default, handler: { (action) -> Void in
+		alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+		let saveAction = UIAlertAction(title:"추가", style: .default, handler: { (action) -> Void in
 			let icon = alert.textFields![0] as UITextField
 			let title = alert.textFields![1] as UITextField
 			if self.collectionList.count < 20 {
@@ -173,6 +171,7 @@ class HomeViewController: UIViewController {
 		})
 		saveAction.isEnabled = false
 		alert.addAction(saveAction)
+		alert.preferredAction = saveAction
 		alert.addTextField(configurationHandler: { (textField) -> Void in
 			textField.placeholder = "대표 아이콘"
 		})
@@ -202,8 +201,6 @@ class HomeViewController: UIViewController {
 		}
 		alert.addAction(EditAction)
 		let destroyAction = UIAlertAction(title: "카테고리 삭제하기", style: .destructive) { (action) in
-//            _ = self.tableshared.removeCategory(categoryId: indexPath.row)
-//			self.viewModel.inputs.deleteTitle(indexPath: indexPath, category: category)
 			self.deleteAlert(indexPath: indexPath, category: category)
 			self.collectionView.reloadData()
 		}
@@ -351,7 +348,7 @@ class EmojiTextField: UITextField {
 extension UILabel {
 	func linkLabel() {
 		textAlignment = .center
-		textColor = UIColor(red: 89/255, green: 86/255, blue: 109/255, alpha: 100)
-		font = UIFont(name:"GmarketSansLight",size:21)
+		textColor = UIColor.appColor(.titleGray)
+		font = UIFont(name:"GmarketSansLight",size:18)
 	}
 }
