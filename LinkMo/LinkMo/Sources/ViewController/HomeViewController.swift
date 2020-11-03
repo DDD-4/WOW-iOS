@@ -74,9 +74,11 @@ class HomeViewController: UIViewController {
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
+		viewModel.inputs.readTitle()
         view.backgroundColor = UIColor.appColor(.bgColor)
         collectionView.backgroundColor = UIColor.appColor(.bgColor)
 		navigationController?.isNavigationBarHidden = true
+		collectionView.reloadData()
 		
         let names = UserDefaults.standard.object(forKey: "linkname")
         linkname.text = "\(names ?? "link")님의 링크"
@@ -221,6 +223,7 @@ class HomeViewController: UIViewController {
 //			self.collectionView.reloadData()
 			let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
 			let editVC = storyBoard.instantiateViewController(withIdentifier: "EditTitleViewController") as! EditTitleViewController
+			editVC.originCategory = category
 			self.navigationController?.pushViewController(editVC, animated: true)
 		}
 		alert.addAction(EditAction)
