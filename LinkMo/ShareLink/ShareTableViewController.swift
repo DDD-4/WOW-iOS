@@ -163,8 +163,8 @@ class ShareSecondTableViewCell: UITableViewCell{
 	
 	let tableLabel: UILabel = {
 		let label = UILabel()
-		label.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
-		label.font = UIFont(name:"AppleSDGothicNeo-Regular" , size: 16)
+		label.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100)
+		label.font = UIFont(name:"AppleSDGothicNeo-Medium" , size: 17)
 
 		return label
 	}()
@@ -191,6 +191,14 @@ class ShareSecondTableViewCell: UITableViewCell{
 		imgView4.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			imgView1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+			imgView1.widthAnchor.constraint(equalToConstant: 18),
+			imgView1.heightAnchor.constraint(equalToConstant: 18),
+			imgView2.widthAnchor.constraint(equalToConstant: 18),
+			imgView2.heightAnchor.constraint(equalToConstant: 18),
+			imgView3.widthAnchor.constraint(equalToConstant: 18),
+			imgView3.heightAnchor.constraint(equalToConstant: 18),
+			imgView4.widthAnchor.constraint(equalToConstant: 18),
+			imgView4.heightAnchor.constraint(equalToConstant: 18),
 			
 			imgView2.leftAnchor.constraint(equalTo: imgView1.rightAnchor, constant: 2),
 			imgView2.centerYAnchor.constraint(equalTo: imgView1.centerYAnchor),
@@ -199,7 +207,9 @@ class ShareSecondTableViewCell: UITableViewCell{
 			imgView4.leftAnchor.constraint(equalTo: imgView3.rightAnchor, constant: 2),
 			imgView4.centerYAnchor.constraint(equalTo: imgView3.centerYAnchor),
 			
-			tableLabel.leadingAnchor.constraint(equalTo: imgView2.leadingAnchor, constant: 8)
+			tableLabel.leftAnchor.constraint(equalTo: imgView2.rightAnchor, constant: 8),
+			tableLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -24),
+			tableLabel.heightAnchor.constraint(equalToConstant: 38)
 			
 		])
 	}
@@ -237,24 +247,19 @@ extension ShareTableViewController: UITableViewDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareSecondTableViewCell", for: indexPath) as? ShareSecondTableViewCell else { return UITableViewCell() }
 		let section = sectionList[indexPath.row]
-		cell.imgView1.image = UIImage(named: "checkmark")
-		cell.imgView2.image = UIImage(named: "checkmark")
-		cell.imgView3.image = UIImage(named: "checkmark")
-		cell.imgView4.image = UIImage(named: "checkmark")
+		cell.imgView1.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+		cell.imgView2.image = UIImage(named: "appicon")?.withTintColor(.systemGray2)
+		cell.imgView3.image = UIImage(named: "appicon")?.withTintColor(.systemGray3)
+		cell.imgView4.image = UIImage(named: "appicon")?.withTintColor(.systemGray4)
 		
-//		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-//		cell.textLabel?.text = section.header
-//		cell.textLabel?.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
-//		cell.textLabel?.font = UIFont(name:"AppleSDGothicNeo-Regular" , size: 16)
-//		cell.textLabel?.translatesAutoresizingMaskIntoConstraints = false
-//		cell.textLabel?.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 36).isActive = true
-//		cell.textLabel?.trailingAnchor.constraint(equalTo: tableView.layoutMarginsGuide.trailingAnchor).isActive = true
+		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
 		cell.tableLabel.text = section.header
+		
 		
 		cell.accessoryView = cell.checkView
 		cell.accessoryView?.isHidden = true
-//		cell.accessoryView?.leadingAnchor.constraint(equalTo: cell.textLabel!.leadingAnchor).isActive = true
-		cell.accessoryView?.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 300).isActive = true
+		cell.accessoryView?.widthAnchor.constraint(equalToConstant: 38).isActive = true
+		cell.accessoryView?.heightAnchor.constraint(equalToConstant: 38).isActive = true
 		cell.accessoryView?.topAnchor.constraint(equalTo: cell.textLabel!.topAnchor, constant: 20).isActive = true
 		cell.accessoryView?.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -34).isActive = true
 		
@@ -288,4 +293,12 @@ extension UIView {
         shapeLayer.path = path
         layer.addSublayer(shapeLayer)
     }
+}
+
+extension UIImageView {
+  func setImageColor(color: UIColor) {
+    let templateImage = self.image?.withRenderingMode(.alwaysTemplate)
+    self.image = templateImage
+    self.tintColor = color
+  }
 }
