@@ -435,77 +435,12 @@ class SecondTableVC: UIViewController {
                     let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                     
                     let update = UIAlertAction(title: "수정", style: .default) { _ in
-                        let alert = UIAlertController(title: nil, message: "링크 수정", preferredStyle: .alert)
-                        let ok = UIAlertAction(title: "OK", style: .default) { _ in
-                            var updateTitle = alert.textFields![0].text
-                            var updatelink = alert.textFields![1].text
-                            
-                            
-                            
-                            defer{
-                                _ = self.tableShardVM.updateCells(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, title: updateTitle!, link: updatelink!)
-                                _ = self.tableShardVM.readSections(categoryId: self.categoryID)
-                                let encodings = updatelink!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                                let updateUrl = URL(string: encodings)!
-                                LPMetadataProvider().startFetchingMetadata(for: updateUrl) { (linkMetadata, error) in
-                                    guard let linkMetadata = linkMetadata,
-                                        let imageProvider = linkMetadata.imageProvider else {
-                                            return DispatchQueue.main.async {
-                                                let images = UIImage(named: "12")
-                                                let convert = images?.pngData()
-                                                
-                                                _ = self.tableShardVM.updatePng(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, png: convert!)
-
-                                            }
-                                    }
-                                    imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                                        guard error == nil else {
-                                            return
-                                        }
-                                        if let image = image as? UIImage {
-                                            // do something with image
-                                            DispatchQueue.main.async {
-                                                let images = image
-                                                let convert = images.pngData()
-
-                                               _ = self.tableShardVM.updatePng(categoryid: self.categoryID, section: indexPath.section, cellrow: indexPath.row, png: convert!)
-                                            }
-                                        } else {
-                                            print("no image available")
-                                        }
-                                    }
-                                    
-                                }
-                            }
-                            
-                            if updatelink!.contains("https://") || updatelink!.contains("http://"){
-                                
-                            }else if updatelink!.isEmpty{
-                                updatelink = dataSource.sectionModels[cell.data.0].linked[cell.data.1]
-                            }else{
-                                updatelink = "https://\(updatelink!)"
-                            }
-                            
-                            if updateTitle!.isEmpty{
-                                updateTitle = dataSource.sectionModels[cell.data.0].titled[cell.data.1]
-                            }
-                            
-                        }
-                        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-                        
-                        alert.addTextField { textField in
-//                            textField.placeholder = dataSource.sectionModels[indexPath.section].titled[indexPath.row]
-                            
-                            textField.placeholder = dataSource.sectionModels[cell.data.0].titled[cell.data.1]
-
-                        }
-                        alert.addTextField { textField in
-//                            textField.placeholder = dataSource.sectionModels[indexPath.section].linked[indexPath.row]
-                            textField.placeholder = dataSource.sectionModels[cell.data.0].linked[cell.data.1]
-                        }
-                        alert.addAction(cancel)
-                        alert.addAction(ok)
-                        self.present(alert, animated: true)
+//                       
+                        let vc = LinkTitleUpdateVC()
+                        vc.sectionValue = cell.data.0
+                        vc.rowValue = cell.data.1
+                        vc.categoryid = self.categoryID
+                        self.navigationController?.pushViewController(vc, animated: true)
                         
                     }
                     let remove = UIAlertAction(title: "삭제", style: .default) { _ in
