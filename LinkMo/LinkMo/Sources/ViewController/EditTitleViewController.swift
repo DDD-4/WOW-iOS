@@ -15,7 +15,7 @@ import EMTNeumorphicView
 
 class EditTitleViewController: UIViewController {
 	let viewModel = HomeViewModel()
-	let buttonSet = EMTNeumorphicButton(type: .custom)
+	let buttonSet = UIButton()
 	let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
 	let emojiLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 25))
 	let categoryLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 25))
@@ -43,15 +43,12 @@ class EditTitleViewController: UIViewController {
 		titleLabel.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		
-		buttonSet.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-		buttonSet.layer.cornerRadius = 5
+		buttonSet.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
 		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .normal)
-		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
 		buttonSet.contentVerticalAlignment = .fill
 		buttonSet.contentHorizontalAlignment = .fill
-		buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
 		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-		buttonSet.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
+		buttonSet.backgroundColor = UIColor.appColor(.bgColor)
 		buttonSet.translatesAutoresizingMaskIntoConstraints = false
 		
 		
@@ -84,8 +81,10 @@ class EditTitleViewController: UIViewController {
 		categoryTextField.translatesAutoresizingMaskIntoConstraints = false
 		
 		NSLayoutConstraint.activate([
-			buttonSet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+			buttonSet.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
 			buttonSet.topAnchor.constraint(equalTo: view.topAnchor, constant: 53),
+			buttonSet.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14),
+			
 			titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 58),
 			emojiLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 143),

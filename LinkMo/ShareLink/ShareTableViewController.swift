@@ -43,7 +43,7 @@ class ShareTableViewController: UIViewController {
 		
 		setConstraint()
 		
-		
+
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -134,6 +134,8 @@ class ShareTableViewController: UIViewController {
 	}
 	
 	@objc func tapFunction(_ sender: Any){
+		
+
 		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
 			if let attachments = item.attachments as? [NSItemProvider] {
 				for attachment: NSItemProvider in attachments {
