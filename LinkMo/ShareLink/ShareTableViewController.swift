@@ -24,6 +24,7 @@ class ShareTableViewController: UIViewController {
 	var sectionList: [TableSection] = []
 	let viewModel = TableViewModel()
 	let disposeBag = DisposeBag()
+	let share = CategoryManager.share
 	let categoryLabel = UILabel()
 	var sectionIndex: Int = 0
 	var tablesectionAll: TableSection? = nil
@@ -41,6 +42,8 @@ class ShareTableViewController: UIViewController {
 			.disposed(by: disposeBag)
 		
 		setConstraint()
+		
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -50,16 +53,6 @@ class ShareTableViewController: UIViewController {
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
-	}
-	
-	@objc func addTapped(){
-		let vc = ShareAlertViewController()
-		vc.categoryid = categoryID
-		vc.categoryIndex = categoryIndex
-		vc.sectionIndex = self.sectionIndex
-		vc.categoryAll = categoryAll
-		vc.tablesectionAll = self.tablesectionAll
-		self.navigationController?.pushViewController(vc, animated: false)
 	}
 	
 	private func setConstraint() {
@@ -104,6 +97,9 @@ class ShareTableViewController: UIViewController {
 		saveLabel.textAlignment = .center
 		saveLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 100)
 		saveLabel.font = UIFont(name:"AppleSDGothicNeo-Regular",size:16)
+		let tap = UITapGestureRecognizer(target: self, action: #selector(ShareTableViewController.tapFunction))
+        saveLabel.isUserInteractionEnabled = true
+        saveLabel.addGestureRecognizer(tap)
 		
 		
 		NSLayoutConstraint.activate([
@@ -135,6 +131,23 @@ class ShareTableViewController: UIViewController {
 	
 	@objc func barbutton(_ sender: Any){
 		self.navigationController?.popViewController(animated: true)
+	}
+	
+	@objc func tapFunction(_ sender: Any){
+		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
+			if let attachments = item.attachments as? [NSItemProvider] {
+				for attachment: NSItemProvider in attachments {
+					if attachment.hasItemConformingToTypeIdentifier("public.url") {
+						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
+							if let shareURL = url as? NSURL {
+								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)")
+							}
+							self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
+						})
+					}
+				}
+			}
+		}
 	}
 	
 	
@@ -231,11 +244,12 @@ extension ShareTableViewController: UITableViewDelegate{
 		
 		self.sectionIndex = indexPath.row
 		self.tablesectionAll = sectionList[indexPath.row].self
-		
+		saveLabel.textColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 100)
 	}
 	func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
 		tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = true
 		tableView.cellForRow(at: indexPath)?.textLabel?.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
+		saveLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 100)
 	}
 }
 
