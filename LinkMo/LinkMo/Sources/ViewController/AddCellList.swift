@@ -36,6 +36,10 @@ class AddCellList: UIViewController {
     
     let buttonBack = UIButton(type: .custom)
     
+    let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+    let container: UIView = UIView()
+    let loadingView: UIView = UIView()
+    
     lazy var didselectNumber = 0
     lazy var selectSection = 0
     
@@ -105,8 +109,39 @@ class AddCellList: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
         view.addGestureRecognizer(tapGesture)
+        
+        
     }
-    
+    func showActivityIndicatory(trueFalse: Bool) {
+        
+        actInd.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        actInd.center = view.center
+        actInd.hidesWhenStopped = true
+        actInd.style = .large
+        if trueFalse{
+            actInd.startAnimating()
+        }
+        
+        container.frame = view.frame
+        container.center = view.center
+        container.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
+        
+        
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        loadingView.center = view.center
+        loadingView.backgroundColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        actInd.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
+        loadingView.addSubview(actInd)
+        container.addSubview(loadingView)
+        view.addSubview(container)
+        
+        container.isHidden = !trueFalse
+        loadingView.isHidden = !trueFalse
+        
+    }
     @objc func barbutton(_ sender: Any){
         self.navigationController?.popViewController(animated: true)
     }
@@ -253,6 +288,7 @@ class AddCellList: UIViewController {
                     self.present(alert, animated: true)
                 }else{
                     defer{
+                        self.showActivityIndicatory(trueFalse: true)
                         _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
                         let urlstring = urlHttps
                         let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -262,11 +298,14 @@ class AddCellList: UIViewController {
                             guard let linkMetadata = linkMetadata,
                                 let imageProvider = linkMetadata.imageProvider else {
                                     return DispatchQueue.main.async {
+                                        
+                                                                                
                                         let images = UIImage(named: "12")
                                         let convert = images?.pngData()
                                         
                                         _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
                                         self.navigationController?.popViewController(animated: true)
+                                        self.showActivityIndicatory(trueFalse: false)
                                     }
                             }
                             imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
@@ -276,11 +315,13 @@ class AddCellList: UIViewController {
                                 if let image = image as? UIImage {
                                     // do something with image
                                     DispatchQueue.main.async {
+                                        
                                         let images = image
                                         let convert = images.pngData()
                                         
                                         _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
                                         self.navigationController?.popViewController(animated: true)
+                                        self.showActivityIndicatory(trueFalse: false)
                                     }
                                 } else {
                                     print("no image available")
