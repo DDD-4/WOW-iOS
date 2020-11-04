@@ -151,7 +151,7 @@ class HomeViewController: UIViewController {
 		let saveAction = UIAlertAction(title:"추가", style: .default, handler: { (action) -> Void in
 			let icon = showAlert.textFields![0] as UITextField
 			let title = showAlert.textFields![1] as UITextField
-			if self.collectionList.count < 6 {
+			if self.collectionList.count < 20 {
 				self.viewModel.addTitle(title: title.text!, icon: icon.text ?? " ")
 			}else {
 				let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 150, y: self.view.frame.size.height-100, width: 300, height: 35))
