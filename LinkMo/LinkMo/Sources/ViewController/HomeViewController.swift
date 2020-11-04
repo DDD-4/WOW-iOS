@@ -239,6 +239,7 @@ class HomeViewController: UIViewController {
 			self.deleteAlert(indexPath: indexPath, category: category)
 			self.collectionView.reloadData()
 		}
+        alert.pruneNegativeWidthConstraints()
 		alert.addAction(destroyAction)
 		self.present(alert, animated: true, completion: nil)
 	}

@@ -76,10 +76,15 @@ class EditTitleViewController: UIViewController {
 		
 		emojiTextField.placeholder = "   \(originCategory?.icon ?? " ")"
 		emojiTextField.translatesAutoresizingMaskIntoConstraints = false
-		
+        emojiTextField.setLeftPaddingPoints(10)
+        emojiTextField.setRightPaddingPoints(10)
+        
+        
 		categoryTextField.placeholder = "   \(originCategory?.title ?? " ")"
 		categoryTextField.translatesAutoresizingMaskIntoConstraints = false
-		
+        categoryTextField.setLeftPaddingPoints(10)
+        categoryTextField.setRightPaddingPoints(10)
+        
 		NSLayoutConstraint.activate([
 			backButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
 			backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 45),
