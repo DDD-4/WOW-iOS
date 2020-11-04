@@ -19,7 +19,6 @@ class HomeSettingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setConstraint()
-		tableView.tableFooterView = UIView()
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -40,7 +39,7 @@ class HomeSettingVC: UIViewController {
         tableView.dataSource = self
 		tableView.register(SettingCell.self, forCellReuseIdentifier: "SettingCell")
 		tableView.backgroundColor = UIColor.appColor(.bgColor)
-		
+		tableView.tableFooterView = UIView()
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 		tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -94,12 +93,13 @@ extension HomeSettingVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-//        if indexPath.row == 0{
+        if indexPath.row == 0{
 //            UserDefaults.standard.set("c", forKey: "linkname")
-//        }
-		let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-		let settingVC = storyBoard.instantiateViewController(withIdentifier: "HomeSettingVC") as! HomeSettingVC
-		self.navigationController?.pushViewController(settingVC, animated: true)
+			let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+			let settingEditVC = storyBoard.instantiateViewController(withIdentifier: "HomeSettingEditVC") as! HomeSettingEditVC
+			self.navigationController?.pushViewController(settingEditVC, animated: true)
+        }
+		
     }
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 57
