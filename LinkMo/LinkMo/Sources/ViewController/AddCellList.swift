@@ -27,13 +27,13 @@ class AddCellList: UIViewController {
     @IBOutlet weak var confirmBtn: EMTNeumorphicButton!
     @IBOutlet weak var scrollonView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var copyUrlLbl: UILabel!
     
     let tableShardVM = TableViewModel.shard
     
     let titleFd = BehaviorRelay<String>(value: "")
     let urlFd = BehaviorRelay<String>(value: "")
     
-    let naviTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
     let buttonBack = EMTNeumorphicButton(type: .custom)
     
     lazy var didselectNumber = 0
@@ -41,7 +41,7 @@ class AddCellList: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(naviTitle)
+
         view.addSubview(buttonBack)
         navigationBar()
         
@@ -60,6 +60,8 @@ class AddCellList: UIViewController {
         tableShardVM.sectionsList(sectionid: selectSection)
         rxButton()
         toolbar()
+        copyURLText()
+        
         
         categoryName.rx.text.orEmpty
             .bind(to: tableShardVM.listlocateS)
@@ -125,12 +127,13 @@ class AddCellList: UIViewController {
     @objc func didTapView(gesture: UITapGestureRecognizer){
         view.endEditing(true)
     }
+    func copyURLText(){
+        copyUrlLbl.translatesAutoresizingMaskIntoConstraints = false
+        copyUrlLbl.text = "링크를 보관할 카테고리를 선택 후\n복사한 URL을 붙여넣어주세요."
+        copyUrlLbl.textColor = UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
+        copyUrlLbl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
+    }
     func navigationBar(){
-        naviTitle.text = "링크 추가"
-        naviTitle.textAlignment = .center
-        naviTitle.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 100)
-        naviTitle.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
-        naviTitle.translatesAutoresizingMaskIntoConstraints = false
         
         buttonBack.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         buttonBack.layer.cornerRadius = 5
@@ -145,8 +148,6 @@ class AddCellList: UIViewController {
         NSLayoutConstraint.activate([
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             buttonBack.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            naviTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            naviTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 58)
         ])
     }
     func addObservers(){
@@ -211,15 +212,22 @@ class AddCellList: UIViewController {
         
     }
     func rxButton(){
+        categoryName.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 19)
+        categoryName.textColor = UIColor.appColor(.title136)
         
         categoryUrl.keyboardType = .URL
-        categoryUrl.placeholder = "링크입력"
+        categoryUrl.placeholder = "링크 주소를 붙여넣기"
+//        categoryUrl.attributedPlaceholder = NSAttributedString(string: "링크 주소를 붙여넣기", attributes: [NSAttributedString.Key.foregroundColor : UIColor.appColor(.titleGray)])
+        categoryUrl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 19)
+        categoryUrl.textColor = UIColor.appColor(.title136)
         categoryUrl.rx.text
             .orEmpty
             .bind(to: urlFd)
             .disposed(by: bag)
         
-        categoryTitle.placeholder = "제목"
+        categoryTitle.placeholder = "링크 제목"
+        categoryTitle.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 19)
+        categoryTitle.textColor = UIColor.appColor(.title136)
         categoryTitle.rx.text
             .orEmpty
             .bind(to: titleFd)
@@ -228,7 +236,8 @@ class AddCellList: UIViewController {
 
         confirmBtn.layer.cornerRadius = confirmBtn.frame.size.height / 2
         confirmBtn.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
-        
+        confirmBtn.setTitle("저장하기", for: .normal)
+        confirmBtn.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 18)
         
         confirmBtn.rx.tap
             .subscribe(onNext: { b in
