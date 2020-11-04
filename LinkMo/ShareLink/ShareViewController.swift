@@ -60,8 +60,8 @@ class ShareViewController: UIViewController {
 		
 		
 		buttonSet.layer.cornerRadius = 5
-		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .normal)
-		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
+		buttonSet.setImage(UIImage(named: "icLeft"), for: .normal)
+		buttonSet.setImage(UIImage(named: "icLeft"), for: .selected)
 		buttonSet.contentVerticalAlignment = .fill
 		buttonSet.contentHorizontalAlignment = .fill
 		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
