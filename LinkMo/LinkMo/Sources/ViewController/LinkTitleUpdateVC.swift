@@ -91,6 +91,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                 var updatelink = self.linkTextfield.text!
                 
                 defer{
+                    self.tableshard.showActivityIndicatory(trueFalse: true, uiView: self.view)
                     _ = self.tableshard.updateCells(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, title: updateTitle, link: updatelink)
                     _ = self.tableshard.readSections(categoryId: self.categoryid)
                     
@@ -106,6 +107,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                                     
                                     _ = self.tableshard.updatePng(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, png: convert!)
                                     self.navigationController?.popViewController(animated: true)
+                                    self.tableshard.showActivityIndicatory(trueFalse: false, uiView: self.view)
                                 }
                         }
                         imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
@@ -120,6 +122,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                                     
                                     _ = self.tableshard.updatePng(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, png: convert!)
                                     self.navigationController?.popViewController(animated: true)
+                                    self.tableshard.showActivityIndicatory(trueFalse: false, uiView: self.view)
                                 }
                             } else {
                                 print("no image available")
