@@ -504,7 +504,7 @@ class SecondTableVC: UIViewController {
         .disposed(by: bag)
         
         tableView.snp.makeConstraints { snp in
-			snp.top.equalTo(view).offset(145)
+			snp.top.equalTo(view).offset(110)
             snp.bottom.equalTo(view)
             snp.trailing.equalTo(view)
             snp.leading.equalTo(view)

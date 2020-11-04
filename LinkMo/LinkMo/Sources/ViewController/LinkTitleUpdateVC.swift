@@ -171,6 +171,8 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         titleTextfield.placeholder = tableshard.sections[sectionValue].titled[rowValue]
         titleTextfield.setLeftPaddingPoints(10)
         titleTextfield.setRightPaddingPoints(10)
+        titleTextfield.autocapitalizationType = .none
+        titleTextfield.textContentType = .URL
         
         titleLbl.snp.makeConstraints { (snp) in
             snp.height.equalTo(20)
@@ -199,6 +201,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         linkTextfield.placeholder = tableshard.sections[sectionValue].linked[rowValue]
         linkTextfield.setLeftPaddingPoints(10)
         linkTextfield.setRightPaddingPoints(10)
+        linkTextfield.autocapitalizationType = .none
         
         linkLbl.snp.makeConstraints { (snp) in
             snp.height.equalTo(20)
