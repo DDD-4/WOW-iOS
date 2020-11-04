@@ -15,7 +15,7 @@ import EMTNeumorphicView
 
 class EditTitleViewController: UIViewController {
 	let viewModel = HomeViewModel()
-	let buttonSet = UIButton()
+	let backButton = UIButton()
 	let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
 	let emojiLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 25))
 	let categoryLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 25))
@@ -28,7 +28,7 @@ class EditTitleViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.addSubview(buttonSet)
+		view.addSubview(backButton)
 		view.addSubview(titleLabel)
 		view.addSubview(emojiLabel)
 		view.addSubview(categoryLabel)
@@ -43,13 +43,13 @@ class EditTitleViewController: UIViewController {
 		titleLabel.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		
-		buttonSet.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-		buttonSet.setImage(UIImage(named: "chevronLeft"), for: .normal)
-		buttonSet.contentVerticalAlignment = .fill
-		buttonSet.contentHorizontalAlignment = .fill
-		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-		buttonSet.backgroundColor = UIColor.appColor(.bgColor)
-		buttonSet.translatesAutoresizingMaskIntoConstraints = false
+		backButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+		backButton.setImage(UIImage(named: "icLeft"), for: .normal)
+		backButton.contentVerticalAlignment = .fill
+		backButton.contentHorizontalAlignment = .fill
+		backButton.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+		backButton.backgroundColor = UIColor.appColor(.bgColor)
+		backButton.translatesAutoresizingMaskIntoConstraints = false
 		
 		
 		saveTitle.text = "수정 완료"
@@ -81,12 +81,12 @@ class EditTitleViewController: UIViewController {
 		categoryTextField.translatesAutoresizingMaskIntoConstraints = false
 		
 		NSLayoutConstraint.activate([
-			buttonSet.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-			buttonSet.topAnchor.constraint(equalTo: view.topAnchor, constant: 53),
-			buttonSet.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14),
+			backButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+			backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 45),
+			backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14),
 			
 			titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 58),
+			titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 54),
 			emojiLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 143),
 			emojiLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 32),
 			emojiTextField.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 6),
