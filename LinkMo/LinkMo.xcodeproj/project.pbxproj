@@ -17,7 +17,13 @@
 		2911E900251DCC4E0068077F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		2911E901251DCC630068077F /* CategoryStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044A824DE3EAD00CB33EA /* CategoryStorageType.swift */; };
 		2911E902251DD8020068077F /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
-		29277ADD2551528100B3D515 /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */; };
+		29277ADF2552613B00B3D515 /* HomeSettingEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29277ADE2552613B00B3D515 /* HomeSettingEditVC.swift */; };
+		29277AE7255264B500B3D515 /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */; };
+		29277AE8255264B500B3D515 /* GmarketSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29277AE32552646300B3D515 /* GmarketSansBold.otf */; };
+		29277AE9255264B500B3D515 /* GmarketSansMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29277AE22552646300B3D515 /* GmarketSansMedium.otf */; };
+		29277AEA255264BC00B3D515 /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */; };
+		29277AEB255264BC00B3D515 /* GmarketSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29277AE32552646300B3D515 /* GmarketSansBold.otf */; };
+		29277AEC255264BC00B3D515 /* GmarketSansMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29277AE22552646300B3D515 /* GmarketSansMedium.otf */; };
 		2934916D254EAE7D00EF8386 /* EditTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */; };
 		2959750225284EFF0074FFCB /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AE24DE3F4600CB33EA /* HomeViewModel.swift */; };
 		2959750325285E430074FFCB /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0449824DE3B9700CB33EA /* Storage.swift */; };
@@ -29,7 +35,6 @@
 		29C2B1EB251DB1F400B8A5A9 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AA24DE3EDE00CB33EA /* CategoryManager.swift */; };
 		29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29D0448224DE394500CB33EA /* LinkMo.xcdatamodeld */; };
 		29C2B1ED251DB26F00B8A5A9 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0449E24DE3C2D00CB33EA /* Category.swift */; };
-		29C5A729254934BD00CA4C7E /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */; };
 		29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447D24DE394500CB33EA /* HomeViewController.swift */; };
 		29D0448124DE394500CB33EA /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29D0447F24DE394500CB33EA /* Home.storyboard */; };
@@ -92,8 +97,10 @@
 
 /* Begin PBXFileReference section */
 		2911E8F8251DBCE80068077F /* ShareTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTableViewController.swift; sourceTree = "<group>"; };
+		29277ADE2552613B00B3D515 /* HomeSettingEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSettingEditVC.swift; sourceTree = "<group>"; };
+		29277AE22552646300B3D515 /* GmarketSansMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansMedium.otf; sourceTree = "<group>"; };
+		29277AE32552646300B3D515 /* GmarketSansBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansBold.otf; sourceTree = "<group>"; };
 		2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTitleViewController.swift; sourceTree = "<group>"; };
-		2959750725301B4F0074FFCB /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = GmarketSansLight.otf; path = "../../../../../../GmarketSansOTF (2)/GmarketSansLight.otf"; sourceTree = "<group>"; };
 		29C2234025075838004ECCD3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		29C2234625075C93004ECCD3 /* ShareLink.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareLink.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C2234825075C93004ECCD3 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -101,8 +108,7 @@
 		29C2234D25075C93004ECCD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29C2235525075F1B004ECCD3 /* LinkMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LinkMo.entitlements; sourceTree = "<group>"; };
 		29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareLink.entitlements; sourceTree = "<group>"; };
-		29C5A7252549346200CA4C7E /* GmarketSansOTF (2) */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "GmarketSansOTF (2)"; path = "LinkMo/Resources/GmarketSansOTF (2)"; sourceTree = "<group>"; };
-		29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = GmarketSansLight.otf; path = "LinkMo/Resources/GmarketSansOTF (2)/GmarketSansLight.otf"; sourceTree = "<group>"; };
+		29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansLight.otf; sourceTree = "<group>"; };
 		29D0447624DE394500CB33EA /* LinkMo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkMo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D0447924DE394500CB33EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29D0447D24DE394500CB33EA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -183,7 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */,
-				29C5A7252549346200CA4C7E /* GmarketSansOTF (2) */,
+				29277AE32552646300B3D515 /* GmarketSansBold.otf */,
+				29277AE22552646300B3D515 /* GmarketSansMedium.otf */,
 				29D0447824DE394500CB33EA /* LinkMo */,
 				29C2234725075C93004ECCD3 /* ShareLink */,
 				29D0447724DE394500CB33EA /* Products */,
@@ -230,7 +237,6 @@
 				A99936E1253EAF0A0009EE22 /* SceneDelegate.swift */,
 				29D0448524DE394900CB33EA /* Assets.xcassets */,
 				29D0448A24DE394900CB33EA /* Info.plist */,
-				2959750725301B4F0074FFCB /* GmarketSansLight.otf */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -282,6 +288,7 @@
 				A99936E3253FE68B0009EE22 /* HomeSettingVC.swift */,
 				2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */,
 				A9AF993125516F6B00E0CF88 /* LinkTitleUpdateVC.swift */,
+				29277ADE2552613B00B3D515 /* HomeSettingEditVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -413,7 +420,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29277ADD2551528100B3D515 /* GmarketSansLight.otf in Resources */,
+				29277AE7255264B500B3D515 /* GmarketSansLight.otf in Resources */,
+				29277AE8255264B500B3D515 /* GmarketSansBold.otf in Resources */,
+				29277AE9255264B500B3D515 /* GmarketSansMedium.otf in Resources */,
 				A98C76D1253BFEEB008B667C /* share.xcassets in Resources */,
 				29C2234C25075C93004ECCD3 /* MainInterface.storyboard in Resources */,
 			);
@@ -423,7 +432,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29C5A729254934BD00CA4C7E /* GmarketSansLight.otf in Resources */,
+				29277AEA255264BC00B3D515 /* GmarketSansLight.otf in Resources */,
+				29277AEB255264BC00B3D515 /* GmarketSansBold.otf in Resources */,
+				29277AEC255264BC00B3D515 /* GmarketSansMedium.otf in Resources */,
 				29D0448624DE394900CB33EA /* Assets.xcassets in Resources */,
 				29D0448124DE394500CB33EA /* Home.storyboard in Resources */,
 			);
@@ -530,6 +541,7 @@
 				A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */,
 				29D044A424DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift in Sources */,
 				29D0449924DE3B9700CB33EA /* Storage.swift in Sources */,
+				29277ADF2552613B00B3D515 /* HomeSettingEditVC.swift in Sources */,
 				29D044B124DE3F6500CB33EA /* ViewModelBindableType.swift in Sources */,
 				A9995B612552584B00BF7C18 /* Extension.swift in Sources */,
 				A9AF993225516F6B00E0CF88 /* LinkTitleUpdateVC.swift in Sources */,

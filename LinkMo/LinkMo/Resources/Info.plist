@@ -23,7 +23,9 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>GmarketSansMedium.otf</string>
 		<string>GmarketSansLight.otf</string>
+		<string>GmarketSansBold.otf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
