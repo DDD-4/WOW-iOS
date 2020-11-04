@@ -16,14 +16,16 @@ import LinkPresentation
 class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
 
     let designLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-    let buttonSet = EMTNeumorphicButton(type: .custom)
+    let buttonSet = UIButton(type: .custom)
+    
+    // title
+    let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+    let titleTextfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
     
     // link
     let linkLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
     let linkTextfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-    // title
-    let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-    let titleTextfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+    
     // Button
     let confirmBtn = EMTNeumorphicButton(type: .custom)
     let tableshard = TableViewModel.shard
@@ -37,26 +39,56 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         
         view.addSubview(designLabel)
         view.addSubview(buttonSet)
-        view.addSubview(linkLbl)
-        view.addSubview(linkTextfield)
         view.addSubview(titleLbl)
         view.addSubview(titleTextfield)
+        view.addSubview(linkLbl)
+        view.addSubview(linkTextfield)
         view.addSubview(confirmBtn)
         
         navigationBar()
-        
-        linkUpdate()
         titleUpdate()
+        linkUpdate()
         confirmButton()
         view.backgroundColor = UIColor.appColor(.bgColor)
         
         linkTextfield.delegate = self
         titleTextfield.delegate = self
         
+
+        titleTextfield.rx.text.orEmpty
+            .bind(to: tableshard.titleValidS)
+            .disposed(by: bag)
+        tableshard.titleValidS
+            .map(tableshard.checkTitle(_:))
+            .bind(to: tableshard.titleVBool)
+            .disposed(by: bag)
+
+        linkTextfield.rx.text.orEmpty
+            .bind(to: tableshard.urlValidS)
+            .disposed(by: bag)
+        
+        tableshard.urlValidS
+            .map(tableshard.checkURL(_:))
+            .bind(to: tableshard.urlVBool)
+            .disposed(by: bag)
+    
+        Observable.combineLatest(tableshard.titleVBool, tableshard.urlVBool, resultSelector: {$0 && $1})
+        .subscribe(onNext: { b in
+            if b == false{
+                
+                self.confirmBtn.isEnabled = false
+                self.confirmBtn.setTitleColor(UIColor.lightGray, for: .normal)
+            }else{
+                self.confirmBtn.isEnabled = true
+                self.confirmBtn.setTitleColor(UIColor.appColor(.pureBlue), for: .normal)
+            }
+        })
+        .disposed(by: bag)
+        
         confirmBtn.rx.tap
             .subscribe(onNext: { _ in
-                var updateTitle = self.linkTextfield.text!
-                var updatelink = self.titleTextfield.text!
+                var updateTitle = self.titleTextfield.text!
+                var updatelink = self.linkTextfield.text!
                 
                 defer{
                     _ = self.tableshard.updateCells(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, title: updateTitle, link: updatelink)
@@ -124,47 +156,23 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         navigationController?.isNavigationBarHidden = false
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
-    func linkUpdate(){
-        linkLbl.text = "링크"
-        linkLbl.font = .systemFont(ofSize: 14)
-        linkLbl.textColor = UIColor.appColor(.titleGray)
-        
-        linkTextfield.backgroundColor = UIColor.white
-        linkTextfield.keyboardType = .default
-        linkTextfield.contentVerticalAlignment = .center
-        linkTextfield.layer.cornerRadius = linkTextfield.frame.size.height / 2
-        linkTextfield.placeholder = tableshard.sections[sectionValue].titled[rowValue]
-        
-        linkLbl.snp.makeConstraints { (snp) in
-            snp.height.equalTo(20)
-            snp.width.equalTo(100)
-            snp.top.equalTo(designLabel).offset(64)
-            snp.leading.equalTo(view).offset(32)
-            snp.trailing.lessThanOrEqualTo(view)
-        }
-        
-        linkTextfield.snp.makeConstraints { (snp) in
-            snp.top.equalTo(linkLbl.snp.bottom).offset(6)
-            snp.leading.equalTo(view).offset(20)
-            snp.trailing.equalTo(view).offset(-20)
-            snp.height.equalTo(54)
-        }
-    }
     func titleUpdate(){
         titleLbl.text = "타이틀"
-        titleLbl.font = .systemFont(ofSize: 14)
+        titleLbl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
         titleLbl.textColor = UIColor.appColor(.titleGray)
         
         titleTextfield.backgroundColor = UIColor.white
         titleTextfield.keyboardType = .default
         titleTextfield.contentVerticalAlignment = .center
-        titleTextfield.layer.cornerRadius = linkTextfield.frame.size.height / 2
-        titleTextfield.placeholder = tableshard.sections[sectionValue].linked[rowValue]
+        titleTextfield.layer.cornerRadius = titleTextfield.frame.size.height / 2
+        titleTextfield.placeholder = tableshard.sections[sectionValue].titled[rowValue]
+        titleTextfield.setLeftPaddingPoints(10)
+        titleTextfield.setRightPaddingPoints(10)
         
         titleLbl.snp.makeConstraints { (snp) in
             snp.height.equalTo(20)
             snp.width.equalTo(100)
-            snp.top.equalTo(linkTextfield.snp.bottom).offset(28)
+            snp.top.equalTo(designLabel).offset(64)
             snp.leading.equalTo(view).offset(32)
             snp.trailing.lessThanOrEqualTo(view)
         }
@@ -176,10 +184,40 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
             snp.height.equalTo(54)
         }
     }
+    func linkUpdate(){
+        linkLbl.text = "링크"
+        linkLbl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
+        linkLbl.textColor = UIColor.appColor(.titleGray)
+        
+        linkTextfield.backgroundColor = UIColor.white
+        linkTextfield.keyboardType = .default
+        linkTextfield.contentVerticalAlignment = .center
+        linkTextfield.layer.cornerRadius = linkTextfield.frame.size.height / 2
+        linkTextfield.placeholder = tableshard.sections[sectionValue].linked[rowValue]
+        linkTextfield.setLeftPaddingPoints(10)
+        linkTextfield.setRightPaddingPoints(10)
+        
+        linkLbl.snp.makeConstraints { (snp) in
+            snp.height.equalTo(20)
+            snp.width.equalTo(100)
+            snp.top.equalTo(titleTextfield.snp.bottom).offset(28)
+            snp.leading.equalTo(view).offset(32)
+            snp.trailing.lessThanOrEqualTo(view)
+        }
+        
+        linkTextfield.snp.makeConstraints { (snp) in
+            snp.top.equalTo(linkLbl.snp.bottom).offset(6)
+            snp.leading.equalTo(view).offset(20)
+            snp.trailing.equalTo(view).offset(-20)
+            snp.height.equalTo(54)
+        }
+    }
     func confirmButton(){
         confirmBtn.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
         confirmBtn.layer.cornerRadius = confirmBtn.frame.size.height / 2
         confirmBtn.neumorphicLayer?.elementColor = UIColor.appColor(.bgColor).cgColor
+        confirmBtn.setTitle("수정 완료", for: .normal)
+        confirmBtn.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 18)
         
         confirmBtn.snp.makeConstraints { (snp) in
             snp.bottom.equalTo(view).offset(-94)
@@ -191,8 +229,8 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
     func navigationBar(){
         designLabel.text = "링크 수정"
         designLabel.textAlignment = .center
-        designLabel.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 100)
-        designLabel.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
+        designLabel.textColor = UIColor.appColor(.naviTitle)
+        designLabel.font = UIFont(name:"AppleSDGothicNeo-Medium",size:16)
         designLabel.translatesAutoresizingMaskIntoConstraints = false
         
         buttonSet.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -201,9 +239,8 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
         buttonSet.contentVerticalAlignment = .fill
         buttonSet.contentHorizontalAlignment = .fill
-        buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
         buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-        buttonSet.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
+        
         buttonSet.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             buttonSet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

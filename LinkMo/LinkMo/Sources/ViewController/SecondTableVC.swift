@@ -48,7 +48,7 @@ class SecondTableVC: UIViewController {
     let addCellBtn = UIButton(type: .custom)
     let sectionLbl = UILabel()
     let cellLbl = UILabel()
-	let buttonSet = EMTNeumorphicButton(type: .custom)
+	let buttonSet = UIButton(type: .custom)
 	let designLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
     let hiddenBackBtn = UIButton(type: .system)
     
@@ -109,8 +109,8 @@ class SecondTableVC: UIViewController {
     func navigationBar(){
         designLabel.text = navigationTitle
         designLabel.textAlignment = .center
-        designLabel.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 100)
-        designLabel.font = UIFont(name:"AppleSDGothicNeo-Light",size:16)
+        designLabel.textColor = UIColor.appColor(.naviTitle)
+        designLabel.font = UIFont(name:"AppleSDGothicNeo-Medium", size:16)
         designLabel.translatesAutoresizingMaskIntoConstraints = false
         
         buttonSet.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -119,9 +119,7 @@ class SecondTableVC: UIViewController {
         buttonSet.setImage(UIImage(named: "chevronLeft"), for: .selected)
         buttonSet.contentVerticalAlignment = .fill
         buttonSet.contentHorizontalAlignment = .fill
-        buttonSet.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
         buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-        buttonSet.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
         buttonSet.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             buttonSet.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
