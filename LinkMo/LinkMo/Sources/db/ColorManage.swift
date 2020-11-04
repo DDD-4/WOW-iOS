@@ -16,6 +16,7 @@ enum neumorphismColor{
     case numberColor
     case titleGray
 	case blackLabel
+	case lightGray
 }
 extension UIColor{
 	static func appColor(_ name: neumorphismColor) -> UIColor{
@@ -38,6 +39,9 @@ extension UIColor{
 			
 			case .blackLabel:
 				return UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 1.0)
+			
+			case .lightGray:
+				return UIColor(red: 155/255, green: 155/255, blue: 155/255, alpha: 1.0)
 		}
 		
 		
