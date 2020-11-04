@@ -123,7 +123,7 @@ class AddCellList: UIViewController {
     }
     
     @objc func didTapView(gesture: UITapGestureRecognizer){
-        view.endEditing(true)
+		view.endEditing(true)
     }
     func navigationBar(){
         naviTitle.text = "링크 추가"
