@@ -11,6 +11,7 @@ import Social
 import CoreData
 import RxSwift
 import RxDataSources
+import LinkPresentation
 
 class ShareTableViewController: UIViewController {
 	private let tableView: UITableView = {
@@ -139,6 +140,8 @@ class ShareTableViewController: UIViewController {
 
 		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
 			if let attachments = item.attachments as? [NSItemProvider] {
+				
+				
 				if let attachment = attachments.first {
 					attachment.loadPreviewImage(options: nil, completionHandler: { (item, error) in
 						if error != nil {
@@ -153,6 +156,8 @@ class ShareTableViewController: UIViewController {
 					if attachment.hasItemConformingToTypeIdentifier("public.url") {
 						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
 							if let shareURL = url as? NSURL {
+								
+								
 								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)", png: (self.thumbnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
 							}
 							self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
