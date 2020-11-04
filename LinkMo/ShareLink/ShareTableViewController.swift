@@ -32,7 +32,7 @@ class ShareTableViewController: UIViewController {
 	let buttonSet = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
 	let saveLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 28, height: 22))
 	let dashView = UIView()
-	var thumnail = UIImage()
+	var thumbnail = UIImage()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -144,7 +144,7 @@ class ShareTableViewController: UIViewController {
 						if error != nil {
 							print("share extension second table VC thumnail image error : ", error)
 						} else if let img = item as? UIImage {
-							self.thumnail = img
+							self.thumbnail = img
 						}
 					})
 				}
@@ -153,7 +153,7 @@ class ShareTableViewController: UIViewController {
 					if attachment.hasItemConformingToTypeIdentifier("public.url") {
 						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
 							if let shareURL = url as? NSURL {
-								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)", png: (self.thumnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
+								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)", png: (self.thumbnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
 							}
 							self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
 						})
