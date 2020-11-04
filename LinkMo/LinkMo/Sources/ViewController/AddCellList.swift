@@ -34,7 +34,7 @@ class AddCellList: UIViewController {
     let titleFd = BehaviorRelay<String>(value: "")
     let urlFd = BehaviorRelay<String>(value: "")
     
-    let buttonBack = EMTNeumorphicButton(type: .custom)
+    let buttonBack = UIButton(type: .custom)
     
     lazy var didselectNumber = 0
     lazy var selectSection = 0
@@ -141,9 +141,7 @@ class AddCellList: UIViewController {
         buttonBack.setImage(UIImage(named: "chevronLeft"), for: .selected)
         buttonBack.contentVerticalAlignment = .fill
         buttonBack.contentHorizontalAlignment = .fill
-        buttonBack.imageEdgeInsets = UIEdgeInsets(top: 26, left: 24, bottom: 22, right: 24)
         buttonBack.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-        buttonBack.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
         buttonBack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -212,13 +210,13 @@ class AddCellList: UIViewController {
         
     }
     func rxButton(){
-        categoryName.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 19)
+        categoryName.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
         categoryName.textColor = UIColor.appColor(.title136)
         
         categoryUrl.keyboardType = .URL
         categoryUrl.placeholder = "링크 주소를 붙여넣기"
 //        categoryUrl.attributedPlaceholder = NSAttributedString(string: "링크 주소를 붙여넣기", attributes: [NSAttributedString.Key.foregroundColor : UIColor.appColor(.titleGray)])
-        categoryUrl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 19)
+        categoryUrl.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
         categoryUrl.textColor = UIColor.appColor(.title136)
         categoryUrl.rx.text
             .orEmpty
@@ -226,7 +224,7 @@ class AddCellList: UIViewController {
             .disposed(by: bag)
         
         categoryTitle.placeholder = "링크 제목"
-        categoryTitle.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 19)
+        categoryTitle.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
         categoryTitle.textColor = UIColor.appColor(.title136)
         categoryTitle.rx.text
             .orEmpty
