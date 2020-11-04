@@ -109,7 +109,7 @@ class SecondTableVC: UIViewController {
     func navigationBar(){
         designLabel.text = navigationTitle
         designLabel.textAlignment = .center
-        designLabel.textColor = UIColor.appColor(.naviTitle)
+        designLabel.textColor = UIColor.appColor(.titleGray)
         designLabel.font = UIFont(name:"AppleSDGothicNeo-Medium", size:16)
         designLabel.translatesAutoresizingMaskIntoConstraints = false
         

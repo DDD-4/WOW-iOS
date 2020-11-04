@@ -235,7 +235,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
     func navigationBar(){
         designLabel.text = "링크 수정"
         designLabel.textAlignment = .center
-        designLabel.textColor = UIColor.appColor(.naviTitle)
+        designLabel.textColor = UIColor.appColor(.titleGray)
         designLabel.font = UIFont(name:"AppleSDGothicNeo-Medium",size:16)
         designLabel.translatesAutoresizingMaskIntoConstraints = false
         
