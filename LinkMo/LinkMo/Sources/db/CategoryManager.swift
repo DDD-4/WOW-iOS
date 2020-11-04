@@ -36,7 +36,7 @@ class CategoryManager {
 		self.fetchedTableSection = try! context.fetch(fetchRequest)
 	}
 	
-	func createCells(category: Category, tablesection: TableSection, categoryNumber: Int, sectionNumber: Int, linkTitle: String, linkUrl: String){
+	func createCells(category: Category, tablesection: TableSection, categoryNumber: Int, sectionNumber: Int, linkTitle: String, linkUrl: String, png: Data){
         
 		let fetchRequestCa = NSFetchRequest<ManagedCategory>(entityName: "ManagedCategory")
 		let fetchRequestLi = NSFetchRequest<ManagedList>(entityName: "ManagedList")
@@ -45,14 +45,17 @@ class CategoryManager {
 		let ids = categorys[categoryNumber].id
 		
 		let sectionRead = try! context.fetch(fetchRequestLi)
-		let deleteValue = sectionRead.filter{$0.categoryid == ids}
+		let addValue = sectionRead.filter{$0.categoryid == ids}
 		
-		deleteValue[sectionNumber].title.append(linkTitle)
-		deleteValue[sectionNumber].url.append(linkUrl)
+		addValue[sectionNumber].title.append(linkTitle)
+		addValue[sectionNumber].url.append(linkUrl)
+		addValue[sectionNumber].thumbnail.append(png)
+		
 		try! context.save()
 		fetchTableSection()
-        
+		
 	}
+	
 }
 
 class CustomPersistantContainer : NSPersistentContainer {

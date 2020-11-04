@@ -32,6 +32,7 @@ class ShareTableViewController: UIViewController {
 	let buttonSet = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
 	let saveLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 28, height: 22))
 	let dashView = UIView()
+	var thumnail = UIImage()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -138,11 +139,21 @@ class ShareTableViewController: UIViewController {
 
 		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
 			if let attachments = item.attachments as? [NSItemProvider] {
+				if let attachment = attachments.first {
+					attachment.loadPreviewImage(options: nil, completionHandler: { (item, error) in
+						if error != nil {
+							print("share extension second table VC thumnail image error : ", error)
+						} else if let img = item as? UIImage {
+							self.thumnail = img
+						}
+					})
+				}
+				
 				for attachment: NSItemProvider in attachments {
 					if attachment.hasItemConformingToTypeIdentifier("public.url") {
 						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
 							if let shareURL = url as? NSURL {
-								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)")
+								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)", png: (self.thumnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
 							}
 							self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
 						})
@@ -150,9 +161,14 @@ class ShareTableViewController: UIViewController {
 				}
 			}
 		}
+		
+		
+		
+		
 	}
-	
-	
+		
+		
+		
 }
 class ShareSecondTableViewCell: UITableViewCell{
 	let imgView1: UIImageView = {
@@ -263,10 +279,33 @@ extension ShareTableViewController: UITableViewDataSource{
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareSecondTableViewCell", for: indexPath) as? ShareSecondTableViewCell else { return UITableViewCell() }
 		let section = sectionList[indexPath.row]
-		cell.imgView1.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
-		cell.imgView2.image = UIImage(named: "appicon")?.withTintColor(.systemGray2)
-		cell.imgView3.image = UIImage(named: "appicon")?.withTintColor(.systemGray3)
-		cell.imgView4.image = UIImage(named: "appicon")?.withTintColor(.systemGray4)
+		
+		if(section.thumbnail.count == 0){
+			cell.imgView1.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+			cell.imgView2.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+			cell.imgView3.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+			cell.imgView4.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+		}else if(section.thumbnail.count == 1){
+			cell.imgView1.image = UIImage(data: section.thumbnail[0])
+			cell.imgView2.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+			cell.imgView3.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+			cell.imgView4.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+		}else if(section.thumbnail.count == 2){
+			cell.imgView1.image = UIImage(data: section.thumbnail[0])
+			cell.imgView2.image = UIImage(data: section.thumbnail[1])
+			cell.imgView3.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+			cell.imgView4.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+		}else if(section.thumbnail.count == 3){
+			cell.imgView1.image = UIImage(data: section.thumbnail[0])
+			cell.imgView2.image = UIImage(data: section.thumbnail[1])
+			cell.imgView3.image = UIImage(data: section.thumbnail[2])
+			cell.imgView4.image = UIImage(named: "appicon")?.withTintColor(.systemGray)
+		}else if(section.thumbnail.count >= 4){
+			cell.imgView1.image = UIImage(data: section.thumbnail[0])
+			cell.imgView2.image = UIImage(data: section.thumbnail[1])
+			cell.imgView3.image = UIImage(data: section.thumbnail[2])
+			cell.imgView4.image = UIImage(data: section.thumbnail[3])
+		}
 		
 		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
 		cell.tableLabel.text = section.header
