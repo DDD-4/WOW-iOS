@@ -9,6 +9,10 @@
 import Foundation
 import CoreData
 
+enum CategoryShow{
+    case show
+    case hide
+}
 struct Category: Equatable {
 	var title: String
 	var id: Int64

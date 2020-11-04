@@ -91,6 +91,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                 var updatelink = self.linkTextfield.text!
                 
                 defer{
+                    self.tableshard.showActivityIndicatory(trueFalse: true, uiView: self.view)
                     _ = self.tableshard.updateCells(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, title: updateTitle, link: updatelink)
                     _ = self.tableshard.readSections(categoryId: self.categoryid)
                     
@@ -106,6 +107,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                                     
                                     _ = self.tableshard.updatePng(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, png: convert!)
                                     self.navigationController?.popViewController(animated: true)
+                                    self.tableshard.showActivityIndicatory(trueFalse: false, uiView: self.view)
                                 }
                         }
                         imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
@@ -120,6 +122,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                                     
                                     _ = self.tableshard.updatePng(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, png: convert!)
                                     self.navigationController?.popViewController(animated: true)
+                                    self.tableshard.showActivityIndicatory(trueFalse: false, uiView: self.view)
                                 }
                             } else {
                                 print("no image available")
@@ -168,6 +171,8 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         titleTextfield.placeholder = tableshard.sections[sectionValue].titled[rowValue]
         titleTextfield.setLeftPaddingPoints(10)
         titleTextfield.setRightPaddingPoints(10)
+        titleTextfield.autocapitalizationType = .none
+        titleTextfield.textContentType = .URL
         
         titleLbl.snp.makeConstraints { (snp) in
             snp.height.equalTo(20)
@@ -196,6 +201,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         linkTextfield.placeholder = tableshard.sections[sectionValue].linked[rowValue]
         linkTextfield.setLeftPaddingPoints(10)
         linkTextfield.setRightPaddingPoints(10)
+        linkTextfield.autocapitalizationType = .none
         
         linkLbl.snp.makeConstraints { (snp) in
             snp.height.equalTo(20)

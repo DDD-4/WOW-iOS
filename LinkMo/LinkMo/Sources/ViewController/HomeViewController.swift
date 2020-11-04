@@ -13,6 +13,21 @@ import RxDataSources
 import EMTNeumorphicView
 
 class HomeViewController: UIViewController {
+    
+    var state: CategoryShow = .hide{
+        didSet{
+            switch state {
+            case .hide:
+                collectionView.isHidden = true
+                dataNil(state: false)
+            
+            case .show:
+                collectionView.isHidden = false
+                dataNil(state: true)
+            }
+        }
+    }
+    
 	let viewModel = HomeViewModel()
 	let tableViewModel = TableViewModel()
 	let disposeBag = DisposeBag()
@@ -31,14 +46,31 @@ class HomeViewController: UIViewController {
 	private var pullControl = UIRefreshControl()
 	let buttonSet = UIButton()
 	let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
-	
+	let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+    
+    func dataNil(state: Bool){
+        emptyLabel.text = "+ 버튼을 눌러 \n 카테고리를 만들어보세요!"
+        emptyLabel.font = UIFont.systemFont(ofSize: 26)
+        emptyLabel.numberOfLines = 0
+        emptyLabel.textAlignment = .center
+        emptyLabel.textColor = .lightGray
+        
+        emptyLabel.snp.makeConstraints { snp in
+            snp.centerX.equalTo(view)
+            snp.centerY.equalTo(view).offset(-80)
+            snp.height.equalTo(80)
+        }
+        
+        emptyLabel.isHidden = state
+    }
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        view.addSubview(emptyLabel)
 		bindViewModel()
         collectionView.showsVerticalScrollIndicator = false
 		view.addSubview(linkLabel)
         view.addSubview(buttonSet)
-		
         viewModel.inputs.readTitle()
         flottingBtn()
 		refresh()
@@ -65,8 +97,7 @@ class HomeViewController: UIViewController {
 			buttonSet.centerYAnchor.constraint(equalTo: linkLabel.centerYAnchor),
 			buttonSet.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14)
 		])
-		
-		
+        
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -142,7 +173,13 @@ class HomeViewController: UIViewController {
 		collectionView.rx.setDataSource(self).disposed(by: disposeBag)
 		viewModel.outputs.categories
 			.subscribe(onNext: {[weak self] categories in
-				self?.collectionList = categories })
+                self?.collectionList = categories
+                if categories.count == 0{
+                    self?.state = .hide
+                }else{
+                    self?.state = .show
+                }
+            })
 			.disposed(by: disposeBag)
 	}
 	

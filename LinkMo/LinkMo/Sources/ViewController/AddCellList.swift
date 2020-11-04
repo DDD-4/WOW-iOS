@@ -36,6 +36,8 @@ class AddCellList: UIViewController {
     
     let buttonBack = UIButton(type: .custom)
     
+    
+    
     lazy var didselectNumber = 0
     lazy var selectSection = 0
     
@@ -105,6 +107,7 @@ class AddCellList: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
         view.addGestureRecognizer(tapGesture)
+        
     }
     
     @objc func barbutton(_ sender: Any){
@@ -253,6 +256,7 @@ class AddCellList: UIViewController {
                     self.present(alert, animated: true)
                 }else{
                     defer{
+                        self.tableShardVM.showActivityIndicatory(trueFalse: true, uiView: self.view)
                         _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
                         let urlstring = urlHttps
                         let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -262,11 +266,14 @@ class AddCellList: UIViewController {
                             guard let linkMetadata = linkMetadata,
                                 let imageProvider = linkMetadata.imageProvider else {
                                     return DispatchQueue.main.async {
+                                        
+                                                                                
                                         let images = UIImage(named: "12")
                                         let convert = images?.pngData()
                                         
                                         _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
                                         self.navigationController?.popViewController(animated: true)
+                                        self.tableShardVM.showActivityIndicatory(trueFalse: false, uiView: self.view)
                                     }
                             }
                             imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
@@ -276,11 +283,13 @@ class AddCellList: UIViewController {
                                 if let image = image as? UIImage {
                                     // do something with image
                                     DispatchQueue.main.async {
+                                        
                                         let images = image
                                         let convert = images.pngData()
                                         
                                         _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
                                         self.navigationController?.popViewController(animated: true)
+                                        self.tableShardVM.showActivityIndicatory(trueFalse: false, uiView: self.view)
                                     }
                                 } else {
                                     print("no image available")

@@ -367,15 +367,41 @@ class TableViewModel{
 
         return titleText.isEmpty ? false : true
     }
+    
+    func showActivityIndicatory(trueFalse: Bool, uiView: UIView) {
+        
+        let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+        let container: UIView = UIView()
+        let loadingView: UIView = UIView()
+        
+        actInd.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        actInd.center = uiView.center
+        actInd.hidesWhenStopped = true
+        actInd.style = .large
+        if trueFalse{
+            actInd.startAnimating()
+        }
+        
+        container.frame = uiView.frame
+        container.center = uiView.center
+        container.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.3)
+        
+        
+        loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        loadingView.center = uiView.center
+        loadingView.backgroundColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        actInd.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
+        loadingView.addSubview(actInd)
+        container.addSubview(loadingView)
+        uiView.addSubview(container)
+        
+        container.isHidden = !trueFalse
+        loadingView.isHidden = !trueFalse
+        
+    }
+    
 }
 
-//MARK: - alert actionSheet 경고창
-extension UIAlertController {
-    func pruneNegativeWidthConstraints() {
-        for subView in self.view.subviews {
-            for constraint in subView.constraints where constraint.debugDescription.contains("width == - 16") {
-                subView.removeConstraint(constraint)
-            }
-        }
-    }
-}
