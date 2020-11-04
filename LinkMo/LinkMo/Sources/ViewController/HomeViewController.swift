@@ -97,7 +97,7 @@ class HomeViewController: UIViewController {
 			buttonSet.centerYAnchor.constraint(equalTo: linkLabel.centerYAnchor),
 			buttonSet.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14)
 		])
-        
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -120,6 +120,7 @@ class HomeViewController: UIViewController {
 		let settingVC = storyBoard.instantiateViewController(withIdentifier: "HomeSettingVC") as! HomeSettingVC
 		self.navigationController?.pushViewController(settingVC, animated: true)
     }
+	
 	
 	func refresh(){
 		pullControl.attributedTitle = NSAttributedString(string: "새로고침")
@@ -182,41 +183,51 @@ class HomeViewController: UIViewController {
 	}
 	
 	func showAlert(title: String) {
-		let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+		let showAlert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
 		
-		alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+		showAlert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
 		let saveAction = UIAlertAction(title:"추가", style: .default, handler: { (action) -> Void in
-			let icon = alert.textFields![0] as UITextField
-			let title = alert.textFields![1] as UITextField
+			let icon = showAlert.textFields![0] as UITextField
+			let title = showAlert.textFields![1] as UITextField
 			if self.collectionList.count < 20 {
 				self.viewModel.addTitle(title: title.text!, icon: icon.text ?? " ")
 			}else {
 				let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 150, y: self.view.frame.size.height-100, width: 300, height: 35))
-				toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+				toastLabel.backgroundColor = UIColor.appColor(.pureBlue)
 				toastLabel.textColor = UIColor.white
+				toastLabel.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
 				toastLabel.textAlignment = .center
 				toastLabel.text = "카테고리는 20개 까지만 추가됩니다."
 				toastLabel.alpha = 1.0
-				toastLabel.layer.cornerRadius = 10
-				toastLabel.clipsToBounds = true
 				self.view.addSubview(toastLabel)
-				UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: { toastLabel.alpha = 0.0 }, completion: {(isCompleted) in toastLabel.removeFromSuperview() })
+				toastLabel.layer.cornerRadius = 18
+				toastLabel.clipsToBounds = true
+//				toastLabel.layer.shadowColor = UIColor(red: 159/255, green: 155/255, blue: 217/255, alpha: 1.0).cgColor
+//				toastLabel.layer.shadowRadius = 13.0
+//				toastLabel.layer.shadowOpacity = 0.75
+//				toastLabel.layer.shadowOffset = CGSize(width: 0, height: 10)
+//				toastLabel.layer.shouldRasterize = true
+//				toastLabel.layer.masksToBounds = false
+				
+				
+				UIView.animate(withDuration: 4.0, delay: 10.0, options: .curveEaseOut, animations: { toastLabel.alpha = 0.0 }, completion: {(isCompleted) in toastLabel.removeFromSuperview() })
 			}
 			
 		})
 		saveAction.isEnabled = false
-		alert.addAction(saveAction)
-		alert.preferredAction = saveAction
-		alert.addTextField(configurationHandler: { (textField) -> Void in
+		showAlert.addAction(saveAction)
+		showAlert.preferredAction = saveAction
+		showAlert.addTextField(configurationHandler: { (textField) -> Void in
 			textField.placeholder = "대표 아이콘"
 		})
-		alert.addTextField(configurationHandler: { (textField) in
+		showAlert.addTextField(configurationHandler: { (textField) in
 			textField.placeholder = "카테고리 이름"
 			NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main) { (notification) in
 				saveAction.isEnabled = textField.text?.count ?? 0 > 0
 			}
 		})
-		self.present(alert, animated: true, completion: nil)
+		
+		self.present(showAlert, animated: true, completion: nil)
 	}
 	
 	func showActionsheet(indexPath: IndexPath, category: Category){

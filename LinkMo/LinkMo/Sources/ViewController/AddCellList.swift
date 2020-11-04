@@ -128,7 +128,7 @@ class AddCellList: UIViewController {
     }
     
     @objc func didTapView(gesture: UITapGestureRecognizer){
-        view.endEditing(true)
+		view.endEditing(true)
     }
     func copyURLText(){
         copyUrlLbl.translatesAutoresizingMaskIntoConstraints = false
