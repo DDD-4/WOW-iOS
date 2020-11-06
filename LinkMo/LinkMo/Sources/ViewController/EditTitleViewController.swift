@@ -13,7 +13,7 @@ import RxDataSources
 import EMTNeumorphicView
 
 
-class EditTitleViewController: UIViewController {
+class EditTitleViewController: UIViewController, UITextFieldDelegate {
 	let viewModel = HomeViewModel()
 	let backButton = UIButton()
 	let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
@@ -37,6 +37,9 @@ class EditTitleViewController: UIViewController {
 		view.addSubview(saveBtn)
 		view.addSubview(saveTitle)
 		
+        emojiTextField.delegate = self
+        categoryTextField.delegate = self
+        
 		titleLabel.text = "타이틀 수정"
 		titleLabel.textAlignment = .center
 		titleLabel.textColor = UIColor.appColor(.titleGray)
@@ -69,6 +72,7 @@ class EditTitleViewController: UIViewController {
 		emojiLabel.font = UIFont(name:"AppleSDGothicNeo-Regular",size:14)
 		emojiLabel.translatesAutoresizingMaskIntoConstraints = false
 		
+        
 		categoryLabel.text = "카테고리 이름"
 		categoryLabel.textColor = UIColor.appColor(.titleGray)
 		categoryLabel.font = UIFont(name:"AppleSDGothicNeo-Regular",size:14)
