@@ -54,7 +54,7 @@ class HomeSettingEditVC: UIViewController{
 		titleLabel.font = UIFont(name:"GmarketSansMedium", size:25)
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		
-		discripLabel.text = "비밀번호 재설정 인증번호를 받기 위해 가입한 \n이메일을 입력해주세요. "
+		discripLabel.text = "홈 화면 카테고리 상단에 표시되는 문구입니다. \n나만의 링크 저장소에 이름을 붙여주세요! "
 		discripLabel.numberOfLines = 0
 		discripLabel.textColor = UIColor.appColor(.lightGray)
 		discripLabel.textAlignment = .left
@@ -62,7 +62,7 @@ class HomeSettingEditVC: UIViewController{
 		discripLabel.translatesAutoresizingMaskIntoConstraints = false
 		
 		
-		nameTextField.attributedPlaceholder = NSAttributedString(string: "OO님의 링크.", attributes: [
+		nameTextField.attributedPlaceholder = NSAttributedString(string: "“00님의 링크”", attributes: [
 			.foregroundColor: UIColor.appColor(.lightGray),
 			.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
 		])
@@ -81,7 +81,7 @@ class HomeSettingEditVC: UIViewController{
 		saveBtn.neumorphicLayer?.elementBackgroundColor = UIColor.appColor(.bgColor).cgColor
 		saveBtn.translatesAutoresizingMaskIntoConstraints = false
 		
-		saveTitle.text = "이름 수정 완료"
+		saveTitle.text = "저장하기"
 		saveTitle.font = UIFont(name:"AppleSDGothicNeo-Medium",size:18)
 		saveTitle.textAlignment = .center
 		saveTitle.textColor = UIColor.appColor(.pureBlue)
