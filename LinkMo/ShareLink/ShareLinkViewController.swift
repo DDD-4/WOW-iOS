@@ -29,9 +29,17 @@ class ShareLinkViewController: UIViewController {
 	var tablesectionAll: TableSection? = nil
 	let dashView = UIView()
 	var thumbnail = UIImage()
+	let urlTitle = UILabel()
+	var urlTitleText = UITextField()
+	let urlLabel = UILabel()
+	var urlText = UITextField()
+	let dashView2 = UIView()
+	let dashView3 = UIView()
+	var shareUrl:String = ""
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		getURL()
 		setConstraint()
 	}
 	
@@ -43,14 +51,51 @@ class ShareLinkViewController: UIViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
 	}
+	func getURL(){
+		
+		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
+			if let attachments = item.attachments as? [NSItemProvider] {
+				
+				if let attachment = attachments.first {
+					attachment.loadPreviewImage(options: nil, completionHandler: { (item, error) in
+						if error != nil {
+							print("share extension second table VC thumnail image error : ", error)
+						} else if let img = item as? UIImage {
+							self.thumbnail = img
+						}
+					})
+				}
+				
+				for attachment: NSItemProvider in attachments {
+					if attachment.hasItemConformingToTypeIdentifier("public.url") {
+						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
+							if let shareURL = url as? NSURL {
+								self.shareUrl = "\(shareURL)"
+								
+								
+							}
+							
+						})
+					}
+				}
+			}
+		}
+	}
 	
 	private func setConstraint() {
+		
 		self.view.addSubview(titleLabel)
 		self.view.addSubview(saveBtn)
 		self.view.addSubview(saveLabel)
 		self.view.addSubview(categoryLabel)
 		self.view.addSubview(sectionLabel)
+		self.view.addSubview(urlTitle)
+		self.view.addSubview(urlTitleText)
+		self.view.addSubview(urlLabel)
+		self.view.addSubview(urlText)
 		view.addSubview(dashView)
+		view.addSubview(dashView2)
+		view.addSubview(dashView3)
 		
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		saveBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +103,15 @@ class ShareLinkViewController: UIViewController {
 		categoryLabel.translatesAutoresizingMaskIntoConstraints = false
 		dashView.translatesAutoresizingMaskIntoConstraints = false
 		sectionLabel.translatesAutoresizingMaskIntoConstraints = false
+		urlTitle.translatesAutoresizingMaskIntoConstraints = false
+		urlTitleText.translatesAutoresizingMaskIntoConstraints = false
+		urlLabel.translatesAutoresizingMaskIntoConstraints = false
+		urlText.translatesAutoresizingMaskIntoConstraints = false
+		dashView2.translatesAutoresizingMaskIntoConstraints = false
+		dashView3.translatesAutoresizingMaskIntoConstraints = false
 		dashView.addDashedBorder()
+		dashView2.addDashedBorder()
+		dashView3.addDashedBorder()
 		
 		categoryLabel.text = categoryAll!.title + " > "
 		categoryLabel.textColor =  UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 100)
@@ -89,6 +142,26 @@ class ShareLinkViewController: UIViewController {
         saveLabel.isUserInteractionEnabled = true
         saveLabel.addGestureRecognizer(tap)
 		
+		urlTitle.text = "URL 이름"
+		urlTitle.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
+		urlTitle.font = UIFont(name:"AppleSDGothicNeo-Medium",size:14)
+		
+		urlTitleText.placeholder = "url title"
+		urlTitleText.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100)
+		urlTitleText.font = UIFont(name:"AppleSDGothicNeo-Medium",size:16)
+		
+		urlLabel.text = "URL"
+		urlLabel.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
+		urlLabel.font = UIFont(name:"AppleSDGothicNeo-Medium",size:14)
+		
+		urlText.attributedPlaceholder = NSAttributedString(string: "\(shareUrl)", attributes: [
+			.foregroundColor: UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100),
+			.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
+		])
+		urlText.text = shareUrl
+		urlText.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100)
+		urlText.font = UIFont(name:"AppleSDGothicNeo-Medium",size:16)
+		
 		NSLayoutConstraint.activate([
 			titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
 			titleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 24),
@@ -108,7 +181,31 @@ class ShareLinkViewController: UIViewController {
 			
 			dashView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 7.5),
 			dashView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
-			dashView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24)
+			dashView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+			
+			urlTitle.topAnchor.constraint(equalTo: dashView.bottomAnchor, constant: 35.5),
+			urlTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+			urlTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+			
+			urlTitleText.topAnchor.constraint(equalTo: urlTitle.bottomAnchor, constant: 16),
+			urlTitleText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+			urlTitleText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+
+			dashView2.topAnchor.constraint(equalTo: urlTitleText.bottomAnchor, constant: 11.5),
+			dashView2.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+			dashView2.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+
+			urlLabel.topAnchor.constraint(equalTo: dashView2.bottomAnchor, constant: 35.5),
+			urlLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+			urlLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+
+			urlText.topAnchor.constraint(equalTo: urlLabel.bottomAnchor, constant: 16),
+			urlText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+			urlText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24),
+
+			dashView3.topAnchor.constraint(equalTo: urlText.bottomAnchor, constant: 11.5),
+			dashView3.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
+			dashView3.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -24)
 		])
 	}
 	
@@ -117,34 +214,9 @@ class ShareLinkViewController: UIViewController {
 	}
 	
 	@objc func tapFunction(_ sender: Any){
-		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
-			if let attachments = item.attachments as? [NSItemProvider] {
-				
-				if let attachment = attachments.first {
-					attachment.loadPreviewImage(options: nil, completionHandler: { (item, error) in
-						if error != nil {
-							print("share extension second table VC thumnail image error : ", error)
-						} else if let img = item as? UIImage {
-							self.thumbnail = img
-						}
-					})
-				}
-				
-				for attachment: NSItemProvider in attachments {
-					if attachment.hasItemConformingToTypeIdentifier("public.url") {
-						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
-							if let shareURL = url as? NSURL {
-								
-								
-								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)", png: (self.thumbnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
-							}
-							self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
-						})
-					}
-				}
-			}
-		}
+		self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.urlTitleText.text ?? shareUrl, linkUrl: shareUrl, png: (self.thumbnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
 		
+		self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
 	}
 }
 
