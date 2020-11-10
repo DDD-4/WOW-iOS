@@ -41,6 +41,17 @@ class ShareLinkViewController: UIViewController {
 		super.viewDidLoad()
 		getURL()
 		setConstraint()
+		
+//		urlTitleText.rx.controlEvent(.editingChanged)
+//			.asObservable()
+//			.subscribe(onNext: { _ in
+//				
+//				self.saveBtn.tintColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 1.0)
+//			})
+//			.disposed(by: disposeBag)
+
+			
+
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +82,13 @@ class ShareLinkViewController: UIViewController {
 						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
 							if let shareURL = url as? NSURL {
 								self.shareUrl = "\(shareURL)"
+								DispatchQueue.main.async {
+									self.urlText.attributedPlaceholder = NSAttributedString(string: "\(self.shareUrl)", attributes: [
+										.foregroundColor: UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100),
+										.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
+									])
+									self.urlText.text = self.shareUrl
+								}
 								
 								
 							}
@@ -154,14 +172,6 @@ class ShareLinkViewController: UIViewController {
 		urlLabel.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
 		urlLabel.font = UIFont(name:"AppleSDGothicNeo-Medium",size:14)
 		
-		urlText.attributedPlaceholder = NSAttributedString(string: "\(shareUrl)", attributes: [
-			.foregroundColor: UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100),
-			.font: UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
-		])
-		urlText.text = shareUrl
-		urlText.textColor = UIColor(red: 34/255, green: 34/255, blue: 34/255, alpha: 100)
-		urlText.font = UIFont(name:"AppleSDGothicNeo-Medium",size:16)
-		
 		NSLayoutConstraint.activate([
 			titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
 			titleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 24),
@@ -217,6 +227,11 @@ class ShareLinkViewController: UIViewController {
 		self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.urlTitleText.text ?? shareUrl, linkUrl: shareUrl, png: (self.thumbnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
 		
 		self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
+	}
+	
+	@objc func textFieldDidChange(_ textField: UITextField) {
+		urlText.text = shareUrl
+		
 	}
 }
 

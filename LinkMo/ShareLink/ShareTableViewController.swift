@@ -216,7 +216,7 @@ extension ShareTableViewController: UITableViewDelegate{
 		
 		let vc = ShareLinkViewController()
 		vc.categoryAll = categoryAll
-		vc.categoryIndex = indexPath.row
+		vc.categoryIndex = categoryIndex
 		vc.sectionIndex = indexPath.row
 		vc.tablesectionAll = sectionList[indexPath.row].self
 		self.navigationController?.pushViewController(vc, animated: true)
