@@ -35,6 +35,8 @@
 		29C2B1EB251DB1F400B8A5A9 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D044AA24DE3EDE00CB33EA /* CategoryManager.swift */; };
 		29C2B1EC251DB1F900B8A5A9 /* LinkMo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29D0448224DE394500CB33EA /* LinkMo.xcdatamodeld */; };
 		29C2B1ED251DB26F00B8A5A9 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0449E24DE3C2D00CB33EA /* Category.swift */; };
+		29CAF60A255A78DC000D1A1F /* ShareLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAF609255A78DC000D1A1F /* ShareLinkViewController.swift */; };
+		29CAF60B255A78DC000D1A1F /* ShareLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAF609255A78DC000D1A1F /* ShareLinkViewController.swift */; };
 		29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447924DE394500CB33EA /* AppDelegate.swift */; };
 		29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0447D24DE394500CB33EA /* HomeViewController.swift */; };
 		29D0448124DE394500CB33EA /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29D0447F24DE394500CB33EA /* Home.storyboard */; };
@@ -109,6 +111,7 @@
 		29C2235525075F1B004ECCD3 /* LinkMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LinkMo.entitlements; sourceTree = "<group>"; };
 		29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareLink.entitlements; sourceTree = "<group>"; };
 		29C5A728254934BD00CA4C7E /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansLight.otf; sourceTree = "<group>"; };
+		29CAF609255A78DC000D1A1F /* ShareLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkViewController.swift; sourceTree = "<group>"; };
 		29D0447624DE394500CB33EA /* LinkMo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkMo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D0447924DE394500CB33EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29D0447D24DE394500CB33EA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +181,7 @@
 				29C2B1EA251DB1E400B8A5A9 /* ShareLink.entitlements */,
 				29C2234825075C93004ECCD3 /* ShareViewController.swift */,
 				2911E8F8251DBCE80068077F /* ShareTableViewController.swift */,
+				29CAF609255A78DC000D1A1F /* ShareLinkViewController.swift */,
 				29C2234A25075C93004ECCD3 /* MainInterface.storyboard */,
 				29C2234D25075C93004ECCD3 /* Info.plist */,
 				A98C76D0253BFEEB008B667C /* share.xcassets */,
@@ -527,6 +531,7 @@
 				2911E902251DD8020068077F /* TableViewModel.swift in Sources */,
 				2959750325285E430074FFCB /* Storage.swift in Sources */,
 				2959750225284EFF0074FFCB /* HomeViewModel.swift in Sources */,
+				29CAF60B255A78DC000D1A1F /* ShareLinkViewController.swift in Sources */,
 				2911E8FC251DCBFA0068077F /* ManagedList+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -548,6 +553,7 @@
 				A99936E4253FE68B0009EE22 /* HomeSettingVC.swift in Sources */,
 				A94B0D3F24F8B4F90072A34A /* ManagedList+CoreDataClass.swift in Sources */,
 				29D044A724DE3E9900CB33EA /* StorageType.swift in Sources */,
+				29CAF60A255A78DC000D1A1F /* ShareLinkViewController.swift in Sources */,
 				29D044B324DE3F7600CB33EA /* BaseViewController.swift in Sources */,
 				A99936E2253EAF0A0009EE22 /* SceneDelegate.swift in Sources */,
 				A94B0D4A24FF61AB0072A34A /* SignUpViewModel.swift in Sources */,

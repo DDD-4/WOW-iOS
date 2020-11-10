@@ -31,7 +31,6 @@ class ShareTableViewController: UIViewController {
 	var tablesectionAll: TableSection? = nil
 	let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 24))
 	let buttonSet = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-	let saveLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 28, height: 22))
 	let dashView = UIView()
 	var thumbnail = UIImage()
 	
@@ -62,7 +61,6 @@ class ShareTableViewController: UIViewController {
 		self.view.addSubview(categoryLabel)
 		self.view.addSubview(titleLabel)
 		self.view.addSubview(buttonSet)
-		self.view.addSubview(saveLabel)
 		view.addSubview(dashView)
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -77,7 +75,6 @@ class ShareTableViewController: UIViewController {
 		categoryLabel.text = categoryAll!.title + " >"
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		buttonSet.translatesAutoresizingMaskIntoConstraints = false
-		saveLabel.translatesAutoresizingMaskIntoConstraints = false
 		dashView.translatesAutoresizingMaskIntoConstraints = false
 		dashView.addDashedBorder()
 		
@@ -95,15 +92,6 @@ class ShareTableViewController: UIViewController {
 		buttonSet.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
 		buttonSet.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		
-		saveLabel.text = "저장"
-		saveLabel.textAlignment = .center
-		saveLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 100)
-		saveLabel.font = UIFont(name:"AppleSDGothicNeo-Regular",size:16)
-		let tap = UITapGestureRecognizer(target: self, action: #selector(ShareTableViewController.tapFunction))
-        saveLabel.isUserInteractionEnabled = true
-        saveLabel.addGestureRecognizer(tap)
-		
-		
 		NSLayoutConstraint.activate([
 			tableView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 40),
 			tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -115,9 +103,6 @@ class ShareTableViewController: UIViewController {
 			
 			buttonSet.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 14),
 			buttonSet.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-			
-			saveLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -20),
-			saveLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
 			
 			categoryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 62),
 			categoryLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 24),
@@ -134,45 +119,6 @@ class ShareTableViewController: UIViewController {
 	@objc func barbutton(_ sender: Any){
 		self.navigationController?.popViewController(animated: true)
 	}
-	
-	@objc func tapFunction(_ sender: Any){
-		
-
-		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
-			if let attachments = item.attachments as? [NSItemProvider] {
-				
-				
-				if let attachment = attachments.first {
-					attachment.loadPreviewImage(options: nil, completionHandler: { (item, error) in
-						if error != nil {
-							print("share extension second table VC thumnail image error : ", error)
-						} else if let img = item as? UIImage {
-							self.thumbnail = img
-						}
-					})
-				}
-				
-				for attachment: NSItemProvider in attachments {
-					if attachment.hasItemConformingToTypeIdentifier("public.url") {
-						attachment.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
-							if let shareURL = url as? NSURL {
-								
-								
-								self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: "\(shareURL)", linkUrl: "\(shareURL)", png: (self.thumbnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
-							}
-							self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
-						})
-					}
-				}
-			}
-		}
-		
-		
-		
-		
-	}
-		
-		
 		
 }
 class ShareSecondTableViewCell: UITableViewCell{
@@ -267,12 +213,18 @@ extension ShareTableViewController: UITableViewDelegate{
 		
 		self.sectionIndex = indexPath.row
 		self.tablesectionAll = sectionList[indexPath.row].self
-		saveLabel.textColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 100)
+		
+		let vc = ShareLinkViewController()
+		vc.categoryAll = categoryAll
+		vc.categoryIndex = indexPath.row
+		vc.sectionIndex = indexPath.row
+		vc.tablesectionAll = sectionList[indexPath.row].self
+		self.navigationController?.pushViewController(vc, animated: true)
+		
 	}
 	func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
 		tableView.cellForRow(at: indexPath)?.accessoryView?.isHidden = true
 		tableView.cellForRow(at: indexPath)?.textLabel?.textColor = UIColor(red: 68/255, green: 68/255, blue: 68/255, alpha: 100)
-		saveLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 100)
 	}
 }
 

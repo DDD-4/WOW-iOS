@@ -38,10 +38,10 @@
             </objects>
             <point key="canvasLocation" x="1896" y="76"/>
         </scene>
-        <!--Share Alert View Controller-->
+        <!--Share Link View Controller-->
         <scene sceneID="aiE-Tt-jYs">
             <objects>
-                <viewController storyboardIdentifier="ShareAlertViewController" id="iTL-hy-EiT" customClass="ShareAlertViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShareLinkViewController" id="iTL-hy-EiT" customClass="ShareLinkViewController" customModule="ShareLink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Inu-VF-hWg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
