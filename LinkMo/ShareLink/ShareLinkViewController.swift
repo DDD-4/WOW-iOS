@@ -154,7 +154,7 @@ class ShareLinkViewController: UIViewController {
 		
 		saveLabel.text = "저장"
 		saveLabel.textAlignment = .center
-		saveLabel.textColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 100)
+		saveLabel.textColor = UIColor(red: 0/255, green: 17/255, blue: 232/255, alpha: 100)
 		saveLabel.font = UIFont(name:"AppleSDGothicNeo-Regular",size:16)
 		let tap = UITapGestureRecognizer(target: self, action: #selector(ShareLinkViewController.tapFunction))
         saveLabel.isUserInteractionEnabled = true
