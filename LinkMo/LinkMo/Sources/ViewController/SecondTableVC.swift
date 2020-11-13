@@ -204,6 +204,12 @@ class SecondTableVC: UIViewController {
         addBtn.layer.cornerRadius = addBtn.frame.size.width / 2
         addBtn.backgroundColor = UIColor.appColor(.pureBlue)
         
+        addBtn.layer.shadowColor = UIColor(red: 159/255, green: 155/255, blue: 217/255, alpha: 0.75).cgColor
+        addBtn.layer.shadowOpacity = 0.75
+        addBtn.layer.shadowOffset = CGSize(width: 0, height: 10)
+        addBtn.layer.shadowRadius = 5
+        addBtn.layer.masksToBounds = false
+        
         addBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
             snp.trailing.equalTo(view).offset(-30)
@@ -346,6 +352,12 @@ class SecondTableVC: UIViewController {
         sectionLbl.textAlignment = .center
         sectionLbl.layer.cornerRadius = 15
         
+        sectionLbl.layer.shadowColor = UIColor(red: 49/255, green: 60/255, blue: 86/255, alpha: 0.5).cgColor
+        sectionLbl.layer.shadowOpacity = 0.5
+        sectionLbl.layer.shadowOffset = CGSize(width: 5, height: 10)
+        sectionLbl.layer.shadowRadius = 5
+        sectionLbl.layer.masksToBounds = false
+        
         sectionLbl.snp.makeConstraints { (snp) in
             snp.trailing.equalTo(addSectionBtn.snp.leading).offset(-10)
             snp.centerY.equalTo(addSectionBtn)
@@ -364,6 +376,13 @@ class SecondTableVC: UIViewController {
         cellLbl.text = "링크 추가"
         cellLbl.textAlignment = .center
         cellLbl.layer.cornerRadius = 15
+        
+        cellLbl.layer.shadowColor = UIColor(red: 49/255, green: 60/255, blue: 86/255, alpha: 0.5).cgColor
+        cellLbl.layer.shadowOpacity = 0.5
+        cellLbl.layer.shadowOffset = CGSize(width: 5, height: 10)
+        cellLbl.layer.shadowRadius = 5
+        cellLbl.layer.masksToBounds = false
+        
         
         cellLbl.snp.makeConstraints { (snp) in
             snp.trailing.equalTo(addCellBtn.snp.leading).offset(-10)
