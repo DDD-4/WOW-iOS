@@ -37,6 +37,9 @@ class ShareLinkViewController: UIViewController , UITextFieldDelegate{
 	let dashView3 = UIView()
 	var shareUrl:String = ""
 	
+    
+    let tableshared = TableViewModel.shard
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		getURL()
@@ -101,8 +104,8 @@ class ShareLinkViewController: UIViewController , UITextFieldDelegate{
 									])
 									self.urlText.text = self.shareUrl
 								}
-								
-								
+                                
+                                
 							}
 							
 						})
@@ -236,8 +239,45 @@ class ShareLinkViewController: UIViewController , UITextFieldDelegate{
 	}
 	
 	@objc func tapFunction(_ sender: Any){
-		self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.urlTitleText.text ?? shareUrl, linkUrl: shareUrl, png: (self.thumbnail.pngData() ?? UIImage(named: "appicon")!.pngData())!)
-		
+        let urlstring = self.shareUrl
+        let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let url = URL(string: encoding)!
+        
+        LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
+            guard let linkMetadata = linkMetadata,
+                let imageProvider = linkMetadata.imageProvider else {
+                    return DispatchQueue.main.async {
+                        
+                                                                
+                        let images = UIImage(named: "12")
+                        let convert = images?.pngData()
+                        
+                        self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.urlTitleText.text ?? self.shareUrl, linkUrl: self.shareUrl, png: convert!)
+                        
+                        self.tableshared.showActivityIndicatory(trueFalse: false, uiView: self.view)
+                    }
+            }
+            imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                guard error == nil else {
+                    return
+                }
+                if let image = image as? UIImage {
+                    // do something with image
+                    DispatchQueue.main.async {
+                        
+                        let images = image
+                        let convert = images.pngData()
+                        
+                        self.share.createCells(category: self.categoryAll!, tablesection: self.tablesectionAll!, categoryNumber: self.categoryIndex, sectionNumber: self.sectionIndex, linkTitle: self.urlTitleText.text ?? self.shareUrl, linkUrl: self.shareUrl, png: convert!)
+                        
+                        self.tableshared.showActivityIndicatory(trueFalse: false, uiView: self.view)
+                    }
+                } else {
+                    print("no image available")
+                }
+            }
+        }
+        
 		self.extensionContext?.completeRequest(returningItems: [], completionHandler:nil)
 	}
 	
