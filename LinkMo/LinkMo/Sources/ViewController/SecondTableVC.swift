@@ -251,7 +251,7 @@ class SecondTableVC: UIViewController {
                 self.hiddenBackBtn.isHidden = true
                 self.addCellBtn.snp.updateConstraints { snp in
                     self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
-                    self.addBtn.transform = CGAffineTransform(rotationAngle: .pi)
+                    self.addBtn.transform = CGAffineTransform(rotationAngle: .pi * 2)
                 }
                 self.view.layoutIfNeeded()
             }
