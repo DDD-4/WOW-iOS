@@ -13,7 +13,7 @@ import RxSwift
 import RxDataSources
 import LinkPresentation
 
-class ShareLinkViewController: UIViewController {
+class ShareLinkViewController: UIViewController , UITextFieldDelegate{
 
 	let viewModel = TableViewModel()
 	let disposeBag = DisposeBag()
@@ -41,6 +41,8 @@ class ShareLinkViewController: UIViewController {
 		super.viewDidLoad()
 		getURL()
 		setConstraint()
+		self.urlTitleText.delegate = self
+		self.urlTitleText.becomeFirstResponder()
 		
 //		urlTitleText.rx.controlEvent(.editingChanged)
 //			.asObservable()
@@ -62,6 +64,16 @@ class ShareLinkViewController: UIViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
 	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		self.urlTitleText.resignFirstResponder()
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
+	}
+	
 	func getURL(){
 		
 		if let item = extensionContext?.inputItems.first as? NSExtensionItem {
