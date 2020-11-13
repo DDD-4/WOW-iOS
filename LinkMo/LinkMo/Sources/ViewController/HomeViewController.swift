@@ -66,11 +66,11 @@ class HomeViewController: UIViewController {
         emptyLabel.snp.makeConstraints { snp in
             snp.centerX.equalTo(view)
             snp.centerY.equalTo(view)
-            snp.height.equalTo(80)
+            snp.height.equalTo(40)
         }
         
         nocategory.snp.makeConstraints { (snp) in
-            snp.bottom.equalTo(emptyLabel.snp.top).offset(11)
+            snp.bottom.equalTo(emptyLabel.snp.top).offset(-11)
             snp.centerX.equalTo(view)
             snp.width.greaterThanOrEqualTo(120)
             snp.height.equalTo(30)
@@ -171,6 +171,12 @@ class HomeViewController: UIViewController {
 		AddBtn.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         AddBtn.layer.cornerRadius = AddBtn.frame.size.width / 2
 		AddBtn.backgroundColor = UIColor.appColor(.pureBlue)
+        
+        AddBtn.layer.shadowColor = UIColor(red: 159/255, green: 155/255, blue: 217/255, alpha: 0.75).cgColor
+        AddBtn.layer.shadowOpacity = 0.75
+        AddBtn.layer.shadowOffset = CGSize(width: 0, height: 10)
+        AddBtn.layer.shadowRadius = 5
+        AddBtn.layer.masksToBounds = false
         
         AddBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
