@@ -121,10 +121,22 @@ class EditTitleViewController: UIViewController, UITextFieldDelegate {
 	override func viewWillAppear(_ animated: Bool) {
         view.backgroundColor = UIColor.appColor(.bgColor)
 		navigationController?.isNavigationBarHidden = true
+		self.emojiTextField.becomeFirstResponder()
+		self.categoryTextField.becomeFirstResponder()
 	}
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
 		navigationController?.interactivePopGestureRecognizer?.delegate = nil
+	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		self.emojiTextField.resignFirstResponder()
+		self.categoryTextField.resignFirstResponder()
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
 	}
 	
 	@objc func barbutton(_ sender: Any){
