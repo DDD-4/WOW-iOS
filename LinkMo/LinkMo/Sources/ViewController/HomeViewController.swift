@@ -79,6 +79,7 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
         
         
         emptyLabel.isHidden = state
+        nocategory.isHidden = state
     }
     
 	override func viewDidLoad() {
