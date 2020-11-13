@@ -47,19 +47,36 @@ class HomeViewController: UIViewController {
 	let buttonSet = UIButton()
 	let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
 	let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+    let nocategory = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
     
     func dataNil(state: Bool){
-        emptyLabel.text = "+ 버튼을 눌러 \n 카테고리를 만들어보세요!"
-        emptyLabel.font = UIFont.systemFont(ofSize: 26)
+        nocategory.text = "카테고리 없음"
+        nocategory.textAlignment = .center
+        nocategory.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 22)
+        nocategory.textColor = UIColor.appColor(.title136)
+        
+        
+        emptyLabel.text = "(+) 버튼을 눌러 링크를 보관할\n나만의 카테고리를 만들어보세요."
+        emptyLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
         emptyLabel.numberOfLines = 0
         emptyLabel.textAlignment = .center
-        emptyLabel.textColor = .lightGray
+        emptyLabel.textColor = UIColor.appColor(.title136)
+        
         
         emptyLabel.snp.makeConstraints { snp in
             snp.centerX.equalTo(view)
-            snp.centerY.equalTo(view).offset(-80)
-            snp.height.equalTo(80)
+            snp.centerY.equalTo(view)
+            snp.height.equalTo(40)
         }
+        
+        nocategory.snp.makeConstraints { (snp) in
+            snp.bottom.equalTo(emptyLabel.snp.top).offset(-11)
+            snp.centerX.equalTo(view)
+            snp.width.greaterThanOrEqualTo(120)
+            snp.height.equalTo(30)
+        }
+        
+        
         
         emptyLabel.isHidden = state
     }
@@ -67,6 +84,7 @@ class HomeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
         view.addSubview(emptyLabel)
+        view.addSubview(nocategory)
 		bindViewModel()
         collectionView.showsVerticalScrollIndicator = false
 		view.addSubview(linkLabel)
@@ -153,6 +171,12 @@ class HomeViewController: UIViewController {
 		AddBtn.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         AddBtn.layer.cornerRadius = AddBtn.frame.size.width / 2
 		AddBtn.backgroundColor = UIColor.appColor(.pureBlue)
+        
+        AddBtn.layer.shadowColor = UIColor(red: 159/255, green: 155/255, blue: 217/255, alpha: 0.75).cgColor
+        AddBtn.layer.shadowOpacity = 0.75
+        AddBtn.layer.shadowOffset = CGSize(width: 0, height: 10)
+        AddBtn.layer.shadowRadius = 5
+        AddBtn.layer.masksToBounds = false
         
         AddBtn.snp.makeConstraints { snp in
             snp.bottom.equalTo(view).offset(-40)
