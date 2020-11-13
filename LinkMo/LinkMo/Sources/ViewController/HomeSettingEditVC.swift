@@ -9,7 +9,7 @@
 import UIKit
 import EMTNeumorphicView
 
-class HomeSettingEditVC: UIViewController{
+class HomeSettingEditVC: UIViewController, UITextFieldDelegate{
 	let backButton = UIButton()
 	let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 190, height: 41))
 	let discripLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 327, height: 44))
@@ -20,16 +20,28 @@ class HomeSettingEditVC: UIViewController{
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.nameTextField.delegate = self
 		setConstraint()
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		view.backgroundColor = UIColor.appColor(.bgColor)
 		navigationController?.isNavigationBarHidden = true
+		self.nameTextField.becomeFirstResponder()
 	}
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
 		navigationController?.interactivePopGestureRecognizer?.delegate = nil
+	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		self.nameTextField.resignFirstResponder()
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
 	}
 	
 	private func setConstraint(){
@@ -54,12 +66,17 @@ class HomeSettingEditVC: UIViewController{
 		titleLabel.font = UIFont(name:"GmarketSansMedium", size:25)
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		
-		discripLabel.text = "홈 화면 카테고리 상단에 표시되는 문구입니다. \n나만의 링크 저장소에 이름을 붙여주세요! "
-		discripLabel.numberOfLines = 0
+//		discripLabel.text = "홈 화면 카테고리 상단에 표시되는 문구입니다. \n나만의 링크 저장소에 이름을 붙여주세요! "
+//		discripLabel.numberOfLines = 0
 		discripLabel.textColor = UIColor.appColor(.lightGray)
 		discripLabel.textAlignment = .left
 		discripLabel.font = UIFont(name:"AppleSDGothicNeo-Regular", size:16)
 		discripLabel.translatesAutoresizingMaskIntoConstraints = false
+		let attributedString = NSMutableAttributedString(string: "홈 화면 카테고리 상단에 표시되는 문구입니다. \n나만의 링크 저장소에 이름을 붙여주세요! ")
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineSpacing = 2
+		attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+		discripLabel.attributedText = attributedString
 		
 		
 		nameTextField.attributedPlaceholder = NSAttributedString(string: "“00님의 링크”", attributes: [

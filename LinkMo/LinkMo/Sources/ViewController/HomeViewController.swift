@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 import EMTNeumorphicView
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController , UITextFieldDelegate{
     
     var state: CategoryShow = .hide{
         didSet{
@@ -132,7 +132,12 @@ class HomeViewController: UIViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
 	}
-
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
+	}
+	
     @objc func barbutton(_ sender: Any){
 		let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
 		let settingVC = storyBoard.instantiateViewController(withIdentifier: "HomeSettingVC") as! HomeSettingVC
@@ -213,6 +218,7 @@ class HomeViewController: UIViewController {
 		let saveAction = UIAlertAction(title:"추가", style: .default, handler: { (action) -> Void in
 			let icon = showAlert.textFields![0] as UITextField
 			let title = showAlert.textFields![1] as UITextField
+			
 			if self.collectionList.count < 20 {
 				self.viewModel.addTitle(title: title.text!, icon: icon.text ?? " ")
 			}else {
