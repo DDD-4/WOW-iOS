@@ -326,7 +326,7 @@ extension HomeViewController: UICollectionViewDelegate {
 		cell.editBtn.tag = indexPath.row
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-        let tableVC = storyBoard.instantiateViewController(withIdentifier: "SecondTableVC") as! SecondTableVC
+        let tableVC = storyBoard.instantiateViewController(withIdentifier: "HomeListVC") as! HomeListVC
         tableVC.categoryID = indexPath.row
         tableVC.navigationTitle = collectionList[indexPath.row].title
         self.navigationController?.pushViewController(tableVC, animated: true)
