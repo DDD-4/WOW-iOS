@@ -17,7 +17,7 @@ import RxCocoa
 import LinkPresentation
 import EMTNeumorphicView
 
-class AddCellList: UIViewController {
+class AddLinkVC: UIViewController {
     
     //@IBOutlet weak var pickerView: UIPickerView!
     let pickerView = UIPickerView()
@@ -34,7 +34,7 @@ class AddCellList: UIViewController {
     let titleFd = BehaviorRelay<String>(value: "")
     let urlFd = BehaviorRelay<String>(value: "")
     
-    let buttonBack = UIButton(type: .custom)
+    let Backbutton = UIButton(type: .custom)
     
     
     
@@ -44,7 +44,7 @@ class AddCellList: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(buttonBack)
+        view.addSubview(Backbutton)
         navigationBar()
         
         view.backgroundColor = UIColor.appColor(.bgColor)
@@ -138,17 +138,17 @@ class AddCellList: UIViewController {
     }
     func navigationBar(){
         
-        buttonBack.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        buttonBack.layer.cornerRadius = 5
-        buttonBack.setImage(UIImage(named: "chevronLeft"), for: .normal)
-        buttonBack.setImage(UIImage(named: "chevronLeft"), for: .selected)
-        buttonBack.contentVerticalAlignment = .fill
-        buttonBack.contentHorizontalAlignment = .fill
-        buttonBack.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
-        buttonBack.translatesAutoresizingMaskIntoConstraints = false
+        Backbutton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        Backbutton.layer.cornerRadius = 5
+        Backbutton.setImage(UIImage(named: "chevronLeft"), for: .normal)
+        Backbutton.setImage(UIImage(named: "chevronLeft"), for: .selected)
+        Backbutton.contentVerticalAlignment = .fill
+        Backbutton.contentHorizontalAlignment = .fill
+        Backbutton.addTarget(self, action: #selector(barbutton(_:)), for: .touchUpInside)
+        Backbutton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            buttonBack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            buttonBack.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            Backbutton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            Backbutton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
         ])
     }
     func addObservers(){
@@ -241,26 +241,26 @@ class AddCellList: UIViewController {
         confirmBtn.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 18)
         
         confirmBtn.rx.tap
-            .subscribe(onNext: { b in
+            .subscribe(onNext: { [weak self]b in
                 
-                var urlHttps = self.urlFd.value
+                var urlHttps = self?.urlFd.value
                 
-                self.tableShardVM.checkLimit(categoryid: self.selectSection, sectionNumber: self.didselectNumber)
+                self?.tableShardVM.checkLimit(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber)
                 
-                if self.tableShardVM.limitCell.value{
+                if self?.tableShardVM.limitCell.value ?? false{
                     let alert = UIAlertController(title: nil, message: "한 카테고리의 링크는 최대 500개입니다", preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style: .default) { (_) in
-                        self.dismiss(animated: true, completion: nil)
+                        self?.dismiss(animated: true, completion: nil)
                     }
                     alert.addAction(ok)
-                    self.present(alert, animated: true)
+                    self?.present(alert, animated: true)
                 }else{
                     defer{
-                        self.tableShardVM.showActivityIndicatory(trueFalse: true, uiView: self.view)
-                        _ = self.tableShardVM.addCells(categoryid: self.selectSection, sectionNumber: self.didselectNumber, linkTitle: self.titleFd.value, linkUrl: urlHttps)
+                        self?.tableShardVM.showActivityIndicatory(trueFalse: true, uiView: self!.view)
+                        _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: urlHttps!)
                         let urlstring = urlHttps
-                        let encoding = urlstring.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                        let url = URL(string: encoding)!
+                        let encoding = urlstring?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                        let url = URL(string: encoding!)!
                         
                         LPMetadataProvider().startFetchingMetadata(for: url) { (linkMetadata, error) in
                             guard let linkMetadata = linkMetadata,
@@ -271,9 +271,9 @@ class AddCellList: UIViewController {
                                         let images = UIImage(named: "12")
                                         let convert = images?.pngData()
                                         
-                                        _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
-                                        self.navigationController?.popViewController(animated: true)
-                                        self.tableShardVM.showActivityIndicatory(trueFalse: false, uiView: self.view)
+                                        _ = self?.tableShardVM.addPng(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, png: convert!)
+                                        self?.navigationController?.popViewController(animated: true)
+                                        self?.tableShardVM.showActivityIndicatory(trueFalse: false, uiView: self!.view)
                                     }
                             }
                             imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
@@ -287,9 +287,9 @@ class AddCellList: UIViewController {
                                         let images = image
                                         let convert = images.pngData()
                                         
-                                        _ = self.tableShardVM.addPng(categoryid: self.selectSection, sectionNumber: self.didselectNumber, png: convert!)
-                                        self.navigationController?.popViewController(animated: true)
-                                        self.tableShardVM.showActivityIndicatory(trueFalse: false, uiView: self.view)
+                                        _ = self?.tableShardVM.addPng(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, png: convert!)
+                                        self?.navigationController?.popViewController(animated: true)
+                                        self?.tableShardVM.showActivityIndicatory(trueFalse: false, uiView: self!.view)
                                     }
                                 } else {
                                     print("no image available")
@@ -297,14 +297,14 @@ class AddCellList: UIViewController {
                             }
                         }
                         
-                        self.tableShardVM.subject.accept(self.tableShardVM.sections)
+                        self?.tableShardVM.subject.accept(self!.tableShardVM.sections)
                         
                         
                     }
-                    if self.urlFd.value.contains("https://") || self.urlFd.value.contains("http://"){
+                    if self!.urlFd.value.contains("https://") || self!.urlFd.value.contains("http://"){
                         return
                     }else{
-                        urlHttps = "https://\(urlHttps)/"
+                        urlHttps = "https://\(urlHttps ?? "")/"
                     }
                 }
                 
@@ -329,12 +329,12 @@ class AddCellList: UIViewController {
     }
 }
 
-extension AddCellList: UITextFieldDelegate{
+extension AddLinkVC: UITextFieldDelegate{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 }
-extension AddCellList: UIPickerViewDelegate, UIPickerViewDataSource{
+extension AddLinkVC: UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }

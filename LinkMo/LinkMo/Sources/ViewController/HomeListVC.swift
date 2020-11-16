@@ -352,7 +352,7 @@ class HomeListVC: UIViewController {
             .subscribe(onNext: { _ in
                 
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
+                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddLinkVC") as! AddLinkVC
                 addcellvc.selectSection = self.categoryID
                 self.navigationController?.pushViewController(addcellvc, animated: true)
             })
