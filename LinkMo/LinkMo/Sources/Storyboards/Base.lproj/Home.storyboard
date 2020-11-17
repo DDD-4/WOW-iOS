@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mM8-SI-pU0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mM8-SI-pU0">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -55,13 +55,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Linkmo님의 링크" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEw-ds-mS0">
-                                <rect key="frame" x="20" y="155" width="374" height="26"/>
+                                <rect key="frame" x="20" y="111" width="560" height="26"/>
                                 <fontDescription key="fontDescription" name="GmarketSansLight" family="Gmarket Sans" pointSize="26"/>
                                 <color key="textColor" red="0.20784313725490194" green="0.19607843137254902" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9gA-8Y-DVm">
-                                <rect key="frame" x="0.0" y="200" width="414" height="696"/>
+                                <rect key="frame" x="0.0" y="156" width="600" height="444"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4fo-Z3-YfE">
                                     <size key="itemSize" width="137" height="137"/>
@@ -173,10 +173,10 @@
             </objects>
             <point key="canvasLocation" x="1942" y="828"/>
         </scene>
-        <!--Second TableVC-->
+        <!--Home ListVC-->
         <scene sceneID="itj-6s-fCT">
             <objects>
-                <viewController storyboardIdentifier="SecondTableVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MDI-8S-Ydf" customClass="SecondTableVC" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeListVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MDI-8S-Ydf" customClass="HomeListVC" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dI5-pB-1cj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -189,10 +189,10 @@
             </objects>
             <point key="canvasLocation" x="2747.826086956522" y="116.51785714285714"/>
         </scene>
-        <!--Add Cell List-->
+        <!--Add LinkVC-->
         <scene sceneID="BHU-J5-TXe">
             <objects>
-                <viewController storyboardIdentifier="AddCellList" id="gVP-8k-qdn" customClass="AddCellList" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddLinkVC" id="gVP-8k-qdn" customClass="AddLinkVC" customModule="LinkMo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AQW-9S-1K4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -255,7 +255,7 @@
                                                 <textInputTraits key="textInputTraits" textContentType="url"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="링크 추가하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uG0-Sg-dFd">
-                                                <rect key="frame" x="24" y="100" width="152" height="25"/>
+                                                <rect key="frame" x="24" y="100" width="151.5" height="25"/>
                                                 <fontDescription key="fontDescription" name="GmarketSansMedium" family="Gmarket Sans" pointSize="25"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>

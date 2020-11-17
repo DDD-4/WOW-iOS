@@ -14,7 +14,7 @@ import SnapKit
 import LinkPresentation
 import EMTNeumorphicView
 
-class SecondTableVC: UIViewController {
+class HomeListVC: UIViewController {
     
     //MARK: - TableView isEmpty didSet
     var state: tableShow = .hide{
@@ -31,8 +31,9 @@ class SecondTableVC: UIViewController {
         }
     }
     private var pullControl = UIRefreshControl()
-    let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
-    let nocategory = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+    let emptyLblTop = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+    let emptyLblBottom = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+    
     //floating btn
     var bools = false
     
@@ -46,9 +47,9 @@ class SecondTableVC: UIViewController {
     //  addBtn, label
     let addBtn = UIButton(type: .custom)
     let addSectionBtn = UIButton(type: .custom)
-    let addCellBtn = UIButton(type: .custom)
-    let sectionLbl = UILabel()
-    let cellLbl = UILabel()
+    let addLinkBtn = UIButton(type: .custom)
+    let listLbl = UILabel()
+    let linkLbl = UILabel()
 	let buttonSet = UIButton(type: .custom)
 	let designLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
     let hiddenBackBtn = UIButton(type: .system)
@@ -66,21 +67,21 @@ class SecondTableVC: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(tableView)
-        view.addSubview(emptyLabel)
-        view.addSubview(nocategory)
+        view.addSubview(emptyLblBottom)
+        view.addSubview(emptyLblTop)
         view.addSubview(buttonSet)
         view.addSubview(designLabel)
         view.addSubview(hiddenBackBtn)
         view.addSubview(addSectionBtn)
-        view.addSubview(addCellBtn)
+        view.addSubview(addLinkBtn)
         view.addSubview(addBtn)
-        view.addSubview(sectionLbl)
-        view.addSubview(cellLbl)
+        view.addSubview(listLbl)
+        view.addSubview(linkLbl)
         
         view.backgroundColor = .black
         
         //TableView 세팅
-        tableView.register(SecondCell.self, forCellReuseIdentifier: "second")
+        tableView.register(ListCell.self, forCellReuseIdentifier: "lists")
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = true
         tableView.separatorStyle = .none
@@ -94,9 +95,9 @@ class SecondTableVC: UIViewController {
         // AddBtn
         floatingBtn()
         AddSectionPush()
-        AddCellPush()
-        sectionLabel()
-        cellLabel()
+        addLinkPush()
+        listLable()
+        linkLabel()
         hiddenBtn()
         navigationBar()
         
@@ -153,43 +154,43 @@ class SecondTableVC: UIViewController {
 	
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
-        nocategory.text = "카테고리 없음"
-        nocategory.textAlignment = .center
-        nocategory.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 22)
-        nocategory.textColor = UIColor.appColor(.title136)
+        emptyLblTop.text = "카테고리 없음"
+        emptyLblTop.textAlignment = .center
+        emptyLblTop.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 22)
+        emptyLblTop.textColor = UIColor.appColor(.title136)
         
         
-        emptyLabel.text = "(+) 버튼을 눌러 링크를 보관할\n나만의 카테고리를 만들어보세요."
-        emptyLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-        emptyLabel.numberOfLines = 0
-        emptyLabel.textAlignment = .center
-        emptyLabel.textColor = UIColor.appColor(.title136)
+        emptyLblBottom.text = "(+) 버튼을 눌러 링크를 보관할\n나만의 카테고리를 만들어보세요."
+        emptyLblBottom.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
+        emptyLblBottom.numberOfLines = 0
+        emptyLblBottom.textAlignment = .center
+        emptyLblBottom.textColor = UIColor.appColor(.title136)
         
         
-        emptyLabel.snp.makeConstraints { snp in
+        emptyLblBottom.snp.makeConstraints { snp in
             snp.centerX.equalTo(view)
             snp.centerY.equalTo(view)
             snp.height.equalTo(40)
         }
         
-        nocategory.snp.makeConstraints { (snp) in
-            snp.bottom.equalTo(emptyLabel.snp.top).offset(-11)
+        emptyLblTop.snp.makeConstraints { (snp) in
+            snp.bottom.equalTo(emptyLblBottom.snp.top).offset(-11)
             snp.centerX.equalTo(view)
             snp.width.greaterThanOrEqualTo(120)
             snp.height.equalTo(30)
         }
         
-        emptyLabel.isHidden = state
-        nocategory.isHidden = state
-        addCellBtn.isEnabled = state
+        emptyLblTop.isHidden = state
+        emptyLblBottom.isHidden = state
+        addLinkBtn.isEnabled = state
     }
     
     func tableState(){
-        tableShardVM.readSections(categoryId: categoryID).subscribe(onNext: { b in
-            if b.count == 0{
-                self.state = .hide
+        tableShardVM.readSections(categoryId: categoryID).subscribe(onNext: { [weak self] category in
+            if category.count == 0{
+                self?.state = .hide
             }else{
-                self.state = .show
+                self?.state = .show
             }
         })
         .disposed(by: bag)
@@ -248,7 +249,7 @@ class SecondTableVC: UIViewController {
             view.layoutIfNeeded()
             UIView.animate(withDuration: firstDuration) {
                 self.hiddenBackBtn.isHidden = false
-                self.addCellBtn.snp.updateConstraints { snp in
+                self.addLinkBtn.snp.updateConstraints { snp in
                     self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-80).constraint
                     self.addBtn.transform = CGAffineTransform(rotationAngle: .pi/4)
                 }
@@ -259,14 +260,14 @@ class SecondTableVC: UIViewController {
                     self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-150).constraint
                 }
                 self.view.layoutIfNeeded()
-                self.sectionLbl.self.isHidden = false
-                self.cellLbl.self.isHidden = false
+                self.listLbl.self.isHidden = false
+                self.linkLbl.self.isHidden = false
             }
         }else{
             view.layoutIfNeeded()
             UIView.animate(withDuration: firstDuration) {
                 self.hiddenBackBtn.isHidden = true
-                self.addCellBtn.snp.updateConstraints { snp in
+                self.addLinkBtn.snp.updateConstraints { snp in
                     self.cellConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
                     self.addBtn.transform = CGAffineTransform(rotationAngle: .pi * 2)
                 }
@@ -277,8 +278,8 @@ class SecondTableVC: UIViewController {
                     self.sectionConstraint = snp.bottom.equalTo(self.addBtn).offset(-10).constraint
                 }
                 self.view.layoutIfNeeded()
-                self.sectionLbl.self.isHidden = true
-                self.cellLbl.self.isHidden = true
+                self.listLbl.self.isHidden = true
+                self.linkLbl.self.isHidden = true
             }
         }
     }
@@ -332,50 +333,50 @@ class SecondTableVC: UIViewController {
     
     
     //MARK: - AddCell
-    func AddCellPush(){
-        addCellBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        addCellBtn.setImage(UIImage(named: "ic_link"), for: .normal)
-        addCellBtn.layer.cornerRadius = addCellBtn.frame.size.height / 2
-        addCellBtn.backgroundColor = UIColor.appColor(.pureBlue)
+    func addLinkPush(){
+        addLinkBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        addLinkBtn.setImage(UIImage(named: "ic_link"), for: .normal)
+        addLinkBtn.layer.cornerRadius = addLinkBtn.frame.size.height / 2
+        addLinkBtn.backgroundColor = UIColor.appColor(.pureBlue)
         
         
         // bottom -110
-        addCellBtn.snp.makeConstraints {  snp in
+        addLinkBtn.snp.makeConstraints {  snp in
             cellConstraint = snp.bottom.equalTo(addBtn).offset(-10).constraint
             snp.centerX.equalTo(addBtn)
             snp.width.equalTo(44)
             snp.height.equalTo(44)
         }
         
-        addCellBtn.rx.tap
+        addLinkBtn.rx.tap
             .subscribe(onNext: { _ in
                 
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddCellList") as! AddCellList
+                let addcellvc = storyBoard.instantiateViewController(withIdentifier: "AddLinkVC") as! AddLinkVC
                 addcellvc.selectSection = self.categoryID
                 self.navigationController?.pushViewController(addcellvc, animated: true)
             })
             .disposed(by: bag)
     }
     
-    func sectionLabel(){
+    func listLable(){
         
-        sectionLbl.isHidden = true
-        sectionLbl.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
-        sectionLbl.font = .systemFont(ofSize: 15)
-        sectionLbl.backgroundColor = .darkGray
-        sectionLbl.textColor = .white
-        sectionLbl.text = "카테고리 추가"
-        sectionLbl.textAlignment = .center
-        sectionLbl.layer.cornerRadius = 15
+        listLbl.isHidden = true
+        listLbl.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        listLbl.font = .systemFont(ofSize: 15)
+        listLbl.backgroundColor = .darkGray
+        listLbl.textColor = .white
+        listLbl.text = "카테고리 추가"
+        listLbl.textAlignment = .center
+        listLbl.layer.cornerRadius = 15
         
-        sectionLbl.layer.shadowColor = UIColor(red: 49/255, green: 60/255, blue: 86/255, alpha: 0.5).cgColor
-        sectionLbl.layer.shadowOpacity = 0.5
-        sectionLbl.layer.shadowOffset = CGSize(width: 5, height: 10)
-        sectionLbl.layer.shadowRadius = 5
-        sectionLbl.layer.masksToBounds = false
+        listLbl.layer.shadowColor = UIColor(red: 49/255, green: 60/255, blue: 86/255, alpha: 0.5).cgColor
+        listLbl.layer.shadowOpacity = 0.5
+        listLbl.layer.shadowOffset = CGSize(width: 5, height: 10)
+        listLbl.layer.shadowRadius = 5
+        listLbl.layer.masksToBounds = false
         
-        sectionLbl.snp.makeConstraints { (snp) in
+        listLbl.snp.makeConstraints { (snp) in
             snp.trailing.equalTo(addSectionBtn.snp.leading).offset(-10)
             snp.centerY.equalTo(addSectionBtn)
             snp.width.greaterThanOrEqualTo(100)
@@ -383,27 +384,27 @@ class SecondTableVC: UIViewController {
         }
     }
     
-    func cellLabel(){
+    func linkLabel(){
         
-        cellLbl.isHidden = true
-        cellLbl.frame = CGRect(x: 0, y: 0, width: 75, height: 30)
-        cellLbl.font = .systemFont(ofSize: 15)
-        cellLbl.backgroundColor = .darkGray
-        cellLbl.textColor = .white
-        cellLbl.text = "링크 추가"
-        cellLbl.textAlignment = .center
-        cellLbl.layer.cornerRadius = 15
+        linkLbl.isHidden = true
+        linkLbl.frame = CGRect(x: 0, y: 0, width: 75, height: 30)
+        linkLbl.font = .systemFont(ofSize: 15)
+        linkLbl.backgroundColor = .darkGray
+        linkLbl.textColor = .white
+        linkLbl.text = "링크 추가"
+        linkLbl.textAlignment = .center
+        linkLbl.layer.cornerRadius = 15
         
-        cellLbl.layer.shadowColor = UIColor(red: 49/255, green: 60/255, blue: 86/255, alpha: 0.5).cgColor
-        cellLbl.layer.shadowOpacity = 0.5
-        cellLbl.layer.shadowOffset = CGSize(width: 5, height: 10)
-        cellLbl.layer.shadowRadius = 5
-        cellLbl.layer.masksToBounds = false
+        linkLbl.layer.shadowColor = UIColor(red: 49/255, green: 60/255, blue: 86/255, alpha: 0.5).cgColor
+        linkLbl.layer.shadowOpacity = 0.5
+        linkLbl.layer.shadowOffset = CGSize(width: 5, height: 10)
+        linkLbl.layer.shadowRadius = 5
+        linkLbl.layer.masksToBounds = false
         
         
-        cellLbl.snp.makeConstraints { (snp) in
-            snp.trailing.equalTo(addCellBtn.snp.leading).offset(-10)
-            snp.centerY.equalTo(addCellBtn)
+        linkLbl.snp.makeConstraints { (snp) in
+            snp.trailing.equalTo(addLinkBtn.snp.leading).offset(-10)
+            snp.centerY.equalTo(addLinkBtn)
             snp.width.greaterThanOrEqualTo(75)
             snp.height.equalTo(30)
         }
@@ -411,7 +412,7 @@ class SecondTableVC: UIViewController {
     // MARK: - 테이블뷰 세팅 관련
     func tableSetting(){
         let configureCells: (TableViewSectionedDataSource<TableSection>, UITableView, IndexPath, String) -> UITableViewCell = { (dataSource, tableView, indexPath, element) in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "second", for: indexPath) as? SecondCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "lists", for: indexPath) as? ListCell else { return UITableViewCell() }
             cell.data = (indexPath.section, indexPath.row)
             
             if dataSource.sectionModels[indexPath.section].expanded == false{
@@ -549,7 +550,7 @@ class SecondTableVC: UIViewController {
 }
 
 //MARK: - Table Delegate
-extension SecondTableVC: UITableViewDelegate{
+extension HomeListVC: UITableViewDelegate{
     
     //MARK: - height row and header
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -576,9 +577,9 @@ extension SecondTableVC: UITableViewDelegate{
         numberLbl.font = .systemFont(ofSize: 15)
         numberLbl.textColor = UIColor.appColor(.numberColor)
         
-        let sectionUpdateBtn = UIButton(type: .custom)
-        sectionUpdateBtn.setImage(UIImage(named: "ic_delete copy"), for: .normal)
-        sectionUpdateBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
+        let titleUpdateBtn = UIButton(type: .custom)
+        titleUpdateBtn.setImage(UIImage(named: "ic_delete copy"), for: .normal)
+        titleUpdateBtn.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
         
         //MARK: - section 선택, expandable
         let expandable = UIButton(frame: CGRect(x: -5, y: -15, width: header.frame.size.width + 5, height: header.frame.size.height))
@@ -599,11 +600,11 @@ extension SecondTableVC: UITableViewDelegate{
         header.addSubview(expandable)
         header.addSubview(titleLbl)
         header.addSubview(numberLbl)
-        header.addSubview(sectionUpdateBtn)
+        header.addSubview(titleUpdateBtn)
         header.layer.cornerRadius = 20
         
         //MARK: - Section, 수정 삭제
-        sectionUpdateBtn.rx.tap
+        titleUpdateBtn.rx.tap
             .subscribe(onNext: { _ in
                 
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -611,6 +612,7 @@ extension SecondTableVC: UITableViewDelegate{
                     let alert = UIAlertController(title: nil, message: "카테고리 수정", preferredStyle: .alert)
                     
                     let ok = UIAlertAction(title: "Done", style: .default) { _ in
+                        
                         let updateText = alert.textFields?[0].text
                         if updateText != ""{
                             
@@ -622,6 +624,7 @@ extension SecondTableVC: UITableViewDelegate{
                     let cancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in}
                     alert.addTextField { textF in
                         textF.placeholder = self.dataSource.sectionModels[section].header
+//                        alert.textFields?[0].text = self.dataSource.sectionModels[section].header
                     }
                     alert.addAction(cancel)
                     alert.addAction(ok)
@@ -666,7 +669,7 @@ extension SecondTableVC: UITableViewDelegate{
             snp.centerY.equalTo(header)
             snp.width.equalTo(50)
         }
-        sectionUpdateBtn.snp.makeConstraints { snp in
+        titleUpdateBtn.snp.makeConstraints { snp in
             snp.trailing.equalTo(header).offset(-20)
             snp.centerY.equalTo(header)
         }
@@ -676,7 +679,7 @@ extension SecondTableVC: UITableViewDelegate{
 }
 
 
-class SecondCell: UITableViewCell{
+class ListCell: UITableViewCell{
     
     let linkImage = UIImageView()
     let linkTitle = UILabel()

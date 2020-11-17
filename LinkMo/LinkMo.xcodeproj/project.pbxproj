@@ -67,8 +67,8 @@
 		A99936E4253FE68B0009EE22 /* HomeSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99936E3253FE68B0009EE22 /* HomeSettingVC.swift */; };
 		A9995B612552584B00BF7C18 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9995B602552584B00BF7C18 /* Extension.swift */; };
 		A9AF993225516F6B00E0CF88 /* LinkTitleUpdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AF993125516F6B00E0CF88 /* LinkTitleUpdateVC.swift */; };
-		A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* SecondTableVC.swift */; };
-		A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddCellList.swift */; };
+		A9C5925424F53B200010FDAD /* HomeListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925324F53B200010FDAD /* HomeListVC.swift */; };
+		A9C5925624F53B3D0010FDAD /* AddLinkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925524F53B3D0010FDAD /* AddLinkVC.swift */; };
 		A9C5925824F53B580010FDAD /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925724F53B580010FDAD /* TableViewModel.swift */; };
 		A9C5925A24F53B690010FDAD /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C5925924F53B690010FDAD /* TableSection.swift */; };
 /* End PBXBuildFile section */
@@ -149,8 +149,8 @@
 		A99936E3253FE68B0009EE22 /* HomeSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSettingVC.swift; sourceTree = "<group>"; };
 		A9995B602552584B00BF7C18 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		A9AF993125516F6B00E0CF88 /* LinkTitleUpdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTitleUpdateVC.swift; sourceTree = "<group>"; };
-		A9C5925324F53B200010FDAD /* SecondTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableVC.swift; sourceTree = "<group>"; };
-		A9C5925524F53B3D0010FDAD /* AddCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellList.swift; sourceTree = "<group>"; };
+		A9C5925324F53B200010FDAD /* HomeListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListVC.swift; sourceTree = "<group>"; };
+		A9C5925524F53B3D0010FDAD /* AddLinkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkVC.swift; sourceTree = "<group>"; };
 		A9C5925724F53B580010FDAD /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
 		A9C5925924F53B690010FDAD /* TableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,8 +284,8 @@
 				29D0447D24DE394500CB33EA /* HomeViewController.swift */,
 				29D044B024DE3F6500CB33EA /* ViewModelBindableType.swift */,
 				29D044B224DE3F7600CB33EA /* BaseViewController.swift */,
-				A9C5925324F53B200010FDAD /* SecondTableVC.swift */,
-				A9C5925524F53B3D0010FDAD /* AddCellList.swift */,
+				A9C5925324F53B200010FDAD /* HomeListVC.swift */,
+				A9C5925524F53B3D0010FDAD /* AddLinkVC.swift */,
 				A94B0D4124FF61200072A34A /* LoginVC.swift */,
 				A94B0D4524FF617F0072A34A /* SignUpVC.swift */,
 				A99936DD253EAA490009EE22 /* SplashView.swift */,
@@ -541,7 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A94B0D4824FF619D0072A34A /* LoginViewModel.swift in Sources */,
-				A9C5925424F53B200010FDAD /* SecondTableVC.swift in Sources */,
+				A9C5925424F53B200010FDAD /* HomeListVC.swift in Sources */,
 				29D0447E24DE394500CB33EA /* HomeViewController.swift in Sources */,
 				A94B0D4224FF61200072A34A /* LoginVC.swift in Sources */,
 				29D044A424DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift in Sources */,
@@ -569,7 +569,7 @@
 				2934916D254EAE7D00EF8386 /* EditTitleViewController.swift in Sources */,
 				29D0447A24DE394500CB33EA /* AppDelegate.swift in Sources */,
 				29D044A524DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift in Sources */,
-				A9C5925624F53B3D0010FDAD /* AddCellList.swift in Sources */,
+				A9C5925624F53B3D0010FDAD /* AddLinkVC.swift in Sources */,
 				A910BABD25258281009A76EE /* ColorManage.swift in Sources */,
 				29D0449F24DE3C2D00CB33EA /* Category.swift in Sources */,
 				A94B0D4024F8B4F90072A34A /* ManagedList+CoreDataProperties.swift in Sources */,
