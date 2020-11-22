@@ -97,7 +97,7 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
 		linkLabel.text = "linkmo"
 		linkLabel.linkLabel()
 		linkLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
         
 		view.backgroundColor = UIColor.appColor(.bgColor)
 		collectionView.backgroundColor = UIColor.appColor(.bgColor)
