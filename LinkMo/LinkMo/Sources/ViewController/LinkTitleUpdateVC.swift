@@ -88,14 +88,14 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         confirmBtn.rx.tap
             .subscribe(onNext: { _ in
                 var updateTitle = self.titleTextfield.text!
-                var updatelink = self.linkTextfield.text!
-                
+                let updatelink = self.linkTextfield.text!
+                var trims = updatelink.trimmingCharacters(in: .whitespaces)
                 defer{
                     self.tableshard.showActivityIndicatory(trueFalse: true, uiView: self.view)
-                    _ = self.tableshard.updateCells(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, title: updateTitle, link: updatelink)
+                    _ = self.tableshard.updateCells(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, title: updateTitle, link: trims)
                     _ = self.tableshard.readSections(categoryId: self.categoryid)
                     
-                    let encodings = updatelink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                    let encodings = trims.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                     let updateUrl = URL(string: encodings)!
                     
                     LPMetadataProvider().startFetchingMetadata(for: updateUrl) { (linkMetadata, error) in
@@ -135,9 +135,9 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                 if updatelink.contains("https://") || updatelink.contains("http://"){
                     
                 }else if updatelink.isEmpty{
-                    updatelink = self.tableshard.sections[self.sectionValue].linked[self.rowValue]
+                    trims = self.tableshard.sections[self.sectionValue].linked[self.rowValue]
                 }else{
-                    updatelink = "https://\(updatelink)"
+                    trims = "https://\(trims)"
                 }
                 
                 if updateTitle.isEmpty{

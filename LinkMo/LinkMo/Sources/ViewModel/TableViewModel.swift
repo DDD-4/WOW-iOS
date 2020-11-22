@@ -342,10 +342,12 @@ class TableViewModel{
     
     // url 주소
     func canOpenURL(_ string: String?) -> Bool {
+        
         guard let urlString = string,
             let url = URL(string: urlString)
+            
             else { return false }
-
+        
         if !UIApplication.shared.canOpenURL(url) { return false }
 
 //        let regEx = "((https|http)://)((\\w|-)+)()(([.]|[/])((\\w|-)+))+(|/)"

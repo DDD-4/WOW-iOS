@@ -241,10 +241,10 @@ class AddLinkVC: UIViewController {
         confirmBtn.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Medium", size: 18)
         
         confirmBtn.rx.tap
-            .subscribe(onNext: { [weak self]b in
+            .subscribe(onNext: { [weak self] b in
                 
-                var urlHttps = self?.urlFd.value
-                
+                let urlHttps = self?.urlFd.value
+                var trims = urlHttps?.trimmingCharacters(in: .whitespaces)
                 self?.tableShardVM.checkLimit(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber)
                 
                 if self?.tableShardVM.limitCell.value ?? false{
@@ -257,8 +257,8 @@ class AddLinkVC: UIViewController {
                 }else{
                     defer{
                         self?.tableShardVM.showActivityIndicatory(trueFalse: true, uiView: self!.view)
-                        _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: urlHttps!)
-                        let urlstring = urlHttps
+                        _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: trims!)
+                        let urlstring = trims
                         let encoding = urlstring?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                         let url = URL(string: encoding!)!
                         
@@ -304,7 +304,7 @@ class AddLinkVC: UIViewController {
                     if self!.urlFd.value.contains("https://") || self!.urlFd.value.contains("http://"){
                         return
                     }else{
-                        urlHttps = "https://\(urlHttps ?? "")/"
+                        trims = "https://\(trims ?? "")/"
                     }
                 }
                 
@@ -351,3 +351,4 @@ extension AddLinkVC: UIPickerViewDelegate, UIPickerViewDataSource{
         didselectNumber = row
     }
 }
+
