@@ -670,7 +670,8 @@ extension HomeListVC: UITableViewDelegate{
             snp.width.equalTo(50)
         }
         titleUpdateBtn.snp.makeConstraints { snp in
-            snp.trailing.equalTo(header).offset(-20)
+            snp.trailing.equalTo(header).offset(-10)
+            snp.width.equalTo(25)
             snp.centerY.equalTo(header)
         }
         
@@ -732,9 +733,9 @@ class ListCell: UITableViewCell{
         
         updateBtn.snp.makeConstraints { snp in
             snp.top.equalTo(contentView).offset(20)
-            snp.trailing.equalTo(contentView).offset(-20)
+            snp.trailing.equalTo(contentView).offset(-5)
             snp.bottom.equalTo(contentView).offset(-20)
-            snp.width.equalTo(24)
+            snp.width.equalTo(30)
         }
         
     }
