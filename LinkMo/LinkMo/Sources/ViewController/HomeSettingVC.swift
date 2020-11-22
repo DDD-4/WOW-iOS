@@ -14,11 +14,16 @@ class HomeSettingVC: UIViewController {
     let tableView = UITableView()
     let backButton = UIButton()
 	let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
-    let settingList = ["홈 화면 이름 수정", "비밀번호 재설정"]
+    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+    
+    var settingList = ["홈 화면 이름 수정", "고객 센터"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setConstraint()
+        if let version = version{
+            settingList.append("버전정보    \(version)")
+        }
     }
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -43,7 +48,7 @@ class HomeSettingVC: UIViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 		tableView.translatesAutoresizingMaskIntoConstraints = false
-		
+        
 		backButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
 		backButton.setImage(UIImage(named: "icLeft"), for: .normal)
 		backButton.contentVerticalAlignment = .fill
@@ -68,10 +73,10 @@ class HomeSettingVC: UIViewController {
 			titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 54),
 			
-			tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 91),
+			tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50),
 			tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -24)
+			tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
 		])
     }
 	
@@ -88,15 +93,26 @@ extension HomeSettingVC: UITableViewDelegate, UITableViewDataSource{
         cell.textLabel?.text = settingList[indexPath.row]
 		cell.textLabel?.font = UIFont(name:"AppleSDGothicNeo-Regular",size:17)
 		cell.textLabel?.textColor = UIColor.appColor(.blackLabel)
-		cell.layer.backgroundColor = UIColor.appColor(.bgColor).cgColor
+        cell.backgroundColor = UIColor.appColor(.bgColor)
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row == 0{
-			let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
-			let settingEditVC = storyBoard.instantiateViewController(withIdentifier: "HomeSettingEditVC") as! HomeSettingEditVC
-			self.navigationController?.pushViewController(settingEditVC, animated: true)
+        switch indexPath.row {
+        // 이름바꾸기
+        case 0:
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Home", bundle:nil)
+            let settingEditVC = storyBoard.instantiateViewController(withIdentifier: "HomeSettingEditVC") as! HomeSettingEditVC
+            self.navigationController?.pushViewController(settingEditVC, animated: true)
+        // 고객 센터
+        case 1:
+            let wowaddress = URL(string: "https://github.com/DDD-4/WOW-iOS")!
+            UIApplication.shared.open(wowaddress, options: [:], completionHandler: nil)
+        case 2: break
+        default:
+            break
         }
 		
     }
