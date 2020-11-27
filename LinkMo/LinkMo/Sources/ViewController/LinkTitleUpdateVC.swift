@@ -164,6 +164,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         titleLbl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
         titleLbl.textColor = UIColor.appColor(.titleGray)
         
+        titleTextfield.text = tableshard.sections[sectionValue].titled[rowValue]
         titleTextfield.keyboardType = .default
         titleTextfield.contentVerticalAlignment = .center
         titleTextfield.layer.cornerRadius = titleTextfield.frame.size.height / 2
@@ -193,6 +194,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         linkLbl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
         linkLbl.textColor = UIColor.appColor(.titleGray)
         
+        linkTextfield.text = tableshard.sections[sectionValue].linked[rowValue]
         linkTextfield.keyboardType = .default
         linkTextfield.contentVerticalAlignment = .center
         linkTextfield.layer.cornerRadius = linkTextfield.frame.size.height / 2

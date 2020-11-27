@@ -608,48 +608,47 @@ extension HomeListVC: UITableViewDelegate{
             .subscribe(onNext: { _ in
                 
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                let update = UIAlertAction(title: "수정", style: .default) { _ in
+                let update = UIAlertAction(title: "수정", style: .default) { [weak self] _ in
                     let alert = UIAlertController(title: nil, message: "카테고리 수정", preferredStyle: .alert)
                     
-                    let ok = UIAlertAction(title: "Done", style: .default) { _ in
+                    let ok = UIAlertAction(title: "Done", style: .default) { [weak self] _ in
                         
                         let updateText = alert.textFields?[0].text
                         if updateText != ""{
                             
-                            _ = self.tableShardVM.updateSections(updateText: updateText!, index: section, categoryId: self.categoryID)
-                            _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                            _ = self?.tableShardVM.updateSections(updateText: updateText!, index: section, categoryId: self!.categoryID)
+                            _ = self?.tableShardVM.readSections(categoryId: self!.categoryID)
                         }
 
                     }
-                    let cancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in}
-                    alert.addTextField { textF in
-                        textF.placeholder = self.dataSource.sectionModels[section].header
-//                        alert.textFields?[0].text = self.dataSource.sectionModels[section].header
+                    let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+                    alert.addTextField { [weak self] textF in
+                        textF.placeholder = self?.dataSource.sectionModels[section].header
+                        textF.text = self?.tableShardVM.sections[section].header
                     }
                     alert.addAction(cancel)
                     alert.addAction(ok)
                     
-                    self.present(alert, animated: true)
+                    self?.present(alert, animated: true)
                     
                 }
-                let remove = UIAlertAction(title: "제거", style: .default) { _ in
+                let remove = UIAlertAction(title: "제거", style: .default) { [weak self] _ in
                     let alertConfirm = UIAlertController(title: nil, message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
                     let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
                     let ok = UIAlertAction(title: "확인", style: .default) { _ in
                         //cell delete
-                        _ = self.tableShardVM.deleteSections(section: section, categoryId: self.categoryID)
-                        _ = self.tableShardVM.readSections(categoryId: self.categoryID)
+                        _ = self?.tableShardVM.deleteSections(section: section, categoryId: self!.categoryID)
+                        _ = self?.tableShardVM.readSections(categoryId: self!.categoryID)
                         
                     }
                     alertConfirm.addAction(cancel)
                     alertConfirm.addAction(ok)
                     
-                    self.present(alertConfirm, animated: true)
-                    
-                    self.tableState()
+                    self?.present(alertConfirm, animated: true)
+                    self?.tableState()
                 }
-                let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
-                    self.dismiss(animated: true, completion: nil)
+                let cancel = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
+                    self?.dismiss(animated: true, completion: nil)
                 }
                 alert.addAction(update)
                 alert.addAction(remove)
