@@ -20,11 +20,11 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
     
     // title
     let titleLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-    let titleTextfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+    let titleTextfield = CustomField()
     
     // link
     let linkLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-    let linkTextfield = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+    let linkTextfield = CustomField()
     
     // Button
     let confirmBtn = EMTNeumorphicButton(type: .custom)
@@ -102,7 +102,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                         guard let linkMetadata = linkMetadata,
                             let imageProvider = linkMetadata.imageProvider else {
                                 return DispatchQueue.main.async {
-                                    let images = UIImage(named: "12")
+                                    let images = UIImage(named: "base48pt")
                                     let convert = images?.pngData()
                                     
                                     _ = self.tableshard.updatePng(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, png: convert!)
@@ -164,7 +164,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         titleLbl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
         titleLbl.textColor = UIColor.appColor(.titleGray)
         
-        titleTextfield.backgroundColor = UIColor.white
+        titleTextfield.text = tableshard.sections[sectionValue].titled[rowValue]
         titleTextfield.keyboardType = .default
         titleTextfield.contentVerticalAlignment = .center
         titleTextfield.layer.cornerRadius = titleTextfield.frame.size.height / 2
@@ -194,7 +194,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
         linkLbl.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 14)
         linkLbl.textColor = UIColor.appColor(.titleGray)
         
-        linkTextfield.backgroundColor = UIColor.white
+        linkTextfield.text = tableshard.sections[sectionValue].linked[rowValue]
         linkTextfield.keyboardType = .default
         linkTextfield.contentVerticalAlignment = .center
         linkTextfield.layer.cornerRadius = linkTextfield.frame.size.height / 2
@@ -258,5 +258,8 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
     @objc func barbutton(_ sender: Any){
         self.navigationController?.popViewController(animated: true)
     }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.titleTextfield.resignFirstResponder()
+        self.linkTextfield.resignFirstResponder()
+    }
 }

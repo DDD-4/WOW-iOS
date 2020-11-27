@@ -268,7 +268,7 @@ class AddLinkVC: UIViewController {
                                     return DispatchQueue.main.async {
                                         
                                                                                 
-                                        let images = UIImage(named: "12")
+                                        let images = UIImage(named: "base48pt")
                                         let convert = images?.pngData()
                                         
                                         _ = self?.tableShardVM.addPng(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, png: convert!)

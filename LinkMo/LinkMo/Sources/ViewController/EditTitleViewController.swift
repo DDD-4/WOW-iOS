@@ -157,7 +157,7 @@ class EditTitleViewController: UIViewController, UITextFieldDelegate {
 	}
 }
 
-
+// linkTitleUpdateVC에도 사용
 class CustomField: UITextField {
 
     lazy var innerShadow: CALayer = {
