@@ -102,7 +102,7 @@ class LinkTitleUpdateVC: UIViewController, UITextFieldDelegate {
                         guard let linkMetadata = linkMetadata,
                             let imageProvider = linkMetadata.imageProvider else {
                                 return DispatchQueue.main.async {
-                                    let images = UIImage(named: "12")
+                                    let images = UIImage(named: "base48pt")
                                     let convert = images?.pngData()
                                     
                                     _ = self.tableshard.updatePng(categoryid: self.categoryid, section: self.sectionValue, cellrow: self.rowValue, png: convert!)

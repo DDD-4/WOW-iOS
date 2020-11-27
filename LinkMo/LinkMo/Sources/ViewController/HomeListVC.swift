@@ -438,7 +438,7 @@ class HomeListVC: UIViewController {
                     guard let linkMetadata = linkMetadata,
                         let imageProvider = linkMetadata.imageProvider else {
                             return DispatchQueue.main.async {
-                                cell.linkImage.image = UIImage(named: "12")
+                                cell.linkImage.image = UIImage(named: "base48pt")
                             }
                     }
                     imageProvider.loadObject(ofClass: UIImage.self) { (image, error) in
