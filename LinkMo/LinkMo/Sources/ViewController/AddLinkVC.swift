@@ -19,7 +19,7 @@ import EMTNeumorphicView
 
 class AddLinkVC: UIViewController {
     
-    //@IBOutlet weak var pickerView: UIPickerView!
+    
     let pickerView = UIPickerView()
     @IBOutlet weak var categoryName: UITextField!
     @IBOutlet weak var categoryUrl: UITextField!
@@ -257,7 +257,9 @@ class AddLinkVC: UIViewController {
                 }else{
                     defer{
                         self?.tableShardVM.showActivityIndicatory(trueFalse: true, uiView: self!.view)
+                        
                         _ = self?.tableShardVM.addCells(categoryid: self!.selectSection, sectionNumber: self!.didselectNumber, linkTitle: self!.titleFd.value, linkUrl: trims!)
+                        
                         let urlstring = trims
                         let encoding = urlstring?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                         let url = URL(string: encoding!)!

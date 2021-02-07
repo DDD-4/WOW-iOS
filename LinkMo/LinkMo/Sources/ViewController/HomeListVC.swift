@@ -700,7 +700,7 @@ class ListCell: UITableViewCell{
         
         linkImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         linkImage.sizeToFit()
-        linkImage.contentMode = .scaleAspectFill
+        linkImage.contentMode = .scaleAspectFit
         
         linkImage.snp.makeConstraints { snp in
             

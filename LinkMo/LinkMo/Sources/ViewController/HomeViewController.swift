@@ -121,8 +121,7 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
 	
 	override func viewWillAppear(_ animated: Bool) {
 		viewModel.inputs.readTitle()
-        view.backgroundColor = UIColor.appColor(.bgColor)
-        collectionView.backgroundColor = UIColor.appColor(.bgColor)
+        
 		navigationController?.isNavigationBarHidden = true
 		collectionView.reloadData()
 		
