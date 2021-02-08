@@ -48,8 +48,15 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
 	let linkLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 89, height: 25))
 	let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
     let nocategory = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-    
+    let emptyLblStack = UIStackView()
     func dataNil(state: Bool){
+        
+        emptyLblStack.axis = .vertical
+        emptyLblStack.spacing = 10
+        emptyLblStack.translatesAutoresizingMaskIntoConstraints = false
+        emptyLblStack.alignment = .fill
+        emptyLblStack.distribution = .fillEqually
+        
         nocategory.text = "카테고리 없음"
         nocategory.textAlignment = .center
         nocategory.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 22)
@@ -63,20 +70,9 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
         emptyLabel.textColor = UIColor.appColor(.title136)
         
         
-        emptyLabel.snp.makeConstraints { snp in
-            snp.centerX.equalTo(view)
-            snp.centerY.equalTo(view)
-            snp.height.equalTo(40)
+        emptyLblStack.snp.makeConstraints { (snp) in
+            snp.centerY.centerX.equalTo(view)
         }
-        
-        nocategory.snp.makeConstraints { (snp) in
-            snp.bottom.equalTo(emptyLabel.snp.top).offset(-11)
-            snp.centerX.equalTo(view)
-            snp.width.greaterThanOrEqualTo(120)
-            snp.height.equalTo(30)
-        }
-        
-        
         
         emptyLabel.isHidden = state
         nocategory.isHidden = state
@@ -84,8 +80,10 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
     
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        view.addSubview(emptyLabel)
-        view.addSubview(nocategory)
+        view.addSubview(emptyLblStack)
+        emptyLblStack.addArrangedSubview(nocategory)
+        emptyLblStack.addArrangedSubview(emptyLabel)
+        
 		bindViewModel()
         collectionView.showsVerticalScrollIndicator = false
 		view.addSubview(linkLabel)
@@ -121,8 +119,7 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
 	
 	override func viewWillAppear(_ animated: Bool) {
 		viewModel.inputs.readTitle()
-        view.backgroundColor = UIColor.appColor(.bgColor)
-        collectionView.backgroundColor = UIColor.appColor(.bgColor)
+        
 		navigationController?.isNavigationBarHidden = true
 		collectionView.reloadData()
 		

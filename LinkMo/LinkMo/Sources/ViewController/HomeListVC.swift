@@ -53,6 +53,7 @@ class HomeListVC: UIViewController {
 	let buttonSet = UIButton(type: .custom)
 	let designLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
     let hiddenBackBtn = UIButton(type: .system)
+    let emptyLblStack = UIStackView()
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var removeBtn: UIBarButtonItem!
@@ -67,8 +68,9 @@ class HomeListVC: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(tableView)
-        view.addSubview(emptyLblBottom)
-        view.addSubview(emptyLblTop)
+        view.addSubview(emptyLblStack)
+        emptyLblStack.addArrangedSubview(emptyLblTop)
+        emptyLblStack.addArrangedSubview(emptyLblBottom)
         view.addSubview(buttonSet)
         view.addSubview(designLabel)
         view.addSubview(hiddenBackBtn)
@@ -77,6 +79,7 @@ class HomeListVC: UIViewController {
         view.addSubview(addBtn)
         view.addSubview(listLbl)
         view.addSubview(linkLbl)
+        
         
         view.backgroundColor = .black
         
@@ -154,6 +157,13 @@ class HomeListVC: UIViewController {
 	
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
+        
+        emptyLblStack.axis = .vertical
+        emptyLblStack.spacing = 10
+        emptyLblStack.translatesAutoresizingMaskIntoConstraints = false
+        emptyLblStack.alignment = .fill
+        emptyLblStack.distribution = .fillEqually
+        
         emptyLblTop.text = "카테고리 없음"
         emptyLblTop.textAlignment = .center
         emptyLblTop.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 22)
@@ -166,19 +176,10 @@ class HomeListVC: UIViewController {
         emptyLblBottom.textAlignment = .center
         emptyLblBottom.textColor = UIColor.appColor(.title136)
         
-        
-        emptyLblBottom.snp.makeConstraints { snp in
-            snp.centerX.equalTo(view)
-            snp.centerY.equalTo(view)
-            snp.height.equalTo(40)
+        emptyLblStack.snp.makeConstraints { (snp) in
+            snp.centerY.centerX.equalTo(view)
         }
         
-        emptyLblTop.snp.makeConstraints { (snp) in
-            snp.bottom.equalTo(emptyLblBottom.snp.top).offset(-11)
-            snp.centerX.equalTo(view)
-            snp.width.greaterThanOrEqualTo(120)
-            snp.height.equalTo(30)
-        }
         
         emptyLblTop.isHidden = state
         emptyLblBottom.isHidden = state
@@ -685,23 +686,41 @@ extension HomeListVC: UITableViewDelegate{
 
 class ListCell: UITableViewCell{
     
+    let LblStack = UIStackView()
+    let linkStack = UIStackView()
+    
     let linkImage = UIImageView()
     let linkTitle = UILabel()
     let linkUrl = UILabel()
     let updateBtn = UIButton(type: .custom)
+    
     var data: (Int, Int) = (0, 0)
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        LblStack.axis = .vertical
+        LblStack.spacing = 10
+        LblStack.translatesAutoresizingMaskIntoConstraints = false
+        LblStack.alignment = .fill
+        LblStack.distribution = .fillEqually
+        
+        contentView.addSubview(LblStack)
+        LblStack.addArrangedSubview(linkTitle)
+        LblStack.addArrangedSubview(linkUrl)
+        
         contentView.addSubview(linkImage)
-        contentView.addSubview(linkTitle)
-        contentView.addSubview(linkUrl)
         contentView.addSubview(updateBtn)
+        
+        linkTitle.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        linkTitle.font = UIFont.systemFont(ofSize: 17)
+        
+        linkUrl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+        linkUrl.textColor = UIColor.darkGray
+        linkUrl.font = UIFont.systemFont(ofSize: 14)
         
         linkImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         linkImage.sizeToFit()
-        linkImage.contentMode = .scaleAspectFill
-        
+        linkImage.contentMode = .scaleAspectFit
         linkImage.snp.makeConstraints { snp in
             
             snp.top.equalTo(contentView).offset(10)
@@ -710,36 +729,77 @@ class ListCell: UITableViewCell{
             snp.width.equalTo(55)
         }
         
-        linkTitle.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
-        linkTitle.font = UIFont.systemFont(ofSize: 17)
-        
-        linkTitle.snp.makeConstraints { snp in
-            snp.leading.equalTo(linkImage.snp.trailing).offset(20)
-            snp.top.equalTo(linkImage.snp.top).offset(10)
-            snp.trailing.equalTo(updateBtn).offset(-30)
-        }
-        
-        linkUrl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
-        linkUrl.textColor = UIColor.darkGray
-        linkUrl.font = UIFont.systemFont(ofSize: 14)
-        
-        linkUrl.snp.makeConstraints { snp in
-            
-            snp.bottom.equalTo(linkImage.snp.bottom).offset(-10)
-            snp.leading.equalTo(linkImage.snp.trailing).offset(20)
-            snp.trailing.equalTo(updateBtn).offset(-30)
-        }
-        
-        
         updateBtn.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         updateBtn.setImage(UIImage(named: "ic_delete copy"), for: .normal)
         
         updateBtn.snp.makeConstraints { snp in
-            snp.top.equalTo(contentView).offset(20)
+            snp.top.bottom.equalTo(LblStack)
             snp.trailing.equalTo(contentView).offset(-5)
-            snp.bottom.equalTo(contentView).offset(-20)
             snp.width.equalTo(30)
         }
+        LblStack.snp.makeConstraints { (snp) in
+            snp.top.equalTo(linkImage.snp.top).offset(5)
+            snp.bottom.equalTo(linkImage.snp.bottom).offset(-5)
+            snp.leading.equalTo(linkImage.snp.trailing).offset(15)
+            snp.trailing.equalTo(updateBtn).offset(-30)
+        }
+
+        
+//        linkStack.snp.makeConstraints { (snp) in
+//            snp.top.equalTo(contentView).offset(10)
+//            snp.bottom.equalTo(contentView).offset(-10)
+//            snp.leading.equalTo(contentView).offset(20)
+//            snp.trailing.equalTo(contentView).offset(-30)
+//        }
+//        contentView.addSubview(linkImage)
+//        contentView.addSubview(linkTitle)
+//        contentView.addSubview(linkUrl)
+//        contentView.addSubview(updateBtn)
+//
+//
+//
+//        linkImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+//        linkImage.sizeToFit()
+//        linkImage.contentMode = .scaleAspectFit
+//
+//        linkImage.snp.makeConstraints { snp in
+//
+//            snp.top.equalTo(contentView).offset(10)
+//            snp.leading.equalTo(contentView).offset(20)
+//            snp.bottom.equalTo(contentView).offset(-10)
+//            snp.width.equalTo(55)
+//        }
+//
+//        linkTitle.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+//        linkTitle.font = UIFont.systemFont(ofSize: 17)
+//
+//        linkTitle.snp.makeConstraints { snp in
+//            snp.leading.equalTo(linkImage.snp.trailing).offset(20)
+//            snp.top.equalTo(linkImage.snp.top).offset(10)
+//            snp.trailing.equalTo(updateBtn).offset(-30)
+//        }
+//
+//        linkUrl.frame = CGRect(x: 0, y: 0, width: 100, height: 30)
+//        linkUrl.textColor = UIColor.darkGray
+//        linkUrl.font = UIFont.systemFont(ofSize: 14)
+//
+//        linkUrl.snp.makeConstraints { snp in
+//
+//            snp.bottom.equalTo(linkImage.snp.bottom).offset(-10)
+//            snp.leading.equalTo(linkImage.snp.trailing).offset(20)
+//            snp.trailing.equalTo(updateBtn).offset(-30)
+//        }
+//
+//
+//        updateBtn.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+//        updateBtn.setImage(UIImage(named: "ic_delete copy"), for: .normal)
+//
+//        updateBtn.snp.makeConstraints { snp in
+//            snp.top.equalTo(contentView).offset(20)
+//            snp.trailing.equalTo(contentView).offset(-5)
+//            snp.bottom.equalTo(contentView).offset(-20)
+//            snp.width.equalTo(30)
+//        }
         
     }
 //    override func prepareForReuse() {
