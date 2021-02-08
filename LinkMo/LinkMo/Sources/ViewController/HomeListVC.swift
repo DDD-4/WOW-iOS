@@ -53,6 +53,7 @@ class HomeListVC: UIViewController {
 	let buttonSet = UIButton(type: .custom)
 	let designLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 25))
     let hiddenBackBtn = UIButton(type: .system)
+    let emptyLblStack = UIStackView()
     
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var removeBtn: UIBarButtonItem!
@@ -67,8 +68,9 @@ class HomeListVC: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(tableView)
-        view.addSubview(emptyLblBottom)
-        view.addSubview(emptyLblTop)
+        view.addSubview(emptyLblStack)
+        emptyLblStack.addArrangedSubview(emptyLblTop)
+        emptyLblStack.addArrangedSubview(emptyLblBottom)
         view.addSubview(buttonSet)
         view.addSubview(designLabel)
         view.addSubview(hiddenBackBtn)
@@ -77,6 +79,7 @@ class HomeListVC: UIViewController {
         view.addSubview(addBtn)
         view.addSubview(listLbl)
         view.addSubview(linkLbl)
+        
         
         view.backgroundColor = .black
         
@@ -154,6 +157,13 @@ class HomeListVC: UIViewController {
 	
     // MARK: - 데이터 isEmpty 상태
     func dataNil(state: Bool){
+        
+        emptyLblStack.axis = .vertical
+        emptyLblStack.spacing = 10
+        emptyLblStack.translatesAutoresizingMaskIntoConstraints = false
+        emptyLblStack.alignment = .fill
+        emptyLblStack.distribution = .fillEqually
+        
         emptyLblTop.text = "카테고리 없음"
         emptyLblTop.textAlignment = .center
         emptyLblTop.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 22)
@@ -166,19 +176,10 @@ class HomeListVC: UIViewController {
         emptyLblBottom.textAlignment = .center
         emptyLblBottom.textColor = UIColor.appColor(.title136)
         
-        
-        emptyLblBottom.snp.makeConstraints { snp in
-            snp.centerX.equalTo(view)
-            snp.centerY.equalTo(view)
-            snp.height.equalTo(40)
+        emptyLblStack.snp.makeConstraints { (snp) in
+            snp.centerY.centerX.equalTo(view)
         }
         
-        emptyLblTop.snp.makeConstraints { (snp) in
-            snp.bottom.equalTo(emptyLblBottom.snp.top).offset(-11)
-            snp.centerX.equalTo(view)
-            snp.width.greaterThanOrEqualTo(120)
-            snp.height.equalTo(30)
-        }
         
         emptyLblTop.isHidden = state
         emptyLblBottom.isHidden = state
