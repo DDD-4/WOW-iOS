@@ -11,10 +11,9 @@ import UIKit
 
 struct SplashView: View {
     @State var isActive: Bool = false
-    
+    @State var animate: Bool = false
     var body: some View {
         GeometryReader{ proxy in
-            
             
             ZStack{
                 if self.isActive{
@@ -26,7 +25,7 @@ struct SplashView: View {
                         
                         Rectangle()
                             .fill(Color.pureblue)
-                            .frame(width: 125, height: 30)
+                            .frame(width: animate ? 135 : 0, height: 30)
                             .cornerRadius(15)
                             .shadow(color: Color.white.opacity(0.15), radius: 5, x: -3, y: 6)
                             .shadow(color: Color.black.opacity(0.3), radius: 5, x: 3, y: -6)
@@ -49,11 +48,19 @@ struct SplashView: View {
             .background(Color.pureblue)
             .edgesIgnoringSafeArea(.all)
             .onAppear{
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    withAnimation{
+                animateRectSize()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    withAnimation(){
                         self.isActive = true
                     }
                 }
+            }
+        }
+    }
+    func animateRectSize(){
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            withAnimation(Animation.easeInOut(duration: 1)){
+                animate.toggle()
             }
         }
     }
