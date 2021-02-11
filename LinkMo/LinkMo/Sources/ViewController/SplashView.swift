@@ -12,6 +12,7 @@ import UIKit
 struct SplashView: View {
     @State var isActive: Bool = false
     @State var animate: Bool = false
+    
     var body: some View {
         GeometryReader{ proxy in
             
@@ -27,8 +28,8 @@ struct SplashView: View {
                             .fill(Color.pureblue)
                             .frame(width: animate ? 135 : 0, height: 30)
                             .cornerRadius(15)
-                            .shadow(color: Color.white.opacity(0.15), radius: 5, x: -3, y: 6)
-                            .shadow(color: Color.black.opacity(0.3), radius: 5, x: 3, y: -6)
+                            .shadow(color: Color.white.opacity(animate ? 0.15 : 0), radius: 5, x: -3, y: 6)
+                            .shadow(color: Color.black.opacity(animate ? 0.3 : 0), radius: 5, x: 3, y: -6)
                             
                             .rotationEffect(Angle(degrees: 135))
                             .padding(.bottom, 50)
@@ -49,6 +50,7 @@ struct SplashView: View {
             .edgesIgnoringSafeArea(.all)
             .onAppear{
                 animateRectSize()
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     withAnimation(){
                         self.isActive = true
@@ -58,8 +60,8 @@ struct SplashView: View {
         }
     }
     func animateRectSize(){
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
-            withAnimation(Animation.easeInOut(duration: 1)){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            withAnimation(Animation.easeInOut(duration: 0.8)){
                 animate.toggle()
             }
         }
