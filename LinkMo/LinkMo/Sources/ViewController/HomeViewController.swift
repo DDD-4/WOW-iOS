@@ -118,11 +118,9 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
-		viewModel.inputs.readTitle()
-        
+
 		navigationController?.isNavigationBarHidden = true
-		collectionView.reloadData()
-		
+
         let names = UserDefaults.standard.object(forKey: "linkname")
         linkname.text = "\(names ?? "link")님의 링크"
         
@@ -155,6 +153,7 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
 	
 	@objc private func refreshListData(_ sender: Any) {
         self.pullControl.endRefreshing()
+        self.viewModel.inputs.readTitle()
 		self.collectionView.reloadData()
     }
 	
