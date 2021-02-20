@@ -264,7 +264,7 @@ extension ShareTableViewController: UITableViewDataSource{
 			cell.imgView4.image = UIImage(data: section.thumbnail[3])
 		}
 		
-		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
+        cell.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		cell.tableLabel.text = section.header
 		
 		
