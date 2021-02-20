@@ -81,6 +81,7 @@ class ShareViewController: UIViewController {
 		viewModel.inputs.readTitle()
 		navigationController?.isNavigationBarHidden = true
 		view.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
+        tableView.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -186,8 +187,7 @@ extension ShareViewController: UITableViewDataSource {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTableViewCell", for: indexPath) as? ShareTableViewCell else { return UITableViewCell() }
 		cell.emojilabel.text = categoryList[indexPath.row].icon
 		cell.titlelabel.text = categoryList[indexPath.row].title
-		cell.layer.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100).cgColor
-		
+        cell.backgroundColor = UIColor(red: 246/255, green: 247/255, blue: 251/255, alpha: 100)
 		return cell
 	}
 	
