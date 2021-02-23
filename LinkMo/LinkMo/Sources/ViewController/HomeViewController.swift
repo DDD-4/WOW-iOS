@@ -127,6 +127,7 @@ class HomeViewController: UIViewController , UITextFieldDelegate{
 	}
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = false
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
 	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
