@@ -14,47 +14,44 @@ struct SplashView: View {
     @State var animate: Bool = false
     
     var body: some View {
-        GeometryReader{ proxy in
-            
-            ZStack{
-                if self.isActive{
-                    UIhomeVC()
-                }else{
-                    
-                    VStack{
-                        Spacer()
-                        
-                        Rectangle()
-                            .fill(Color.pureblue)
-                            .frame(width: animate ? 135 : 0, height: 30)
-                            .cornerRadius(15)
-                            .shadow(color: Color.white.opacity(animate ? 0.15 : 0), radius: 5, x: -3, y: 6)
-                            .shadow(color: Color.black.opacity(animate ? 0.3 : 0), radius: 5, x: 3, y: -6)
-                            
-                            .rotationEffect(Angle(degrees: 135))
-                            .padding(.bottom, 50)
-                        
-                        Text("linkmo")
-                        .font(.custom("GmarketSansLight", size: 35))
-                        .foregroundColor(.fontColor)
-                        
-                        Spacer()
-                    }
-                    .padding(.bottom, 50)
-                    
-                }
-                Spacer()
-                    .layoutPriority(1)
-            }
-            .background(Color.pureblue)
-            .edgesIgnoringSafeArea(.all)
-            .onAppear{
-                animateRectSize()
+        ZStack{
+            if self.isActive{
+                UIhomeVC()
+            }else{
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    withAnimation(){
-                        self.isActive = true
-                    }
+                VStack{
+                    Spacer()
+                    
+                    Rectangle()
+                        .fill(Color.pureblue)
+                        .frame(width: animate ? 135 : 0, height: 30)
+                        .cornerRadius(15)
+                        .shadow(color: Color.white.opacity(animate ? 0.15 : 0), radius: 5, x: -3, y: 6)
+                        .shadow(color: Color.black.opacity(animate ? 0.3 : 0), radius: 5, x: 3, y: -6)
+                        
+                        .rotationEffect(Angle(degrees: 135))
+                        .padding(.bottom, 50)
+                    
+                    Text("linkmo")
+                    .font(.custom("GmarketSansLight", size: 35))
+                    .foregroundColor(.fontColor)
+                    
+                    Spacer()
+                }
+                .padding(.bottom, 50)
+                
+            }
+            Spacer()
+                .layoutPriority(1)
+        }
+        .background(Color.pureblue)
+        .edgesIgnoringSafeArea(.all)
+        .onAppear{
+            animateRectSize()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                withAnimation(){
+                    self.isActive = true
                 }
             }
         }
