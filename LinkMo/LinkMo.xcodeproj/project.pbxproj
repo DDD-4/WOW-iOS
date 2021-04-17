@@ -109,7 +109,6 @@
 		29277AE22552646300B3D515 /* GmarketSansMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansMedium.otf; sourceTree = "<group>"; };
 		29277AE32552646300B3D515 /* GmarketSansBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansBold.otf; sourceTree = "<group>"; };
 		2934916C254EAE7D00EF8386 /* EditTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTitleViewController.swift; sourceTree = "<group>"; };
-		29C2234025075838004ECCD3 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		29C2234625075C93004ECCD3 /* ShareLink.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareLink.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C2234825075C93004ECCD3 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		29C2234B25075C93004ECCD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -291,7 +290,6 @@
 		29D0449624DE3AD200CB33EA /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				29C2234025075838004ECCD3 /* Login.storyboard */,
 				29D0447F24DE394500CB33EA /* Home.storyboard */,
 			);
 			path = Storyboards;
