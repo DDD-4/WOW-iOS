@@ -144,8 +144,8 @@
 		818FD891FCB0616AB7D9C4DD /* Pods-LinkMo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo.release.xcconfig"; path = "Target Support Files/Pods-LinkMo/Pods-LinkMo.release.xcconfig"; sourceTree = "<group>"; };
 		8E1584C83B89878501FAC338 /* Pods-LinkMo-ShareLink.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMo-ShareLink.debug.xcconfig"; path = "Target Support Files/Pods-LinkMo-ShareLink/Pods-LinkMo-ShareLink.debug.xcconfig"; sourceTree = "<group>"; };
 		A910BABC25258281009A76EE /* ColorManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManage.swift; sourceTree = "<group>"; };
-		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedList+CoreDataClass.swift"; path = "LinkMo/Sources/db/Model/LinkList/ManagedList+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ManagedList+CoreDataProperties.swift"; path = "LinkMo/Sources/db/Model/LinkList/ManagedList+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		A98C76D0253BFEEB008B667C /* share.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = share.xcassets; sourceTree = "<group>"; };
 		A99936DD253EAA490009EE22 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		A99936E1253EAF0A0009EE22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -301,13 +301,10 @@
 		29D0449724DE3B0900CB33EA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				29D044A224DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift */,
-				29D044A324DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift */,
-				A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */,
-				A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */,
+				A947F6A1262AD97B001C4814 /* Home */,
+				A947F6A2262AD982001C4814 /* LinkList */,
 				29D0448224DE394500CB33EA /* LinkMo.xcdatamodeld */,
 				29D0449E24DE3C2D00CB33EA /* Category.swift */,
-				A9C5925924F53B690010FDAD /* TableSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -366,6 +363,25 @@
 			isa = PBXGroup;
 			children = (
 				A9C5925724F53B580010FDAD /* TableViewModel.swift */,
+			);
+			path = LinkList;
+			sourceTree = "<group>";
+		};
+		A947F6A1262AD97B001C4814 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				29D044A224DE3E7A00CB33EA /* ManagedCategory+CoreDataClass.swift */,
+				29D044A324DE3E7A00CB33EA /* ManagedCategory+CoreDataProperties.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A947F6A2262AD982001C4814 /* LinkList */ = {
+			isa = PBXGroup;
+			children = (
+				A9C5925924F53B690010FDAD /* TableSection.swift */,
+				A94B0D3D24F8B4F90072A34A /* ManagedList+CoreDataClass.swift */,
+				A94B0D3E24F8B4F90072A34A /* ManagedList+CoreDataProperties.swift */,
 			);
 			path = LinkList;
 			sourceTree = "<group>";
